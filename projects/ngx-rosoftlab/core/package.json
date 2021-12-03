@@ -1,0 +1,14 @@
+{
+  "name": "@ngx-rosoftlab/core",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^12.1.0",
+    "@angular/core": "^12.1.0",
+    "fast-json-patch": "^3.1.0",
+    "date-fns": "^2.27.0",
+    "@types/qs": "^6.9.7"
+  },
+  "dependencies": {
+    "tslib": "^2.2.0"
+  }
+}

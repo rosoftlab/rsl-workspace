@@ -2,10 +2,17 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@ngx-rosoftlab/core": [
+        "dist/ngx-rosoftlab/core/ngx-rosoftlab-core",
+        "dist/ngx-rosoftlab/core"
+      ]
+    },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "noImplicitAny": false,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    // "strict": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
@@ -24,7 +31,8 @@
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    // "strictInputAccessModifiers": true,
+    // "strictTemplates": true,
+     "noImplicitAny": false,
   }
 }

@@ -3,5 +3,37 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "@ngx-rosoftlab/core": {
+      "projectType": "library",
+      "root": "projects/ngx-rosoftlab/core",
+      "sourceRoot": "projects/ngx-rosoftlab/core/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-rosoftlab/core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-rosoftlab/core/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-rosoftlab/core/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-rosoftlab/core/src/test.ts",
+            "tsConfig": "projects/ngx-rosoftlab/core/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-rosoftlab/core/karma.conf.js"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "@ngx-rosoftlab/core"
 }
