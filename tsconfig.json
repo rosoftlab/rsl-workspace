@@ -3,9 +3,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "@ngx-rosoftlab/core": [
-        "dist/ngx-rosoftlab/core/ngx-rosoftlab-core",
-        "dist/ngx-rosoftlab/core"
+      "@rosoftlab/core": [
+        "dist/rosoftlab/core/rosoftlab-core",
+        "dist/rosoftlab/core"
       ]
     },
     "baseUrl": "./",
@@ -33,6 +33,6 @@
     "strictInjectionParameters": true,
     // "strictInputAccessModifiers": true,
     // "strictTemplates": true,
-     "noImplicitAny": false,
+     "noImplicitAny": false
   }
 }

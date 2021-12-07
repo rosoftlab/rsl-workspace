@@ -1,0 +1,32 @@
+{
+  "name": "@rosoftlab/core",
+  "version": "0.0.3",
+  "peerDependencies": {
+    "@angular/common": "^12.1.0",
+    "@angular/core": "^12.1.0",
+    "fast-json-patch": "^3.1.0",
+    "date-fns": "^2.27.0",
+    "@types/qs": "^6.9.7",
+    "@tinymce/tinymce-angular": "^4.2.4",
+    "@ngx-translate/core": "^13.0.0",
+    "tinymce": "^5.10.2",
+    "@angular/material": "^12.2.13",
+    "json-logic-js": "^2.0.1",
+    "@sweetalert2/theme-material-ui": "^5.0.8",
+    "sweetalert2": "^11.2.2",
+    "@angular/cdk": "^12.2.13"
+  },
+  "dependencies": {
+    "tslib": "^2.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rosoftlab/rsl-workspace.git"
+  },
+  "author": "rosoftlab",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rosoftlab/rsl-workspace/issues"
+  },
+  "homepage": "https://github.com/rosoftlab/rsl-workspace#readme"
+}

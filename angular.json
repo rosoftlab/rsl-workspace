@@ -3,23 +3,23 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "@ngx-rosoftlab/core": {
+    "@rosoftlab/core": {
       "projectType": "library",
-      "root": "projects/ngx-rosoftlab/core",
-      "sourceRoot": "projects/ngx-rosoftlab/core/src",
+      "root": "projects/rosoftlab/core",
+      "sourceRoot": "projects/rosoftlab/core/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/ngx-rosoftlab/core/ng-package.json"
+            "project": "projects/rosoftlab/core/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngx-rosoftlab/core/tsconfig.lib.prod.json"
+              "tsConfig": "projects/rosoftlab/core/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ngx-rosoftlab/core/tsconfig.lib.json"
+              "tsConfig": "projects/rosoftlab/core/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,13 +27,13 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-rosoftlab/core/src/test.ts",
-            "tsConfig": "projects/ngx-rosoftlab/core/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-rosoftlab/core/karma.conf.js"
+            "main": "projects/rosoftlab/core/src/test.ts",
+            "tsConfig": "projects/rosoftlab/core/tsconfig.spec.json",
+            "karmaConfig": "projects/rosoftlab/core/karma.conf.js"
           }
         }
       }
     }
   },
-  "defaultProject": "@ngx-rosoftlab/core"
+  "defaultProject": "@rosoftlab/core"
 }

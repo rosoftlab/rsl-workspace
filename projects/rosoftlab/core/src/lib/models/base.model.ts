@@ -6,6 +6,7 @@ import { ModelConfig } from '../interfaces/model-config.interface';
 import { BaseDatastore, ModelType } from '../services/base-datastore.service';
 import { GridLayout } from './grid-layout';
 export class BaseModel {
+  public highlighted: boolean;
   public id: any;
   [key: string]: any;
 
