@@ -48,7 +48,7 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
   private filterChanged: Subject<string> = new Subject<string>();
   private filterChangedSubscription: Subscription
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(ElementRef, { static: false }) filter: ElementRef;
   @ViewChild('table') table: MatTable<any>;

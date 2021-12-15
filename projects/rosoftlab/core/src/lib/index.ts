@@ -16,6 +16,7 @@ export * from './models/base-meta.model';
 export * from './models/base-query-data';
 export * from './models/base.model';
 export * from './models/error-response.model';
+export * from './models/rule';
 export * from './module';
 export * from './pipes/input-error.pipe';
 export * from './pipes/Nl2brPipe.pipe';

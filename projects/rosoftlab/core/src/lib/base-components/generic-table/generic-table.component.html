@@ -38,7 +38,8 @@
           {{column.translateKey | translate}}
         </mat-header-cell>
         <mat-cell matTooltip={{getCelValue(row,column.propertyName)}} [style.flex]="getFlexStyle(column)"
-          [style.text-align]="getCellTextAlign(column)" *matCellDef="let row">{{getCelValue(row,column.propertyName)}} </mat-cell>
+          [style.text-align]="getCellTextAlign(column)" *matCellDef="let row">{{getCelValue(row,column.propertyName)}}
+        </mat-cell>
       </ng-container>
 
 
@@ -63,7 +64,9 @@
       <mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></mat-header-row>
 
       <ng-container *ngIf="!editOnClick">
-        <mat-row *matRowDef="let row;let index = dataIndex; columns: displayedColumns;" cdkDrag [cdkDragData]="row">
+        <mat-row *matRowDef="let row;let index = dataIndex; columns: displayedColumns;" cdkDrag [cdkDragData]="row"
+          [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (click)="highlight(row)"
+          (mouseover)="row.hovered = true" (mouseout)="row.hovered = false">
         </mat-row>
       </ng-container>
 
