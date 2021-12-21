@@ -167,7 +167,7 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
     }
     // Otherwise ask the user with the dialog service and return its
     // observable which resolves to true or false when the user decides
-    return this.dialogService.confirm('Änderungen verwerfen ?', null, 'verwerfen');
+    return this.dialogService.confirm('Discard changes ?', null, 'Discard');
   }
   getFiledName(filedTranslationKey: string) {
     return { field: this.translate.instant(filedTranslationKey) };
