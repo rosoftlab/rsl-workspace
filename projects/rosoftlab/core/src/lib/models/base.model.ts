@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { AttributeMetadata } from '../constants/symbols';
 import { ModelConfig } from '../interfaces/model-config.interface';
 import { BaseDatastore, ModelType } from '../services/base-datastore.service';
-import { GridLayout } from './grid-layout';
+import { GridLayoutModel } from './grid-layout';
 export class BaseModel {
   public highlighted: boolean;
   public id: any;
@@ -143,12 +143,12 @@ export class BaseModel {
     return fb.group(controlsConfig);
   }
 
-  public getGridLayout(): GridLayout[] {
-    const result = Array<GridLayout>();
+  public getGridLayout(): GridLayoutModel[] {
+    const result = Array<GridLayoutModel>();
     const gridLayout: any = Reflect.getMetadata('GridLayout', this);
     if (gridLayout) {
       for (const layout of gridLayout) {
-        const data = new GridLayout(layout.propertyName, layout.translateKey,
+        const data = new GridLayoutModel(layout.propertyName, layout.translateKey,
           layout.width, layout.shrink, layout.grow,
           layout.formating, layout.format, layout.order, layout.textAlign);
         result.push(data);

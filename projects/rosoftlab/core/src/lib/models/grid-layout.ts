@@ -1,6 +1,6 @@
 import { CellTextAlign, GridLayoutFormat } from './grid-layout-format.enum';
 
-export class GridLayout {
+export class GridLayoutModel {
     constructor(
         propertyName: string, translateKey: any = null, width: any = null, grow: 0 | 1 = 0, shrink: 0 | 1 = 0,
         formating: GridLayoutFormat = GridLayoutFormat.none, format = '', order = 0,

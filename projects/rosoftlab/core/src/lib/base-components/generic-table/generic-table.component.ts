@@ -10,11 +10,12 @@ import { merge, Observable, of, Subject, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { BaseQueryData } from '../../models/base-query-data';
 import { BaseModel } from '../../models/base.model';
-import { GridLayout } from '../../models/grid-layout';
+import { GridLayoutModel } from '../../models/grid-layout';
 import { CellTextAlign, GridLayoutFormat } from '../../models/grid-layout-format.enum';
 import { Rule } from '../../models/rule';
 import { BaseService } from '../../services/base.service';
 import { DialogService } from '../../services/dialog.service';
+import { GridLayoutService } from '../../services/grid-layout.service';
 declare var $: any;
 
 @Component({
@@ -26,6 +27,7 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
   // displayedColumns = ['code']; //, 'name', 'cif', 'city', 'address', 'state', 'priceListName', 'delete'];
   @Input() modelType: new (...args: any[]) => T;
   @Input() baseService: BaseService<T>;
+  @Input() gridLayoutService?: GridLayoutService<T>;
   @Input() editLink: string;
   @Input() defaultSort: string = null;
   @Input() defaultSortDirection: SortDirection = null;
@@ -55,7 +57,7 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
   resizeSubscription: any;
 
   selectedItem: T;
-  gridLayout: GridLayout[];
+  gridLayout: GridLayoutModel[];
   @Output() selectedObject: EventEmitter<T> = new EventEmitter<T>();
 
   displayedColumns: string[];
@@ -71,8 +73,13 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
 
   ngOnChanges() {
     if (this.baseService !== undefined || this.baseService !== null) {
-      const model = this.baseService.newModel();
-      this.gridLayout = model.getGridLayout();
+      if (this.gridLayoutService != null) {
+        this.gridLayout = this.gridLayoutService.getGridLayout();
+      }
+      else {
+        const model = this.baseService.newModel();
+        this.gridLayout = model.getGridLayout();
+      }
       this.displayedColumns = [];
       if (this.allowReorderItems) {
         this.displayedColumns.push('position')
@@ -223,7 +230,7 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
     const id = model.id;
     this.router.navigate([this.editLink, id]);
   }
-  getFlexStyle(column: GridLayout) {
+  getFlexStyle(column: GridLayoutModel) {
     if (column.width) {
       const style = column.grow + ' ' + column.shrink + ' ' + column.width + 'px';
       return style;
@@ -231,7 +238,7 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
     return null;
   }
 
-  getCellTextAlign(column: GridLayout) {
+  getCellTextAlign(column: GridLayoutModel) {
     return column.textAlign ?? CellTextAlign.left;
   }
 
@@ -277,7 +284,7 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
       return this.getCelValue(row[prop], subProp);
     }
   }
-  private getFormatedValue(gridLayout: GridLayout, value: any) {
+  private getFormatedValue(gridLayout: GridLayoutModel, value: any) {
 
     if (gridLayout) {
       switch (gridLayout.formating) {

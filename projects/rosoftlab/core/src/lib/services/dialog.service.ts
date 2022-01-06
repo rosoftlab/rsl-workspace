@@ -17,11 +17,11 @@ export class DialogService {
    */
   constructor() { }
   confirm(message?: string, text?: string,
-    confirmButtonText: string = 'löschen',
-    cancelButtonText: string = 'abbrechen'): Observable<boolean> {
+    confirmButtonText: string = 'Delete',
+    cancelButtonText: string = 'Cancel'): Observable<boolean> {
     const confirmation = Swal.fire({
       title: message || 'Are you sure?',
-      //icon: 'warning',
+      icon: 'warning',
       text: text || '',
       showCancelButton: true,
       confirmButtonText: confirmButtonText,
