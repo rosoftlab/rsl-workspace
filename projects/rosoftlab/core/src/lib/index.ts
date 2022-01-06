@@ -4,7 +4,7 @@ export * from './decorators/base-datastore-config.decorator';
 export * from './decorators/base-model-config.decorator';
 export * from './decorators/custom.type.decorator';
 export * from './decorators/grid-layout.decorator';
-export * from './directives/editor-mat-form-control.directive';
+// export * from './directives/editor-mat-form-control.directive';
 export * from './directives/translated-content.directive';
 export * from './directives/translated-element.directive';
 export * from './interfaces/attribute-decorator-options.interface';
