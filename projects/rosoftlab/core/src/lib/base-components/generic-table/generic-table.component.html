@@ -63,19 +63,24 @@
 
       <mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></mat-header-row>
 
-      <ng-container *ngIf="!editOnClick">
+      <ng-container *ngIf="!editOnClick && !editOnDblClick">
         <mat-row *matRowDef="let row;let index = dataIndex; columns: displayedColumns;" cdkDrag [cdkDragData]="row"
           [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (click)="highlight(row)"
           (mouseover)="row.hovered = true" (mouseout)="row.hovered = false">
         </mat-row>
       </ng-container>
 
-      <ng-container *ngIf="editOnClick">
+      <ng-container *ngIf="editOnClick && !editOnDblClick">
         <mat-row *matRowDef="let row;let index = dataIndex; columns: displayedColumns;" cdkDrag [cdkDragData]="row"
           [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (click)="editObject(row)"
           (mouseover)="row.hovered = true" (mouseout)="row.hovered = false" style="cursor: pointer;"></mat-row>
       </ng-container>
 
+      <ng-container *ngIf="!editOnClick && editOnDblClick">
+        <mat-row *matRowDef="let row;let index = dataIndex; columns: displayedColumns;" cdkDrag [cdkDragData]="row"
+          [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (dblclick)="editObject(row)"
+          (mouseover)="row.hovered = true" (mouseout)="row.hovered = false" style="cursor: pointer;"></mat-row>
+      </ng-container>
 
       <!-- [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}"
         (click)="highlight(row)" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false" -->

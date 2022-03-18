@@ -39,6 +39,9 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
   @Input() allowReorderItems: boolean;
   @Input() stickyColumns: string = null;
   @Input() editOnClick: boolean = false;
+  @Input() editOnDblClick: boolean = false;
+  @Input() allowEdit: boolean = true;
+  @Input() customInclude: string = null;
   @Input() changeItemPosition: (prevItem: T, currentItem: T) => boolean;
 
   dataSource: MatTableDataSource<T> = new MatTableDataSource();
@@ -85,7 +88,7 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
         this.displayedColumns.push('position')
       }
       this.displayedColumns.push.apply(this.displayedColumns, this.gridLayout.map(x => x.propertyName));
-      if (!this.editOnClick) {
+      if (!this.editOnClick && this.allowEdit) {
         this.displayedColumns.push('delete');
       }
     }
@@ -176,7 +179,7 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
       filters.push(this.defaultFilter);
     }
     const filtersValue = filters.join(', ');
-    return this.baseService.getAll(pageIndex, pageSize, sorts, filtersValue);
+    return this.baseService.getAll(pageIndex, pageSize, sorts, filtersValue, this.customInclude);
   }
 
   refreshForm() {
