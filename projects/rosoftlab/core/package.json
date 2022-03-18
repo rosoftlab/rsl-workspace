@@ -1,24 +1,24 @@
 {
   "name": "@rosoftlab/core",
-  "version": "0.0.17",
+  "version": "0.0.19",
   "peerDependencies": {
-    "@angular/common": "~13.1.1",
-    "@angular/core": "~13.1.1",
+    "@angular/common": "~13.3.0",
+    "@angular/core": "~13.3.0",
     "fast-json-patch": "^3.1.0",
-    "date-fns": "^2.27.0",
+    "date-fns": "^2.28.0",
     "@types/qs": "^6.9.7",
-    "@tinymce/tinymce-angular": "^4.2.4",
-    "@ngx-translate/core": "^13.0.0",
-    "tinymce": "^5.10.2",
-    "@angular/material": "^13.1.1",
-    "json-logic-js": "^2.0.1",
-    "@sweetalert2/theme-material-ui": "^5.0.8",
-    "sweetalert2": "^11.3.3",
-    "@angular/cdk": "^13.1.1",
+    "@tinymce/tinymce-angular": "^5.0.1",
+    "@ngx-translate/core": "^14.0.0",
+    "tinymce": "^6.0.0",
+    "@angular/material": "^13.3.0",
+    "json-logic-js": "^2.0.2",
+    "@sweetalert2/theme-material-ui": "^5.0.10",
+    "sweetalert2": "^11.4.5",
+    "@angular/cdk": "^13.3.0",
     "ng-block-ui": "^3.0.2"
   },
   "dependencies": {
-    "tslib": "^2.2.0"
+    "tslib": "^2.3.1"
   },
   "repository": {
     "type": "git",
