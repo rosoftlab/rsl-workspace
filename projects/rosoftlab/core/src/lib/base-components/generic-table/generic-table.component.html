@@ -43,7 +43,7 @@
       </ng-container>
 
 
-      <ng-container matColumnDef="delete" stickyEnd *ngIf="!editOnClick">
+      <ng-container matColumnDef="delete" stickyEnd *ngIf="!editOnClick && !editOnDblClick">
         <mat-header-cell *matHeaderCellDef disableClear="true">
         </mat-header-cell>
         <mat-cell *matCellDef="let row">

@@ -21,6 +21,7 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
   isLoading = true;
   cancelRoute: string;
   editRoute: string;
+  public changeUrlRoute: boolean = true;
   constructor(
     protected fb: FormBuilder,
     protected router: Router,
@@ -50,19 +51,28 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
   ngOnInit() {
     this.initForm();
   }
-  initForm(customInclude: string = '', newModelId: string = null) {
-    this.modelId = this.route.snapshot.paramMap.get('id') ?? newModelId;
-    this.isEdit = false;
-    if (this.modelId) {
-      this.modelService.get(this.modelId, customInclude).subscribe((value: T) => {
-        this.isEdit = true;
-        this.generateForm(value)
+  initForm(customInclude: string = '', newModelId: string = null, model: T = null) {
+    if (model === null) {
+      this.modelId = this.route.snapshot.paramMap.get('id') ?? newModelId;
+      this.isEdit = false;
+      if (this.modelId) {
+        this.modelService.get(this.modelId, customInclude).subscribe((value: T) => {
+          this.isEdit = true;
+          this.generateForm(value)
+        }
+        );
+      } else {
+        if (this.changeUrlRoute) {
+          const addUrl = this.router.createUrlTree([]).toString();
+          this.editRoute = this.router.createUrlTree([addUrl.replace('add', 'edit')]).toString();
+        }
+        // }
+        this.generateForm(this.modelService.newModel());
       }
-      );
     } else {
-      const addUrl = this.router.createUrlTree([]).toString();
-      this.editRoute = this.router.createUrlTree([addUrl.replace('add', 'edit')]).toString();
-      this.generateForm(this.modelService.newModel());
+      this.modelId = model.id;
+      this.isEdit = true;
+      this.generateForm(model)
     }
   }
   generateForm(model?: T) {
@@ -110,9 +120,10 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
               this.modelId = newModel.id;
               if (this.editRoute) {
                 this.isEdit = true;
-                const url = this.router.createUrlTree([this.editRoute, this.modelId]).toString();
-                // this.router.navigateByUrl(url, { skipLocationChange: false, replaceUrl: true })
-                this.location.replaceState(url);
+                if (this.changeUrlRoute) {
+                  const url = this.router.createUrlTree([this.editRoute, this.modelId]).toString();
+                  this.location.replaceState(url);
+                }
               }
               this.afterSave(newModel).subscribe((val: T) => {
                 this.blockUI.stop();

@@ -41,6 +41,7 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
   @Input() editOnClick: boolean = false;
   @Input() editOnDblClick: boolean = false;
   @Input() allowEdit: boolean = true;
+  @Input() popupEdit: boolean = false;
   @Input() customInclude: string = null;
   @Input() changeItemPosition: (prevItem: T, currentItem: T) => boolean;
 
@@ -62,6 +63,7 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
   selectedItem: T;
   gridLayout: GridLayoutModel[];
   @Output() selectedObject: EventEmitter<T> = new EventEmitter<T>();
+  @Output() editModel: EventEmitter<T> = new EventEmitter<T>();
 
   displayedColumns: string[];
   // ruleEngineService: RuleEngineService<T>;
@@ -88,7 +90,7 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
         this.displayedColumns.push('position')
       }
       this.displayedColumns.push.apply(this.displayedColumns, this.gridLayout.map(x => x.propertyName));
-      if (!this.editOnClick && this.allowEdit) {
+      if (!this.editOnClick && !this.editOnDblClick && this.allowEdit) {
         this.displayedColumns.push('delete');
       }
     }
@@ -230,8 +232,12 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
     });
   }
   editObject(model: T) {
-    const id = model.id;
-    this.router.navigate([this.editLink, id]);
+    if (!this.popupEdit) {
+      const id = model.id;
+      this.router.navigate([this.editLink, id]);
+    } else {
+      this.editModel.emit(model);
+    }
   }
   getFlexStyle(column: GridLayoutModel) {
     if (column.width) {
@@ -325,5 +331,17 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
     }
     return false;
   }
-
+  updateElement(model: T) {
+    //Find if element exist
+    var currentElement = this.dataSource.data.find(f => f.id === model.id);
+    if (currentElement !== null) {
+      const index = this.dataSource.data.indexOf(currentElement);
+      this.dataSource.data[index] = model;
+    } else {
+      this.dataSource.data.push(model);
+    }
+    const newData = [ ...this.dataSource.data ]; 
+    this.dataSource.data = newData;
+    this.dataSource._updateChangeSubscription();
+  }
 }
