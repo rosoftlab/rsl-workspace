@@ -20,6 +20,7 @@
 
     <mat-table fxFlex #table [dataSource]="dataSource" id="tempalte-forms-table" matSort matSortDisableClear
       matSortDirection="asc" cdkDropList [cdkDropListData]="dataSource" (cdkDropListDropped)="dropTable($event)">
+      <!-- (scroll)="onTableScroll($event)" -->
 
 
       <ng-container matColumnDef="position">
@@ -38,7 +39,11 @@
           {{column.translateKey | translate}}
         </mat-header-cell>
         <mat-cell matTooltip={{getCelValue(row,column.propertyName)}} [style.flex]="getFlexStyle(column)"
-          [style.text-align]="getCellTextAlign(column)" *matCellDef="let row">{{getCelValue(row,column.propertyName)}}
+          [style.text-align]="getCellTextAlign(column)" *matCellDef="let row"  (click)="cellClick(row,column.propertyName)">
+          <div [ngClass]="getCellClass(row,column.propertyName)" *ngIf="!showPictureCell(column)">
+            {{getCelValue(row,column.propertyName)}}
+          </div>
+          <img [ngClass]="getCellClass(row,column.propertyName)" *ngIf="showPictureCell(column)">
         </mat-cell>
       </ng-container>
 
@@ -79,14 +84,15 @@
       <ng-container *ngIf="!editOnClick && editOnDblClick">
         <mat-row *matRowDef="let row;let index = dataIndex; columns: displayedColumns;" cdkDrag [cdkDragData]="row"
           [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (dblclick)="editObject(row)"
-          (mouseover)="row.hovered = true" (mouseout)="row.hovered = false" style="cursor: pointer;"></mat-row>
+          (click)="highlight(row)" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"
+          style="cursor: pointer;"></mat-row>
       </ng-container>
 
       <!-- [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}"
         (click)="highlight(row)" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false" -->
     </mat-table>
-    <mat-paginator #paginator [length]="resultsLength" [pageSize]="15" [pageSizeOptions]="[15, 30,  100]"
-      [showFirstLastButtons]="true">
+    <mat-paginator #paginator [hidden]="infiniteScroll" [length]="resultsLength" [pageSize]="15"
+      [pageSizeOptions]="[15, 30,  100]" [showFirstLastButtons]="true">
     </mat-paginator>
   </div>
 </div>

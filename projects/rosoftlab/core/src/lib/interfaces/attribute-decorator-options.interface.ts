@@ -5,4 +5,5 @@ export interface AttributeDecoratorOptions {
   converter?: PropertyConverter;
   required?: boolean;
   defaultValue?: any;
+  formSubGroup?: string
 }

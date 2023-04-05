@@ -1,20 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { BlockUIModule } from 'ng-block-ui';
 import { GenericTableComponent } from './base-components/generic-table/generic-table.component';
+import { SearchableDropdownComponent } from './base-components/searchable-dropdown/searchable-dropdown.component';
 import { MaterialModule } from './material';
 import { PROVIDERS } from './providers';
 
 @NgModule({
   declarations: [
-    GenericTableComponent
+    GenericTableComponent,
+    SearchableDropdownComponent
   ],
-  imports:[
+  imports: [
     CommonModule,
     TranslateModule.forChild({}),
     MaterialModule,
+    ReactiveFormsModule,
     BlockUIModule.forRoot(),
   ],
   providers: [
@@ -22,7 +26,8 @@ import { PROVIDERS } from './providers';
   ],
   exports: [
     HttpClientModule,
-    GenericTableComponent
+    GenericTableComponent,
+    SearchableDropdownComponent
   ]
 })
 export class RslBaseModule {

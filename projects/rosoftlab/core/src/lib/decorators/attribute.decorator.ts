@@ -53,6 +53,10 @@ export function Attribute(options: AttributeDecoratorOptions = {}): PropertyDeco
       defaultMetadata[serializedPropertyName] = options.defaultValue !== undefined ? options.defaultValue : null;
       Reflect.defineMetadata('AttributedefaultValue', defaultMetadata, target);
 
+      const formSubGroupMetadata = Reflect.getMetadata('AttributeformSubGroup', target) || {};
+      formSubGroupMetadata[serializedPropertyName] = options.formSubGroup !== undefined ? options.formSubGroup : null;
+      Reflect.defineMetadata('AttributeformSubGroup', formSubGroupMetadata, target);
+
     };
 
     const setMetadata = (

@@ -2,7 +2,8 @@ export enum GridLayoutFormat {
     none,
     date,
     number,
-    percent
+    percent,
+    picture
 }
 
 export enum CellTextAlign {

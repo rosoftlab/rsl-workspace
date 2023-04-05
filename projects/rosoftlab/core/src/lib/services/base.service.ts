@@ -104,8 +104,12 @@ export abstract class BaseService<T extends BaseModel> {
   }
 
   fromFormGroup(formGroup: FormGroup, id?: any): T {
-    const saveModel = this.newModel(formGroup.getRawValue());
-    saveModel.id = id ? id : null;
+    // const saveModel = this.newModel(formGroup.getRawValue());
+    // saveModel.id = id ? id : null;
+    // return saveModel;
+    const saveModel = this.newModel();
+    saveModel.getModelFromFormGroup(formGroup)
+    saveModel.id = id ? id : null;    
     return saveModel;
   }
 }

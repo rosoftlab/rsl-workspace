@@ -18,7 +18,7 @@
 // .mat-row:nth-child(even){
 //     background-color:rgb(238, 238, 238);
 // }
-        
+
 // .mat-row:nth-child(odd){
 //    // background-color: black;
 // }
@@ -31,22 +31,26 @@
 // }
 
 .mat-table {
-    overflow-x: scroll;
-  }
-  
-  // .mat-cell,
-  // .mat-header-cell {
-  //   word-wrap: initial;
-  //   display: table-cell;
-  //   padding: 0px 10px;
-  //   line-break: unset;
-  //   width: 100%;
-  //   white-space: nowrap;
-  //   overflow: hidden;
-  //   vertical-align: middle;
-  // }
-  
-  // .mat-row,
-  // .mat-header-row {
-  //   display: table-row;
-  // }
+    overflow-x: auto;
+}
+
+// .mat-cell,
+// .mat-header-cell {
+//   word-wrap: initial;
+//   display: table-cell;
+//   padding: 0px 10px;
+//   line-break: unset;
+//   width: 100%;
+//   white-space: nowrap;
+//   overflow: hidden;
+//   vertical-align: middle;
+// }
+
+// .mat-row,
+// .mat-header-row {
+//   display: table-row;
+// }
+
+[hidden] {
+    display: none !important;
+}

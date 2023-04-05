@@ -1,12 +1,12 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DatePipe, DecimalPipe, PercentPipe } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import * as jsonLogic from 'json-logic-js/logic.js';
-import { merge, Observable, of, Subject, Subscription } from 'rxjs';
+import { fromEvent, merge, Observable, of, Subject, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { BaseQueryData } from '../../models/base-query-data';
 import { BaseModel } from '../../models/base.model';
@@ -19,11 +19,12 @@ import { GridLayoutService } from '../../services/grid-layout.service';
 declare var $: any;
 
 @Component({
-  selector: 'app-generic-table',
+  selector: 'rsl-generic-table',
   templateUrl: './generic-table.component.html',
-  styleUrls: ['./generic-table.component.scss']
+  styleUrls: ['./generic-table.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class GenericTableComponent<T extends BaseModel> implements OnInit, OnChanges {
+export class GenericTableComponent<T extends BaseModel> implements OnInit, OnChanges, AfterViewInit {
   // displayedColumns = ['code']; //, 'name', 'cif', 'city', 'address', 'state', 'priceListName', 'delete'];
   @Input() modelType: new (...args: any[]) => T;
   @Input() baseService: BaseService<T>;
@@ -44,7 +45,7 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
   @Input() popupEdit: boolean = false;
   @Input() customInclude: string = null;
   @Input() changeItemPosition: (prevItem: T, currentItem: T) => boolean;
-
+  @Input() infiniteScroll: boolean = false;
   dataSource: MatTableDataSource<T> = new MatTableDataSource();
   resultsLength = 0;
   isLoadingResults = true;
@@ -58,11 +59,13 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(ElementRef, { static: false }) filter: ElementRef;
   @ViewChild('table') table: MatTable<any>;
+  @ViewChild('table', { read: ElementRef }) public matTableRef: ElementRef;
   resizeSubscription: any;
 
   selectedItem: T;
   gridLayout: GridLayoutModel[];
   @Output() selectedObject: EventEmitter<T> = new EventEmitter<T>();
+  @Output() click: EventEmitter<{ propertyName: string, model: T }> = new EventEmitter<{ propertyName: string, model: T }>();
   @Output() editModel: EventEmitter<T> = new EventEmitter<T>();
 
   displayedColumns: string[];
@@ -72,7 +75,8 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
     public router: Router,
     private datePipe: DatePipe,
     private numberPipe: DecimalPipe,
-    private percentPipe: PercentPipe
+    private percentPipe: PercentPipe,
+    private renderer: Renderer2
   ) {
   }
 
@@ -149,9 +153,20 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
           return of([]);
         })
       ).subscribe(data => {
+        // if (this.infiniteScroll) {
+        //   let oldData = this.dataSource.data ?? null;
+        //   // if (oldData.length === 0) {
+        //   //   oldData = data;
+        //   // } else {
+        //     oldData=oldData.concat(data);
+        //   // }
+        //   this.dataSource.data = oldData;
+        // }
+        // else {
         this.dataSource.data = data;
+        // }
       });
-
+    // this.paginator.nextPage()
   }
   getData(): Observable<BaseQueryData<T>> {
     this.isLoadingResults = true;
@@ -251,12 +266,19 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
     return column.textAlign ?? CellTextAlign.left;
   }
 
+  showPictureCell(column: GridLayoutModel): boolean {
+    return (column?.formating ?? GridLayoutFormat.none)===GridLayoutFormat.picture;
+  }
+
   deleteDisabled(model: T) {
     if (this.deleteDisableRule) {
       return this.evaluateRule(this.deleteDisableRule, model);
     } else {
       return false;
     }
+  }
+  cellClick(model: T, propertyName: string) {
+    this.click.emit({ propertyName, model });
   }
 
   private evaluateRule(rules: Rule[], model: T): boolean {
@@ -315,13 +337,15 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
   applyFilter(event: Event) {
   }
   dropTable(event: CdkDragDrop<any>) {
-    const prevItem = this.dataSource.data[event.previousIndex];
-    const currentItem = this.dataSource.data[event.currentIndex];
+    if (this.changeItemPosition) {
+      const prevItem = this.dataSource.data[event.previousIndex];
+      const currentItem = this.dataSource.data[event.currentIndex];
 
-    if (this.changeItemPosition(prevItem, currentItem)) {
-      const prevIndex = this.dataSource.data.findIndex((d) => d === event.item.data);
-      moveItemInArray(this.dataSource.data, prevIndex, event.currentIndex);
-      this.table.renderRows();
+      if (this.changeItemPosition(prevItem, currentItem)) {
+        const prevIndex = this.dataSource.data.findIndex((d) => d === event.item.data);
+        moveItemInArray(this.dataSource.data, prevIndex, event.currentIndex);
+        this.table.renderRows();
+      }
     }
   }
   isColumnSticky(name: string): boolean {
@@ -340,8 +364,44 @@ export class GenericTableComponent<T extends BaseModel> implements OnInit, OnCha
     } else {
       this.dataSource.data.push(model);
     }
-    const newData = [ ...this.dataSource.data ]; 
+    const newData = [...this.dataSource.data];
     this.dataSource.data = newData;
     this.dataSource._updateChangeSubscription();
+  }
+  public ngAfterViewInit(): void {
+    fromEvent(this.matTableRef.nativeElement, 'scroll')
+      .pipe(debounceTime(700))
+      .subscribe((e: any) => this.onTableScroll(e));
+  }
+  onTableScroll(e) {
+    const tableViewHeight = e.target.offsetHeight // viewport: ~500px
+    const tableScrollHeight = e.target.scrollHeight // length of all table
+    const scrollLocation = e.target.scrollTop; // how far user scrolled
+
+    // If the user has scrolled within 200px of the bottom, add more data
+    const scrollThreshold = 200;
+
+    const scrollUpLimit = scrollThreshold;
+    if (scrollLocation < scrollUpLimit && this.paginator.pageIndex > 0) {
+      // this.firstPage--;
+      console.log(`onTableScroll() UP: firstPage decreased to ${this.paginator.pageIndex}. Now fetching data...`);
+      // this.fetchData();
+
+      this.scrollTo(tableScrollHeight / 2 - 2 * tableViewHeight);
+    }
+
+    const scrollDownLimit = tableScrollHeight - tableViewHeight - scrollThreshold;
+    if (scrollLocation > scrollDownLimit && this.paginator.pageIndex < this.paginator.getNumberOfPages()) {
+      // this.firstPage++;
+      console.log(`onTableScroll(): firstPage increased to ${this.paginator.pageIndex}. Now fetching data...`);
+      this.paginator.nextPage();
+      // this.scrollTo(tableScrollHeight / 2 + tableViewHeight);
+    }
+  }
+  private scrollTo(position: number): void {
+    this.renderer.setProperty(this.matTableRef.nativeElement, 'scrollTop', position);
+  }
+  getCellClass(model: T, property: string) {
+    return model.getCellClass(property);
   }
 }

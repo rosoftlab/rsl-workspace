@@ -85,10 +85,18 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
   public afterFormGenerated() {
 
   }
-  validateAllFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
+  private getFromGroup(formGroup: FormGroup | string = null): FormGroup {
+    if (!formGroup)
+      return this.baseForm;
+    if (formGroup instanceof FormGroup)
+      return formGroup;
+    return this.baseForm.controls[formGroup] as FormGroup;
+  }
+  validateAllFormFields(formGroup: FormGroup | string = null) {
+    const fg = this.getFromGroup(formGroup)
+    Object.keys(fg.controls).forEach(field => {
       // console.log(field);
-      const control = formGroup.get(field);
+      const control = fg.get(field);
       if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
       } else if (control instanceof FormGroup) {
@@ -96,22 +104,34 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
       }
     });
   }
-  isFieldValid(form: FormGroup, field: string) {
-    return !form.get(field).valid && form.get(field).touched;
+  isFieldValid(field: string, formGroup: FormGroup | string = null) {
+    const fg = this.getFromGroup(formGroup)
+    const filedControl = fg.get(field)
+    return !filedControl.valid && filedControl.touched;
   }
-  displayFieldCss(form: FormGroup, field: string) {
+
+  isFieldValidFromArray(arrayIndex: number, field: string, arrayName: string = 'formArray') {
+    const fieldControl = this.baseForm.get(arrayName).get([arrayIndex]).get(field)
+    return !fieldControl.valid && fieldControl.touched;
+  }
+
+  displayFieldCss(field: string) {
     return {
-      'has-error': this.isFieldValid(form, field),
-      'has-feedback': this.isFieldValid(form, field)
+      'has-error': this.isFieldValid(field),
+      'has-feedback': this.isFieldValid(field)
     };
   }
   onCancel() {
     this.router.navigate([this.cancelRoute]);
   }
   onSave() {
+    this.saveModel(this.baseForm)
+  }
+  saveModel(formGroup: FormGroup | string = null) {
+    const fg = this.getFromGroup(formGroup)
     const that = this;
-    if (this.baseForm) {
-      if (this.baseForm.valid) {
+    if (fg) {
+      if (fg.valid) {
         that.blockUI.start('Saving ...');
         this.beforeSave(this.model).subscribe(_ => {
           this.modelService.save(this.baseForm, this.modelId, this.model).subscribe(
@@ -128,7 +148,7 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
               this.afterSave(newModel).subscribe((val: T) => {
                 this.blockUI.stop();
                 this.dialogService.showSaveMessage('Your changes were saved successfully.').subscribe(d => {
-                  this.baseForm.markAsPristine();
+                  fg.markAsPristine();
                 });
               });
             },
@@ -138,7 +158,7 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
             });
         });
       } else {
-        this.validateAllFormFields(this.baseForm);
+        this.validateAllFormFields(formGroup);
       }
     }
   }
@@ -186,8 +206,16 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
   getCustomErrorMessage(error: any, fieldLabel: string): string {
     return '';
   }
-  getErrorMessage(field: string, filedTranslationKey: string): string {
-    const error = this.baseForm.get(field).errors;
+  getErrorMessageFromArray(arrayIndex: number, field: string, filedTranslationKey: string, arrayName: string = 'formArray'): string {
+    const fieldControl = this.baseForm.get(arrayName).get([arrayIndex]).get(field)
+    return this.getErrorMessageForField(fieldControl, filedTranslationKey)
+  }
+  getErrorMessage(field: string, filedTranslationKey: string, formGroup: FormGroup | string = null): string {
+    const fg = this.getFromGroup(formGroup)
+    return this.getErrorMessageForField(fg.get(field), filedTranslationKey)
+  }
+  getErrorMessageForField(fieldControl: any, filedTranslationKey: string): string {
+    const error = fieldControl.errors;
     const fieldLabel = this.translate.instant(filedTranslationKey);
     let rvalue = '';
     if (error !== null) {

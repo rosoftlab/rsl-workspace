@@ -114,33 +114,76 @@ export class BaseModel {
     return properties;
   }
 
-  private getModelPropertyNames(model: BaseModel) {
+  public getModelPropertyNames(model: BaseModel) {
     return Reflect.getMetadata('AttributeMapping', model);
   }
-  private getModelRequiredPropertyNames(model: BaseModel) {
+  public getModelRequiredPropertyNames(model: BaseModel) {
     return Reflect.getMetadata('AttributeRequired', model);
   }
-  private getModelDefaultPropertyValues(model: BaseModel) {
+  public getModelDefaultPropertyValues(model: BaseModel) {
     return Reflect.getMetadata('AttributedefaultValue', model);
   }
+
+  public getModelSubGroupPropertyNames(model: BaseModel) {
+    return Reflect.getMetadata('AttributeformSubGroup', model);
+  }
+
   public getFromGroup(fb: FormBuilder): FormGroup {
     const props = Object.keys(this.getModelPropertyNames(this));
     const requiredProps = this.getModelRequiredPropertyNames(this);
     const defaultValues = this.getModelDefaultPropertyValues(this);
+    const formSubGroupsValues = this.getModelSubGroupPropertyNames(this);
     const controlsConfig: any = {};
     const that = this;
     if (props) {
       props.forEach(property => {
         const value = that[property] !== undefined ? that[property] : defaultValues[property];
+        const formSubGroup = formSubGroupsValues[property] ?? null;
         if (requiredProps[property]) {
-          controlsConfig[property] = [value, Validators.required];
+          if (formSubGroup)
+            this.getSubFromGroup(fb, controlsConfig, formSubGroup).addControl(property, fb.control(value, Validators.required));
+          else
+            controlsConfig[property] = [value, Validators.required];
         } else {
-          controlsConfig[property] = value;
+          if (formSubGroup)
+            this.getSubFromGroup(fb, controlsConfig, formSubGroup).addControl(property, fb.control(value));
+          else
+            controlsConfig[property] = value;
         }
       });
 
     }
     return fb.group(controlsConfig);
+  }
+  private getSubFromGroup(fb: FormBuilder, controlsConfig: any, subGroup: string): FormGroup {
+    if (!controlsConfig[subGroup])
+      controlsConfig[subGroup] = fb.group({});
+    return controlsConfig[subGroup];
+  }
+
+  public getModelFromFormGroup(formGroup: FormGroup, id?: any) {
+    const props = Object.keys(this.getModelPropertyNames(this));
+    const formSubGroupsValues = this.getModelSubGroupPropertyNames(this);
+    const data: any = {};
+    if (id) {
+      data.id = id;
+    }
+    const that = this;
+    if (props) {
+      props.forEach(property => {
+        const formSubGroup = formSubGroupsValues[property] ?? null;
+        if (!formSubGroup)
+          data[property] = formGroup.controls[property].value ?? null;
+        else
+          data[property] = (formGroup.controls[formSubGroup] as FormGroup).controls[property].value ?? null;
+      });
+    }
+    if (data) {
+      if (id) {
+        this.id = id;
+      }
+      Object.assign(this, data);
+    }
   }
 
   public getGridLayout(): GridLayoutModel[] {
@@ -161,5 +204,8 @@ export class BaseModel {
   public getSerializedModel() {
     const attributesMetadata: any = this[AttributeMetadata];
     return this._datastore.modelToEntity(this, attributesMetadata, true);
+  }
+  getCellClass(property: string) {
+    return '';
   }
 }
