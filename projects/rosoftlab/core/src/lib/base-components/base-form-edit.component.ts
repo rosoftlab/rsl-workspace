@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
@@ -14,7 +14,7 @@ import { DialogService } from '../services/dialog.service';
 })
 export abstract class BaseFormEditComponent<T extends BaseModel> implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
-  baseForm: FormGroup;
+  baseForm: UntypedFormGroup;
   modelId: string;
   model: T;
   isEdit: boolean;
@@ -23,7 +23,7 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
   editRoute: string;
   public changeUrlRoute: boolean = true;
   constructor(
-    protected fb: FormBuilder,
+    protected fb: UntypedFormBuilder,
     protected router: Router,
     protected route: ActivatedRoute,
     protected modelService: BaseService<T>,
@@ -85,26 +85,26 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
   public afterFormGenerated() {
 
   }
-  private getFromGroup(formGroup: FormGroup | string = null): FormGroup {
+  private getFromGroup(formGroup: UntypedFormGroup | string = null): UntypedFormGroup {
     if (!formGroup)
       return this.baseForm;
-    if (formGroup instanceof FormGroup)
+    if (formGroup instanceof UntypedFormGroup)
       return formGroup;
-    return this.baseForm.controls[formGroup] as FormGroup;
+    return this.baseForm.controls[formGroup] as UntypedFormGroup;
   }
-  validateAllFormFields(formGroup: FormGroup | string = null) {
+  validateAllFormFields(formGroup: UntypedFormGroup | string = null) {
     const fg = this.getFromGroup(formGroup)
     Object.keys(fg.controls).forEach(field => {
       // console.log(field);
       const control = fg.get(field);
-      if (control instanceof FormControl) {
+      if (control instanceof UntypedFormControl) {
         control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {
+      } else if (control instanceof UntypedFormGroup) {
         this.validateAllFormFields(control);
       }
     });
   }
-  isFieldValid(field: string, formGroup: FormGroup | string = null) {
+  isFieldValid(field: string, formGroup: UntypedFormGroup | string = null) {
     const fg = this.getFromGroup(formGroup)
     const filedControl = fg.get(field)
     return !filedControl.valid && filedControl.touched;
@@ -127,7 +127,7 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
   onSave() {
     this.saveModel(this.baseForm)
   }
-  saveModel(formGroup: FormGroup | string = null) {
+  saveModel(formGroup: UntypedFormGroup | string = null) {
     const fg = this.getFromGroup(formGroup)
     const that = this;
     if (fg) {
@@ -210,7 +210,7 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
     const fieldControl = this.baseForm.get(arrayName).get([arrayIndex]).get(field)
     return this.getErrorMessageForField(fieldControl, filedTranslationKey)
   }
-  getErrorMessage(field: string, filedTranslationKey: string, formGroup: FormGroup | string = null): string {
+  getErrorMessage(field: string, filedTranslationKey: string, formGroup: UntypedFormGroup | string = null): string {
     const fg = this.getFromGroup(formGroup)
     return this.getErrorMessageForField(fg.get(field), filedTranslationKey)
   }

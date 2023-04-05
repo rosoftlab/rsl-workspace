@@ -1,7 +1,7 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Optional, Output, Self } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, UntypedFormControl, NgControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { BaseQueryData } from '../../models/base-query-data';
@@ -109,7 +109,7 @@ export class SearchableDropdownComponent<T extends BaseModel> implements OnInit,
     @Optional() @Self() public ngControl: NgControl
   ) {
 
-    this.searchControl = new FormControl('');
+    this.searchControl = new UntypedFormControl('');
     _focusMonitor.monitor(_elementRef, true).subscribe(origin => {
       if (this.focused && !origin) {
         this.onTouched();

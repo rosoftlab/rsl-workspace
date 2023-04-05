@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { BaseQueryData } from '../models/base-query-data';
 import { BaseModel } from '../models/base.model';
@@ -66,10 +66,10 @@ export abstract class BaseService<T extends BaseModel> {
 
   // }
 
-  save(docTypeOrFormGroup: T | FormGroup, id?: any, origModel?: T): Observable<T> {
+  save(docTypeOrFormGroup: T | UntypedFormGroup, id?: any, origModel?: T): Observable<T> {
     if (id == null) {
       let fromModel: T;
-      if (docTypeOrFormGroup instanceof FormGroup) {
+      if (docTypeOrFormGroup instanceof UntypedFormGroup) {
         fromModel = this.fromFormGroup(docTypeOrFormGroup, id);
       } else {
         fromModel = docTypeOrFormGroup;
@@ -81,9 +81,9 @@ export abstract class BaseService<T extends BaseModel> {
     }
   }
 
-  patch(docTypeOrFormGroup: T | FormGroup, origModel: T, id?: any): Observable<T> {
+  patch(docTypeOrFormGroup: T | UntypedFormGroup, origModel: T, id?: any): Observable<T> {
     let fromModel: T;
-    if (docTypeOrFormGroup instanceof FormGroup) {
+    if (docTypeOrFormGroup instanceof UntypedFormGroup) {
       fromModel = this.fromFormGroup(docTypeOrFormGroup, id);
     } else {
       fromModel = docTypeOrFormGroup;
@@ -96,14 +96,14 @@ export abstract class BaseService<T extends BaseModel> {
     return new this.modelType(this.datastore, data);
   }
 
-  toFormGroup(fb: FormBuilder, fromModel?: T): FormGroup {
+  toFormGroup(fb: UntypedFormBuilder, fromModel?: T): UntypedFormGroup {
     if (fromModel === undefined) {
       fromModel = this.newModel();
     }
     return fromModel.getFromGroup(fb);
   }
 
-  fromFormGroup(formGroup: FormGroup, id?: any): T {
+  fromFormGroup(formGroup: UntypedFormGroup, id?: any): T {
     // const saveModel = this.newModel(formGroup.getRawValue());
     // saveModel.id = id ? id : null;
     // return saveModel;

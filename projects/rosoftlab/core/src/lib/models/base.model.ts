@@ -1,5 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AttributeMetadata } from '../constants/symbols';
 import { ModelConfig } from '../interfaces/model-config.interface';
@@ -128,7 +128,7 @@ export class BaseModel {
     return Reflect.getMetadata('AttributeformSubGroup', model);
   }
 
-  public getFromGroup(fb: FormBuilder): FormGroup {
+  public getFromGroup(fb: UntypedFormBuilder): UntypedFormGroup {
     const props = Object.keys(this.getModelPropertyNames(this));
     const requiredProps = this.getModelRequiredPropertyNames(this);
     const defaultValues = this.getModelDefaultPropertyValues(this);
@@ -155,13 +155,13 @@ export class BaseModel {
     }
     return fb.group(controlsConfig);
   }
-  private getSubFromGroup(fb: FormBuilder, controlsConfig: any, subGroup: string): FormGroup {
+  private getSubFromGroup(fb: UntypedFormBuilder, controlsConfig: any, subGroup: string): UntypedFormGroup {
     if (!controlsConfig[subGroup])
       controlsConfig[subGroup] = fb.group({});
     return controlsConfig[subGroup];
   }
 
-  public getModelFromFormGroup(formGroup: FormGroup, id?: any) {
+  public getModelFromFormGroup(formGroup: UntypedFormGroup, id?: any) {
     const props = Object.keys(this.getModelPropertyNames(this));
     const formSubGroupsValues = this.getModelSubGroupPropertyNames(this);
     const data: any = {};
@@ -175,7 +175,7 @@ export class BaseModel {
         if (!formSubGroup)
           data[property] = formGroup.controls[property].value ?? null;
         else
-          data[property] = (formGroup.controls[formSubGroup] as FormGroup).controls[property].value ?? null;
+          data[property] = (formGroup.controls[formSubGroup] as UntypedFormGroup).controls[property].value ?? null;
       });
     }
     if (data) {
