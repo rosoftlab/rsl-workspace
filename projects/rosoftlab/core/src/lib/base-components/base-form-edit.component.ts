@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { Observable } from 'rxjs';
 import { BaseModel } from '../models/base.model';
 import { BaseService } from '../services/base.service';
@@ -13,7 +12,6 @@ import { DialogService } from '../services/dialog.service';
   template: ''
 })
 export abstract class BaseFormEditComponent<T extends BaseModel> implements OnInit {
-  @BlockUI() blockUI: NgBlockUI;
   baseForm: UntypedFormGroup;
   modelId: string;
   model: T;
@@ -132,7 +130,6 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
     const that = this;
     if (fg) {
       if (fg.valid) {
-        that.blockUI.start('Saving ...');
         this.beforeSave(this.model).subscribe(_ => {
           this.modelService.save(this.baseForm, this.modelId, this.model).subscribe(
             (newModel: T) => {
@@ -146,7 +143,6 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
                 }
               }
               this.afterSave(newModel).subscribe((val: T) => {
-                this.blockUI.stop();
                 this.dialogService.showSaveMessage('Your changes were saved successfully.').subscribe(d => {
                   fg.markAsPristine();
                 });
@@ -154,7 +150,6 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
             },
             err => {
               this.serverErrors(err)
-              this.blockUI.stop();
             });
         });
       } else {
