@@ -1,6 +1,6 @@
 {
   "name": "@rosoftlab/core",
-  "version": "0.15.1",
+  "version": "0.16.1",
   "peerDependencies": {
     "@angular/common": "^15.2.5",
     "@angular/core": "^15.2.5",
