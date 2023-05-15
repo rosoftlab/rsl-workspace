@@ -33,6 +33,72 @@
           }
         }
       }
+    },
+    "@ngx-rosoftlab/ionic": {
+      "projectType": "library",
+      "root": "projects/ngx-rosoftlab/ionic",
+      "sourceRoot": "projects/ngx-rosoftlab/ionic/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-rosoftlab/ionic/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-rosoftlab/ionic/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-rosoftlab/ionic/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ngx-rosoftlab/ionic/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    },
+    "@rosoftlab/ionic": {
+      "projectType": "library",
+      "root": "projects/rosoftlab/ionic",
+      "sourceRoot": "projects/rosoftlab/ionic/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/rosoftlab/ionic/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/rosoftlab/ionic/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/rosoftlab/ionic/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/rosoftlab/ionic/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   }
 }
