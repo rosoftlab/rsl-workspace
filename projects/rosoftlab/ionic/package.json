@@ -5,8 +5,9 @@
     "@angular/common": "^16.0.1",
     "@angular/core": "^16.0.1",
     "@ngx-formly/core": "^6.1.6",
-    "@ionic/angular": "^7.0.6",
-    "@rosoftlab/core": "0.0.0-ROSOFTLAB-VERSION"
+    "@ionic/angular": "^6.7.4",
+    "@rosoftlab/core": "0.0.0-ROSOFTLAB-VERSION",
+    "@rosoftlab/formly": "0.0.0-ROSOFTLAB-VERSION"
   },
   "dependencies": {
     "tslib": "^2.3.0"
