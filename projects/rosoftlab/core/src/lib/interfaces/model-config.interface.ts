@@ -6,4 +6,5 @@ export interface ModelConfig {
   baseUrl?: string;
   modelEndpointUrl?: string;
   meta?: BaseMetaModel;
+  formTitle: string;
 }

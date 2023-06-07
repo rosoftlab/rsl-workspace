@@ -10,7 +10,7 @@ import { BaseDatastore, ModelType } from './base-datastore.service';
 @Injectable({
   providedIn: 'root'
 })
-export abstract class BaseService<T extends BaseModel> {
+export class BaseService<T extends BaseModel> {
   public modelType: ModelType<T>;
   constructor(public datastore: BaseDatastore) {
   }

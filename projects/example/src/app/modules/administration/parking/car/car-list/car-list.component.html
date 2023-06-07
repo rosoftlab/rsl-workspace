@@ -1,0 +1,13 @@
+<div class="forms-view-container">
+  <div class="forms">
+    <div class="flex-header">
+      <h3> {{'Administration.Display.Title' | translate}}</h3>
+      <button class="btn btn-red btn-fill btn-wd btn-just-icon" (click)="addForm()">
+        <i class="material-icons">add</i>
+        <div class="ripple-container"></div>
+      </button>
+    </div>
+    <rsl-generic-table [modelType]="CarRef" [editLink]="'administration/parking/car/edit/'" [baseService]="carService">
+    </rsl-generic-table>
+  </div>
+</div>

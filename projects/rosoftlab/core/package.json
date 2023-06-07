@@ -1,9 +1,9 @@
 {
   "name": "@rosoftlab/core",
-  "version": "0.16.2",
+  "version": "0.0.0-ROSOFTLAB-VERSION",
   "peerDependencies": {
-    "@angular/common": "^16.0.0",
-    "@angular/core": "^16.0.0",
+    "@angular/common": "^16.0.1",
+    "@angular/core": "^16.0.1",
     "fast-json-patch": "^3.1.1",
     "date-fns": "^2.30.0",
     "@types/qs": "^6.9.7",
@@ -14,7 +14,7 @@
     "json-logic-js": "^2.0.2",
     "@sweetalert2/theme-material-ui": "^5.0.15",
     "sweetalert2": "^11.7.5",
-    "@angular/cdk": "^16.0.0"
+    "@angular/cdk": "^16.0.1"
   },
   "dependencies": {
     "tslib": "^2.3.1"

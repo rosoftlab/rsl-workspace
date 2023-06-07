@@ -3,16 +3,12 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "@ngx-rosoftlab/ionic": [
-        "dist/ngx-rosoftlab/ionic"
-      ],
-      "@rosoftlab/core": [
-        "dist/rosoftlab/core/rosoftlab-core",
-        "dist/rosoftlab/core"
-      ],
-      "@rosoftlab/ionic": [
-        "dist/rosoftlab/ionic"
-      ]
+      "@rosoftlab/*": [
+        "src/*/src/private_api",
+        "src/*/src/public_api",
+        "src/ui/*/src/public_api"
+      ],      
+      "@assets/*": ["demo/src/assets/*"]
     },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
@@ -26,19 +22,21 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "resolveJsonModule": true,
     "target": "ES2022",
     "module": "es2020",
     "lib": [
       "es2018",
       "dom"
     ],
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "skipLibCheck": true,
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     // "strictInputAccessModifiers": true,
     // "strictTemplates": true,
-     "noImplicitAny": false
+    "noImplicitAny": false
   }
 }

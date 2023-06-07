@@ -2,6 +2,6 @@
  * Public API Surface of ionic
  */
 
-export * from './lib/ionic.service';
-export * from './lib/ionic.component';
-export * from './lib/ionic.module';
+export * from './lib/rsl-ionic-crud.component/rsl-ionic-crud.component';
+export * from './lib/rsl-ionic-grid/rsl-ionic-grid.component';
+

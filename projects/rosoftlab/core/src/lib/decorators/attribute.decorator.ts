@@ -1,4 +1,5 @@
-import { } from 'reflect-metadata';
+import 'reflect-metadata';
+// import * as Reflect from 'reflect-metadata';
 import { AttributeMetadata } from '../constants/symbols';
 import { DateConverter } from '../converters/date/date.converter';
 import { AttributeDecoratorOptions } from '../interfaces/attribute-decorator-options.interface';

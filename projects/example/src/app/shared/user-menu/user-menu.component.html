@@ -1,0 +1,35 @@
+<ng-container *ngFor="let menuItem of menu$  |async; let i = index">
+  <ng-container [ngTemplateOutlet]="menuItem.sublinks && menuItem.sublinks.length > 0 ?parentMenu : finalMenu"
+    [ngTemplateOutletContext]="{menuItem:menuItem}">
+  </ng-container>
+</ng-container>
+
+<ng-template #parentMenu let-menuItem='menuItem'>
+  <ion-accordion-group>
+    <ion-accordion value="{{ menuItem.header }}">
+      <ion-item slot="header">
+        <ion-label>{{ menuItem.translationKey | translate }}</ion-label>
+      </ion-item>
+      <!-- [color]="isRoot ? 'primary' : 'secondary'" -->
+      <div class="ion-padding" slot="content">
+        <ng-container *ngFor="let menuSubItem of menuItem.sublinks; let i = index">
+          <ng-container [ngTemplateOutlet]="menuSubItem.sublinks && menuSubItem.sublinks.length > 0 ?parentMenu : finalMenu"
+            [ngTemplateOutletContext]="{menuItem:menuSubItem}">
+          </ng-container>
+        </ng-container>
+        <!-- <app-menu-item *ngFor="let item of menuItem.sublinks" [menuItem]="item"></app-menu-item> -->
+      </div>
+     </ion-accordion>
+  </ion-accordion-group>
+</ng-template>
+
+<ng-template #finalMenu let-menuItem='menuItem'>
+  <ion-menu-toggle auto-hide="false">
+    <ion-item routerDirection="forward" [routerLink]="[menuItem.link]" lines="none" detail="false"
+      routerLinkActive="selected">
+      <!-- TODO <ion-icon aria-hidden="true" slot="start" [ios]="menuItem.icon + '-outline'"
+        [md]="menuItem.icon + '-sharp'"></ion-icon> -->
+      <ion-label>{{ menuItem.translationKey | translate }}</ion-label>
+    </ion-item>
+  </ion-menu-toggle>
+</ng-template>
