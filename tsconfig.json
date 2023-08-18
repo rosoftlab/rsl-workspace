@@ -8,7 +8,12 @@
         "src/*/src/public_api",
         "src/ui/*/src/public_api"
       ],      
-      "@assets/*": ["demo/src/assets/*"]
+      "@assets/*": [
+        "demo/src/assets/*"
+      ],
+      "@rosoftlab/material": [
+        "dist/rosoftlab/material"
+      ]
     },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
@@ -23,6 +28,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
     "target": "ES2022",
     "module": "es2020",
     "lib": [

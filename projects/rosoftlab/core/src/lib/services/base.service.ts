@@ -109,7 +109,10 @@ export class BaseService<T extends BaseModel> {
     // return saveModel;
     const saveModel = this.newModel();
     saveModel.getModelFromFormGroup(formGroup)
-    saveModel.id = id ? id : null;    
+    saveModel.id = id ? id : null;
     return saveModel;
+  }
+  getSelectValues(property: string): Observable<any[]> {
+    return null;
   }
 }

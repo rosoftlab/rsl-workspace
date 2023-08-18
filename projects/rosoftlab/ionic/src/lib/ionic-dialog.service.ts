@@ -24,7 +24,7 @@ export class IonicDialogService {
         text: confirmButtonText,
         handler: () => {
           alert.dismiss(true);
-          return false;
+          return true;
         }
       }]
     });

@@ -8,11 +8,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { MissingTranslationHandler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { DialogService, MaterialModule, RslBaseModule } from '@rosoftlab/core';
-import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { RslBaseModule } from '@rosoftlab/core';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { ClipboardModule } from 'ngx-clipboard';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
@@ -50,13 +48,11 @@ const providers: any[] = [
     multi: true,
   },
   TranslateloaderService,
-  DialogService,
   DatePipe,
   DecimalPipe,
   PercentPipe,
   LanguageService,
-  CanDeactivateGuard,
-  { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
+  CanDeactivateGuard
 ]
 
 const imports: any[] = [
@@ -68,7 +64,6 @@ const imports: any[] = [
   FormsModule,
   ReactiveFormsModule,
   LayoutModule,
-  MaterialModule,
   HttpClientModule,
   RslBaseModule,
   TranslateModule.forRoot({
@@ -80,11 +75,8 @@ const imports: any[] = [
     missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler },
     useDefaultLang: false,
   }),
-  NgxMatSelectSearchModule,
-  EditorModule,
   ClipboardModule,
   OAuthModule.forRoot()
-  // BlockUIModule.forRoot(),
 ]
 
 @NgModule({

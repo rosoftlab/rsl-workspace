@@ -8,6 +8,7 @@ import { DatastoreConfig } from '../interfaces/datastore-config.interface';
 import { ModelConfig } from '../interfaces/model-config.interface';
 import { BaseQueryData } from '../models/base-query-data';
 import { BaseModel } from '../models/base.model';
+import { CacheService } from './cache.service';
 export type ModelType<T extends BaseModel> = new (datastore: BaseDatastore, data: any) => T;
 
 @Injectable()
@@ -71,7 +72,10 @@ export class BaseDatastore {
     return dirtyData;
   }
 
-  constructor(protected httpClient: HttpClient) {
+  constructor(
+    protected httpClient: HttpClient,
+    protected cacheService: CacheService
+  ) {
   }
 
   findAll<T extends BaseModel>(
@@ -91,6 +95,7 @@ export class BaseDatastore {
         catchError(this.handleError)
       );
     return response;
+
   }
 
   findRecord<T extends BaseModel>(
@@ -107,10 +112,12 @@ export class BaseDatastore {
     }
 
     const htmlParams = this.buildParams(params, undefined);
-    return this.httpClient.get(url, { headers: customHeadhers, params: htmlParams, withCredentials: true })
+    const response = this.httpClient.get(url, { headers: customHeadhers, params: htmlParams, withCredentials: true })
       .pipe(map(res => this.entityToModel(res, modelType, undefined)),
         catchError(this.handleError)
       );
+    return response;
+
   }
   getCustom<U, T extends BaseModel>(modelType: ModelType<T>,
     params?: any,
@@ -177,6 +184,7 @@ export class BaseDatastore {
     return httpCall
       .pipe(
         map(res => {
+          this.cacheService.clearCacheContainingKeyword(url);
           const data = this.resetMetadataAttributes(res, attributesMetadata, modelType);
           return this.entityToModel(data, modelType);
         }),
@@ -210,6 +218,7 @@ export class BaseDatastore {
       return httpCall
         .pipe(
           map(res => {
+            this.cacheService.clearCacheContainingKeyword(url);
             const data = this.resetMetadataAttributes(res, attributesMetadata, modelType);
             return this.entityToModel(data, modelType);
           }),
@@ -253,6 +262,7 @@ export class BaseDatastore {
     return httpCall
       .pipe(
         map(res => {
+          this.cacheService.clearCacheContainingKeyword(url);
           const data = this.resetMetadataAttributes(res, attributesMetadata, modelType);
           return this.entityToModel(data, modelType);
         }),
@@ -274,7 +284,14 @@ export class BaseDatastore {
     }
     // const idParam = new HttpParams().set('id', id);
     return this.httpClient.delete(url, { headers: customHeadhers, withCredentials: true })
-      .pipe(catchError(this.handleError));
+      .pipe(
+        map(res => {
+          this.cacheService.clearCacheContainingKeyword(url);
+          return res;
+        }
+        ),
+        catchError(this.handleError)
+      );
   }
 
   public buildUrl<T extends BaseModel>(

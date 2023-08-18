@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from '@rosoftlab/core';
-import { Car } from '../models/car';
+import { BaseServiceFormly } from '@rosoftlab/formly';
+import { Car } from '../models/administration/car';
 import { Datastore } from './datastore.service';
 
 
@@ -8,7 +8,7 @@ import { Datastore } from './datastore.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CarService extends BaseService<Car> {
+export class CarService extends BaseServiceFormly<Car> {
 
   constructor(datastore: Datastore) {
     super(datastore);

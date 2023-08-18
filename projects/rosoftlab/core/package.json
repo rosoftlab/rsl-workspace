@@ -7,12 +7,10 @@
     "fast-json-patch": "^3.1.1",
     "date-fns": "^2.30.0",
     "@types/qs": "^6.9.7",
+    "@ngx-translate/core": "^15.0.0",
     "@tinymce/tinymce-angular": "^7.0.0",
-    "@ngx-translate/core": "^14.0.0",
     "tinymce": "^6.4.2",
-    "@angular/material": "^16.0.0",
     "json-logic-js": "^2.0.2",
-    "@sweetalert2/theme-material-ui": "^5.0.15",
     "sweetalert2": "^11.7.5",
     "@angular/cdk": "^16.0.1"
   },

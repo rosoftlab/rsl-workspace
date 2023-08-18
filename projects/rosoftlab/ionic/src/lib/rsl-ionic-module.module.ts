@@ -7,6 +7,10 @@ import { FormlyIonicModule } from '@ngx-formly/ionic';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { IonicDialogService } from './ionic-dialog.service';
 import { registerTranslateExtension } from './translate.extension';
+import { RepeatTypeComponent } from './types/repeat/repeat-section.type';
+import { fieldMatchValidator } from './validators/must-match';
+import { AccordionWrapperComponent } from './wrappers/accordion-wrapper.component';
+import { PanelWrapperComponent } from './wrappers/panel-wrapper.component';
 const COMMON_MODULES = [
   CommonModule,
   IonicModule,
@@ -17,9 +21,14 @@ const COMMON_MODULES = [
 @NgModule({
   imports: [
     ...COMMON_MODULES,
-    TranslateModule.forRoot({      
+    TranslateModule.forChild({
     }),
     FormlyModule.forRoot({
+      types: [{ name: 'repeat', component: RepeatTypeComponent }],
+      validators: [{ name: 'fieldMatch', validation: fieldMatchValidator }],
+      wrappers: [
+        { name: 'panel', component: PanelWrapperComponent },
+        { name: 'accordion', component: AccordionWrapperComponent }],
       validationMessages: [
         { name: 'required', message: 'This field is required' },
       ],

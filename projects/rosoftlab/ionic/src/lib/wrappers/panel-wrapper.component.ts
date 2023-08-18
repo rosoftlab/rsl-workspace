@@ -1,0 +1,20 @@
+import { Component } from '@angular/core';
+import { FieldWrapper } from '@ngx-formly/core';
+import { WrappersModule } from './wrappers.module';
+
+@Component({
+  standalone: true,
+  selector: 'formly-wrapper-panel',
+  template: `
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ props.label  |translate }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ng-container #fieldComponent></ng-container>
+      </ion-card-content>
+    </ion-card>
+  `,
+  imports: [WrappersModule]
+})
+export class PanelWrapperComponent extends FieldWrapper { }

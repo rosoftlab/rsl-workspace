@@ -11,6 +11,9 @@
       "@rosoftlab/formly/*": ["dist/@rosoftlab/formly/*"],
       "@rosoftlab/ionic": ["dist/@rosoftlab/ionic"],
       "@rosoftlab/ionic/*": ["dist/@rosoftlab/ionic/*"],
+      "@rosoftlab/material": ["dist/@rosoftlab/material"],
+      "@rosoftlab/material/*": ["dist/@rosoftlab/material/*"],
+      
       "@models":["projects/example/src/app/models"],
       "@models/*":["projects/example/src/app/models/*"],
       "@services":["projects/example/src/app/services"],

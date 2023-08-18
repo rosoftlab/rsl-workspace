@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ng-container [ngTemplateOutlet]="header"></ng-container>
+  </ion-toolbar>
+  <ng-container [ngTemplateOutlet]="search"></ng-container>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ng-container [ngTemplateOutlet]="header"></ng-container>
+      <ng-container [ngTemplateOutlet]="search"></ng-container>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+    <ng-container *ngFor="let item of data">
+      <ion-item-sliding>
+        <ng-container [ngTemplateOutlet]="listItem" [ngTemplateOutletContext]="{item}"></ng-container>
+        <ion-item-options side="end">
+          <ion-item-option color="danger">
+            <ion-icon slot="icon-only" name="trash" (click)='deleteModel(item)'></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ng-container>
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>
+
+<ng-template #header>
+  <ion-title size="large" class="ion-text-center">{{title |translate}}</ion-title>
+  <ion-button slot="end" (click)="onAdd()" fill="clear">
+    <ion-icon size="large" name="add"></ion-icon>
+  </ion-button>
+</ng-template>
+
+<ng-template #search>
+  <ion-toolbar *ngIf="showSerach">
+    <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)"></ion-searchbar>
+  </ion-toolbar>
+</ng-template>
+
+<ng-template #listItem let-item='item'>
+  <ion-item button (click)='editModel(item)'>
+    <ion-label>
+      <ng-container *ngFor="let row of gridLayout">
+        <h2 *ngIf="row.primary"> {{getCelValue(item,row.key)}} </h2>
+        <h3 *ngIf="!row.primary">{{getCelValue(item,row.key)}} </h3>
+      </ng-container>
+    </ion-label>
+  </ion-item>
+</ng-template>

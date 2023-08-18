@@ -59,6 +59,6 @@ import 'reflect-metadata';
 
 declare var require: any;
 declare var global: any;
-
+declare var $: any;
 (window as any).global = window;
 // @ts-ignore

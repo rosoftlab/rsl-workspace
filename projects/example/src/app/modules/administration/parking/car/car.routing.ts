@@ -8,7 +8,16 @@ const routes: Routes = [
 
   {
     path: '',
-    component: RslIonicGridComponent,
+    component: RslIonicGridComponent<Car, CarService>,
+    data: {
+      showSerach: true,
+      searchFields: 'licensePlate,description',
+      customInclude: "",
+      defaultSort: 'licensePlate',
+      defaultSortDirection: 'asc',
+      deletePropertyName: 'licensePlate',
+      requiredService: CARSERVICE
+    }
   },
   // {
   //   path: '',

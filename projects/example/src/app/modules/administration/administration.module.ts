@@ -6,7 +6,6 @@ import { MyMissingTranslationHandler } from '../../handler/my-missing-translatio
 import { SharedModule } from '../../shared/shared-module.module';
 import { AdministrationRoutingModule } from './administration-routing.module';
 import { ParkingModule } from './parking/parking.module';
-import { SecurityModule } from './security/security.module';
 
 
 
@@ -19,7 +18,6 @@ import { SecurityModule } from './security/security.module';
       missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler },
       useDefaultLang: false,
     }),
-    SecurityModule,
     ParkingModule,
     IonicModule,
   ]

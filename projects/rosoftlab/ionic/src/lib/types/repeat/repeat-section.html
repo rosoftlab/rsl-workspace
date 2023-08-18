@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ng-container [ngTemplateOutlet]="header"></ng-container>
+    </ion-toolbar>
+</ion-header>
+
+<ng-template #header>
+    <ion-title  class="ion-text-left">{{props.label |translate}}</ion-title>
+    <ion-button slot="end" (click)="add()" fill="clear">
+        <ion-icon size="large" name="add"></ion-icon>
+    </ion-button>
+</ng-template>
+
+
+<ion-list lines="full">
+    <ion-item *ngFor="let field of field.fieldGroup; let i = index" class="row align-items-baseline">
+        <formly-field class="formly-ion-list-item" [field]="field"></formly-field>
+        <ion-button color="danger" slot="end" (click)='remove(i)'>
+            <ion-icon slot="icon-only" name="trash" (click)='remove(i)'></ion-icon>
+        </ion-button>
+    </ion-item>
+</ion-list>
+
+
+<!-- <ion-card>
+    <ion-card-header>
+      <ion-item>
+      <ion-card-title>{{ props.label  |translate }}</ion-card-title>
+      <ion-card-subtitle *ngIf="props.description">{{ props.description  |translate}}</ion-card-subtitle>
+        <ion-button item-right (click)="add()" fill="clear">
+          <ion-icon size="large" name="add"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-card-header>      
+    <ion-card-content>
+      <div *ngFor="let field of field.fieldGroup; let i = index" class="row align-items-baseline">
+        <formly-field class="col" [field]="field"></formly-field>
+        <div class="col-1 d-flex align-items-center">
+          <button class="btn btn-danger" type="button" (click)="remove(i)">-</button>
+        </div>
+      </div>
+    </ion-card-content>
+    
+  </ion-card> -->

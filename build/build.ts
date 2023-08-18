@@ -29,11 +29,15 @@ PACKAGES.map((name) => {
     homepage: mainPkg.homepage,
     description: mainPkg.description,
     repository: mainPkg.repository,
-    bugs: mainPkg.bugs,
+    bugs: mainPkg.bugs
   };
 
   if (pkgJson.peerDependencies && pkgJson.peerDependencies['@rosoftlab/core']) {
     pkgJson.peerDependencies['@rosoftlab/core'] = mainPkg.version;
+  }
+
+  if (pkgJson.peerDependencies && pkgJson.peerDependencies['@rosoftlab/formly']) {
+    pkgJson.peerDependencies['@rosoftlab/formly'] = mainPkg.version;
   }
 
   fs.writeFileSync(pkgPath, JSON.stringify(pkgJson, null, 2));

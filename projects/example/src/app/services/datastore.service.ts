@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BaseDatastore, BaseDatastoreConfig, DatastoreConfig } from '@rosoftlab/core';
+import { BaseDatastore, BaseDatastoreConfig, CacheService, DatastoreConfig } from '@rosoftlab/core';
 import { environment } from '../../environments/environment';
 
 const config: DatastoreConfig = {
@@ -11,7 +11,8 @@ const config: DatastoreConfig = {
 @Injectable()
 @BaseDatastoreConfig(config)
 export class Datastore extends BaseDatastore {
-    constructor(http: HttpClient) {
-        super(http);
+    constructor(http: HttpClient,
+        cacheService:CacheService) {
+        super(http,cacheService);
     }
 }

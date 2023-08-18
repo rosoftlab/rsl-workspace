@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 // Define a custom injection token
 import { InjectionToken } from '@angular/core';
-import { BaseService } from '@rosoftlab/core';
 
 export const CLASS_NAME_TOKEN = new InjectionToken<any>('className');
 
 @Component({
   selector: 'app-your-component',
-  template: '<h1>Your Component</h1>',
+  templateUrl: './test.component.html',
 })
 export class TestComponent implements OnInit {
   instance: any;
@@ -18,15 +17,15 @@ export class TestComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(
-      ({ modelInstance, serviceInstance }) => {
-        this.instance = modelInstance
-        console.log(modelInstance)
-        console.log(serviceInstance)
-        const baseService = new BaseService<typeof modelInstance>(serviceInstance);
-        console.log(baseService)
-        // do something with your resolved data ...
-      });
+    // this.activatedRoute.data.subscribe(
+    //   ({ modelInstance, serviceInstance }) => {
+    //     this.instance = modelInstance
+    //     console.log(modelInstance)
+    //     console.log(serviceInstance)
+    //     const baseService = new BaseService<typeof modelInstance>(serviceInstance);
+    //     console.log(baseService)
+    //     // do something with your resolved data ...
+    //   });
   }
 
 }

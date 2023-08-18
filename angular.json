@@ -27,13 +27,9 @@
               "demo/src/assets"
             ],
             "styles": [
-              "demo/src/styles.scss",
-              "node_modules/datatables.net-dt/css/jquery.dataTables.css"
+              "demo/src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/datatables.net/js/jquery.dataTables.js"
-            ],
+            "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
@@ -336,6 +332,42 @@
           }
         }
       }
+    },
+    "@rosoftlab/material": {
+      "projectType": "library",
+      "root": "projects/rosoftlab/material",
+      "sourceRoot": "projects/rosoftlab/material/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/rosoftlab/material/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/rosoftlab/material/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/rosoftlab/material/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/rosoftlab/material/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
