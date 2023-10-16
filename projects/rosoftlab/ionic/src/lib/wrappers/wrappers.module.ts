@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { FORMLY_CONFIG, FormlyModule } from '@ngx-formly/core';
 import { FormlyIonicModule } from '@ngx-formly/ionic';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { registerTranslateExtension } from '../translate.extension';
 
 const COMMON_MODULES = [
@@ -12,13 +13,13 @@ const COMMON_MODULES = [
   IonicModule,
   ReactiveFormsModule,
   FormlyIonicModule,
+  NgxDatatableModule
 ];
 
 @NgModule({
   imports: [
     ...COMMON_MODULES,
-    TranslateModule.forRoot({      
-    }),
+    TranslateModule
   ],
   providers: [
     { provide: FORMLY_CONFIG, multi: true, useFactory: registerTranslateExtension, deps: [TranslateService] },

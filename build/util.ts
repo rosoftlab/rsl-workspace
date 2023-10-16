@@ -9,8 +9,8 @@ export const PACKAGES = [
 
   // UI
   // 'bootstrap',
-  'material',
   'ionic',
+  'material',  
   // 'primeng',
   // 'kendo',
   // 'nativescript',

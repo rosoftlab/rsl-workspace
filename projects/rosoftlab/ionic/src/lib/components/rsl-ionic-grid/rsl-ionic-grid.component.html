@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header *ngIf="showHeader">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -10,17 +10,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-      </ion-buttons>
-      <ng-container [ngTemplateOutlet]="header"></ng-container>
-      <ng-container [ngTemplateOutlet]="search"></ng-container>
-    </ion-toolbar>
-  </ion-header>
-
 
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
@@ -30,7 +19,7 @@
     <ng-container *ngFor="let item of data">
       <ion-item-sliding>
         <ng-container [ngTemplateOutlet]="listItem" [ngTemplateOutletContext]="{item}"></ng-container>
-        <ion-item-options side="end">
+        <ion-item-options *ngIf="deleteEnabled(item)" side="end">
           <ion-item-option color="danger">
             <ion-icon slot="icon-only" name="trash" (click)='deleteModel(item)'></ion-icon>
           </ion-item-option>
@@ -46,7 +35,7 @@
 </ion-content>
 
 <ng-template #header>
-  <ion-title size="large" class="ion-text-center">{{title |translate}}</ion-title>
+  <ion-title  class="ion-text-center">{{title |translate}}</ion-title>
   <ion-button slot="end" (click)="onAdd()" fill="clear">
     <ion-icon size="large" name="add"></ion-icon>
   </ion-button>

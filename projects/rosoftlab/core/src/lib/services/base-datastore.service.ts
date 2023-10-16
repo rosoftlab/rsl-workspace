@@ -85,7 +85,7 @@ export class BaseDatastore {
     customUrl?: string
   ): Observable<BaseQueryData<T>> {
     const customHeadhers: HttpHeaders = this.buildHeaders(headers);
-    const htmlParams = this.buildParams(params);
+    const htmlParams = this.buildParams(modelType, params);
     const url: string = this.buildUrl(modelType, customUrl);
 
     const response = this.httpClient.get(url,
@@ -111,7 +111,7 @@ export class BaseDatastore {
       url += '/' + id;
     }
 
-    const htmlParams = this.buildParams(params, undefined);
+    const htmlParams = this.buildParams(modelType, params);
     const response = this.httpClient.get(url, { headers: customHeadhers, params: htmlParams, withCredentials: true })
       .pipe(map(res => this.entityToModel(res, modelType, undefined)),
         catchError(this.handleError)
@@ -126,7 +126,7 @@ export class BaseDatastore {
     customResponseType?: any): Observable<U> {
     const customHeadhers: HttpHeaders = this.buildHeaders(headers);
     const url: string = this.buildUrl(modelType, customUrl);
-    const htmlParams = this.buildParams(params, undefined);
+    const htmlParams = this.buildParams(modelType, params);
     if (!customResponseType)
       customResponseType = 'json';
     return this.httpClient.get<U>(url, { headers: customHeadhers, params: htmlParams, withCredentials: true, responseType: customResponseType });
@@ -139,7 +139,7 @@ export class BaseDatastore {
     customUrl?: string): Observable<U> {
     const customHeadhers: HttpHeaders = this.buildHeaders(headers);
     const url: string = this.buildUrl(modelType, customUrl);
-    const htmlParams = this.buildParams(params, undefined);
+    const htmlParams = this.buildParams(modelType, params);
     return this.httpClient.post<U>(url, body, { headers: customHeadhers, params: htmlParams, reportProgress: true, withCredentials: true });
   }
 
@@ -150,7 +150,7 @@ export class BaseDatastore {
     customUrl?: string): Observable<U> {
     const customHeadhers: HttpHeaders = this.buildHeaders(headers);
     const url: string = this.buildUrl(modelType, customUrl);
-    const htmlParams = this.buildParams(params, undefined);
+    const htmlParams = this.buildParams(modelType, params);
     return this.httpClient.patch<U>(url, body, { headers: customHeadhers, params: htmlParams, withCredentials: true });
   }
   createRecord<T extends BaseModel>(modelType: ModelType<T>, data?: any): T {
@@ -168,7 +168,7 @@ export class BaseDatastore {
     const modelConfig: ModelConfig = model.modelConfig;
     const customHeadhers: HttpHeaders = this.buildHeaders(headers);
     const url: string = this.buildUrl(modelType, customUrl);
-    const htmlParams = this.buildParams(params);
+    const htmlParams = this.buildParams(modelType, params);
 
     let httpCall: Observable<any>;
 
@@ -203,7 +203,7 @@ export class BaseDatastore {
     const modelConfig: ModelConfig = model.modelConfig;
     const customHeadhers: HttpHeaders = this.buildHeaders(headers);
     const url: string = this.buildUrl(modelType, customUrl);
-    const htmlParams = this.buildParams(params);
+    const htmlParams = this.buildParams(modelType, params);
 
     let httpCall: Observable<any>;
     let origData = { id: '' };
@@ -247,7 +247,7 @@ export class BaseDatastore {
     const modelConfig: ModelConfig = model.modelConfig;
     const customHeadhers: HttpHeaders = this.buildHeaders(headers);
     const url: string = this.buildUrl(modelType, customUrl);
-    const htmlParams = this.buildParams(params);
+    const htmlParams = this.buildParams(modelType, params);
 
     let httpCall: Observable<any>;
 
@@ -412,11 +412,9 @@ export class BaseDatastore {
     return new HttpHeaders(headers);
   }
 
-  public buildParams(params: any, id?: string): HttpParams {
+  public buildParams<T extends BaseModel>(modelType: ModelType<T>,
+    params: any): HttpParams {
     let httpParams = new HttpParams();
-    if (id) {
-      httpParams = httpParams.set('id', id);
-    }
     if (params) {
       Object.keys(params)
         .filter(key => {
@@ -429,6 +427,8 @@ export class BaseDatastore {
           httpParams = httpParams.set(key, params[key]);
         });
     }
+    const modelConfig: ModelConfig = Reflect.getMetadata('BaseModelConfig', modelType);
+    httpParams = httpParams.set('bypassCache', modelConfig.bypassCache || false);
     return httpParams;
   }
 

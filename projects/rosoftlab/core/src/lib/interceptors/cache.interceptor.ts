@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { CacheService } from '../services/cache.service';
 
@@ -21,14 +21,15 @@ export class CacheInterceptor implements HttpInterceptor {
     if (!bypassCache) {
       const cachedResponse = this.cacheService.get(request.urlWithParams);
       if (cachedResponse) {
-        return cachedResponse;
+        return of(cachedResponse.clone());
+        //return cachedResponse;
       }
     }
 
     return next.handle(request).pipe(
       tap((event) => {
         if (event instanceof HttpResponse) {
-          this.cacheService.set(request.urlWithParams, event, this.expirationTime);
+          this.cacheService.set(request.urlWithParams, event.clone(), this.expirationTime);
         }
       })
     );

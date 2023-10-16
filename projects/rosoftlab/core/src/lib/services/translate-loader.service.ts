@@ -15,7 +15,7 @@ export class TranslateloaderService implements TranslateLoader {
   constructor(private httpClient: HttpClient,
     @Optional() config?: Configurations) {
     if (config) {
-      this._apiUrl = config.apiUrl;
+      this._apiUrl = config.baseUrl;
     }
   }
   getTranslation(lang: string): Observable<any> {

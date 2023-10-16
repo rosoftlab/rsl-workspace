@@ -7,4 +7,5 @@ export interface ModelConfig {
   modelEndpointUrl?: string;
   meta?: BaseMetaModel;
   formTitle: string;
+  bypassCache?: boolean;
 }

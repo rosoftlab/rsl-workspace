@@ -8,7 +8,7 @@ import { WrappersModule } from './wrappers.module';
   template: `
     <ion-card>
       <ion-card-header>
-        <ion-card-title>{{ props.label  |translate }}</ion-card-title>
+        <ion-card-title>{{ props.label}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ng-container #fieldComponent></ng-container>

@@ -1,5 +1,5 @@
 export const environment = {
-  baseUrl: 'https://dev-api.nexitynetwork.org',
-  authUrl: 'https://dev-identity.nexitynetwork.org',
+  baseUrl: 'https://opti-api-dev.rosoftlab.net',
+  authUrl: 'https://opti-identity-dev.rosoftlab.net',
   production: true
 };

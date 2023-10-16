@@ -9,25 +9,17 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-      </ion-buttons>
-      <ng-container [ngTemplateOutlet]="header"></ng-container>
-    </ion-toolbar>
-  </ion-header>
-
   <ng-container *ngIf="!isLoading">
     <form [formGroup]="baseForm" (ngSubmit)="onSubmit(model)">
-      <formly-form [form]="baseForm" [fields]="fields" [model]="model"   [options]="options"></formly-form>
+      <formly-form [form]="baseForm" [fields]="fields" [model]="model" [options]="options"></formly-form>
     </form>
   </ng-container>
 </ion-content>
 
 <ng-template #header>
-  <ion-title size="large" class="ion-text-center">{{title |translate}}</ion-title>
-  <ion-button *ngIf="!isLoading" slot="end" fill="clear" (click)="onSave()" [disabled]="baseForm.invalid || !baseForm.dirty">
+  <ion-title  class="ion-text-center">{{title |translate}}</ion-title>
+  <ion-button *ngIf="!isLoading" slot="end" fill="clear" (click)="onSave()"
+    [disabled]="baseForm.invalid || !baseForm.dirty">
     <ion-icon size="large" name="save"></ion-icon>
   </ion-button>
 </ng-template>

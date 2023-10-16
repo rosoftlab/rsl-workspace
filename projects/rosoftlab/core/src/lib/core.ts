@@ -4,4 +4,5 @@ export * from './grid-layout-format.enum';
 export * from './index';
 export * from './providers';
 export * from './rsl-base-module';
+export * from './utils';
 

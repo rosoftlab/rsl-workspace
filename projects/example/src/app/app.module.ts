@@ -10,6 +10,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { MissingTranslationHandler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { RslBaseModule } from '@rosoftlab/core';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { CacheInterceptor } from 'dist/@rosoftlab/core';
 import { ClipboardModule } from 'ngx-clipboard';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,11 +43,9 @@ const providers: any[] = [
   StorageService,
   UserService,
   Datastore,
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true,
-  },
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, },
+  { provide: 'CACHE_EXPIRATION_TIME', useValue: 3600000 },
+  { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
   TranslateloaderService,
   DatePipe,
   DecimalPipe,

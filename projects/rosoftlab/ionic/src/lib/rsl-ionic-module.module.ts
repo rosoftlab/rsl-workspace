@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { FORMLY_CONFIG, FormlyModule } from '@ngx-formly/core';
 import { FormlyIonicModule } from '@ngx-formly/ionic';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { IonicDialogService } from './ionic-dialog.service';
 import { registerTranslateExtension } from './translate.extension';
 import { RepeatTypeComponent } from './types/repeat/repeat-section.type';
@@ -16,13 +17,13 @@ const COMMON_MODULES = [
   IonicModule,
   ReactiveFormsModule,
   FormlyIonicModule,
+  NgxDatatableModule
 ];
 
 @NgModule({
   imports: [
     ...COMMON_MODULES,
-    TranslateModule.forChild({
-    }),
+    TranslateModule,
     FormlyModule.forRoot({
       types: [{ name: 'repeat', component: RepeatTypeComponent }],
       validators: [{ name: 'fieldMatch', validation: fieldMatchValidator }],
