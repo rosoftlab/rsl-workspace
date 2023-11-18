@@ -40,5 +40,17 @@ PACKAGES.map((name) => {
     pkgJson.peerDependencies['@rosoftlab/formly'] = mainPkg.version;
   }
 
+  if (pkgJson.peerDependencies && pkgJson.peerDependencies['@rosoftlab/ionic']) {
+    pkgJson.peerDependencies['@rosoftlab/ionic'] = mainPkg.version;
+  }
+
+  if (pkgJson.peerDependencies && pkgJson.peerDependencies['@rosoftlab/material']) {
+    pkgJson.peerDependencies['@rosoftlab/material'] = mainPkg.version;
+  }
+
+  if (pkgJson.peerDependencies && pkgJson.peerDependencies['@rosoftlab/statemachine']) {
+    pkgJson.peerDependencies['@rosoftlab/statemachine'] = mainPkg.version;
+  }
+
   fs.writeFileSync(pkgPath, JSON.stringify(pkgJson, null, 2));
 });

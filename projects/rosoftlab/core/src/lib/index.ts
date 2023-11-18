@@ -3,8 +3,6 @@ export * from './decorators/attribute.decorator';
 export * from './decorators/base-datastore-config.decorator';
 export * from './decorators/base-model-config.decorator';
 export * from './decorators/custom.type.decorator';
-export * from './directives/translated-content.directive';
-export * from './directives/translated-element.directive';
 export * from './interceptors';
 export * from './interfaces/attribute-decorator-options.interface';
 export * from './interfaces/datastore-config.interface';

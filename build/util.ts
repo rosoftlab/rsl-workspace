@@ -5,11 +5,12 @@ import { join } from 'path';
 export const PACKAGES = [
   'core',
   'formly',
+  'statemachine',
   // 'schematics',
 
   // UI
   // 'bootstrap',
-  'ionic',
+  'ionic', 
   'material',  
   // 'primeng',
   // 'kendo',

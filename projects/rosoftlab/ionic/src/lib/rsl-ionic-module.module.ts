@@ -6,8 +6,10 @@ import { FORMLY_CONFIG, FormlyModule } from '@ngx-formly/core';
 import { FormlyIonicModule } from '@ngx-formly/ionic';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { RslIonicSmButtonsComponent } from './components/rsl-ionic-sm-buttons/ionic-sm-buttons.component';
 import { IonicDialogService } from './ionic-dialog.service';
 import { registerTranslateExtension } from './translate.extension';
+import { RepeatDatatableComponent } from './types/repeat-datatable/repeat-datatable.component';
 import { RepeatTypeComponent } from './types/repeat/repeat-section.type';
 import { fieldMatchValidator } from './validators/must-match';
 import { AccordionWrapperComponent } from './wrappers/accordion-wrapper.component';
@@ -25,7 +27,11 @@ const COMMON_MODULES = [
     ...COMMON_MODULES,
     TranslateModule,
     FormlyModule.forRoot({
-      types: [{ name: 'repeat', component: RepeatTypeComponent }],
+      types: [
+        { name: 'repeat', component: RepeatTypeComponent },
+        { name: 'repeat-data-table', component: RepeatDatatableComponent },
+        { name: 'sm-buttons', component: RslIonicSmButtonsComponent }
+      ],
       validators: [{ name: 'fieldMatch', validation: fieldMatchValidator }],
       wrappers: [
         { name: 'panel', component: PanelWrapperComponent },

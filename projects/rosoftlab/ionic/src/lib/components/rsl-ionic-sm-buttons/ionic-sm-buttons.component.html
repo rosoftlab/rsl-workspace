@@ -1,0 +1,15 @@
+<!-- <ion-input [type]="props.type || 'text'" [formControl]="formControl" [ionFormlyAttributes]="field"></ion-input> -->
+
+<!-- <p>Sync</p>
+<ion-list>
+  <ion-button *ngFor="let action of smActions" color="{{getColor(action)}}" (click)="executeAction(action)">
+    {{action.buttonTranslationKey |translate}}
+  </ion-button>
+</ion-list> -->
+<ion-label *ngIf="currentState">{{ getCurrentState() }}</ion-label>
+<ion-list>
+  <ion-button *ngFor="let action of smActions$ | async " color="{{getColor(action)}}" (click)="executeAction(action)">
+    {{action.buttonTranslationKey |translate}}
+     <!-- - {{action.actionID}} -->
+  </ion-button>
+</ion-list>

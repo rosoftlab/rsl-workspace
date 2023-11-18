@@ -4,6 +4,7 @@ import { } from 'reflect-metadata';
 export interface IonicDataTableLayoutConfig extends TableColumn {
     order?: number;
     visible?: boolean;
+    isTranslated?: boolean;
 }
 export function IonicDataTableLayout(config: IonicDataTableLayoutConfig) {
     return (target: any, propertyName: string) => {

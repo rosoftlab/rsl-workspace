@@ -13,6 +13,9 @@
       ],
       "@rosoftlab/material": [
         "dist/rosoftlab/material"
+      ],
+      "@rosoftlab/statemachine": [
+        "dist/rosoftlab/statemachine"
       ]
     },
     "baseUrl": "./",

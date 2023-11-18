@@ -2,12 +2,14 @@
   "name": "@rosoftlab/ionic",
   "version": "0.0.0-ROSOFTLAB-VERSION",
   "peerDependencies": {
-    "@angular/common": "^16.2.1",
-    "@angular/core": "^16.2.1",
-    "@ngx-formly/core": "^6.1.8",
+    "@angular/common": "^16.2.10",
+    "@angular/core": "^16.2.10",
+    "@ngx-formly/core": "^6.2.1",
     "@ionic/angular": "^6.7.5",
+    "@swimlane/ngx-datatable": "^20.1.0",
     "@rosoftlab/core": "0.0.0-ROSOFTLAB-VERSION",
-    "@rosoftlab/formly": "0.0.0-ROSOFTLAB-VERSION"
+    "@rosoftlab/formly": "0.0.0-ROSOFTLAB-VERSION",
+    "@rosoftlab/statemachine": "0.0.0-ROSOFTLAB-VERSION"
   },
   "dependencies": {
     "tslib": "^2.3.0"

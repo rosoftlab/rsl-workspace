@@ -10,10 +10,6 @@
     "paths": {
       "@rosoftlab/core": ["dist/@rosoftlab/core"],
       "@rosoftlab/core/*": ["dist/@rosoftlab/core/*"],
-      "@rosoftlab/formly": ["dist/@rosoftlab/formly"],
-      "@rosoftlab/formly/*": ["dist/@rosoftlab/formly/*"],
-      "@rosoftlab/statemachine": ["dist/@rosoftlab/statemachine"],
-      "@rosoftlab/statemachine/*": ["dist/@rosoftlab/statemachine/*"]
     }
   },
   "exclude": [

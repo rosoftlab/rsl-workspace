@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, InjectionToken, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { BaseModel } from '../models/base.model';
 import { BaseService } from '../services/base.service';
 import { DialogService } from '../services/dialog.service';
+const DialogSERVICE = new InjectionToken<string>('DialogService');
 @Component({
   selector: 'app-base.form.edit',
   template: ''
@@ -25,7 +26,7 @@ export abstract class BaseFormEditComponent<T extends BaseModel> implements OnIn
     protected router: Router,
     protected route: ActivatedRoute,
     protected modelService: BaseService<T>,
-    protected dialogService: DialogService,
+    @Inject(DialogSERVICE) protected dialogService: DialogService,
     protected translate: TranslateService,
     protected location: Location
   ) {

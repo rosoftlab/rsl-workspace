@@ -5,10 +5,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { BaseQueryData, BaseService, CellTextAlign, DialogService, GridLayoutFormat, Rule } from '@rosoftlab/core';
+import { BaseQueryData, BaseService, CellTextAlign, GridLayoutFormat, Rule } from '@rosoftlab/core';
 import * as jsonLogic from 'json-logic-js/logic.js';
 import { Observable, Subject, Subscription, fromEvent, merge, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
+import { DialogServiceMaterial } from '../../../services/dialog.service-implementation';
 import { GridLayoutModel, MaterialBaseModel } from '../../models';
 import { RSLMaterialModule } from '../../rsl-material-module';
 import { GridLayoutService } from '../../services';
@@ -69,7 +70,7 @@ export class GenericTableComponent<T extends MaterialBaseModel> implements OnIni
   displayedColumns: string[];
   // ruleEngineService: RuleEngineService<T>;
   constructor(
-    public dialogService: DialogService,
+    public dialogService: DialogServiceMaterial,
     public router: Router,
     private datePipe: DatePipe,
     private numberPipe: DecimalPipe,

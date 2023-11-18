@@ -1,0 +1,26 @@
+.rls-server-scrolling {
+    height: calc(100vh - 110px);
+    position: relative !important;
+  }
+  
+  ::ng-deep .datatable-body-cell {
+    padding: 0 !important;
+  }
+  
+  ::ng-deep .datatable-body-cell-label {
+    height: 100% !important;
+  }
+  
+  ::ng-deep .progress-linear {
+    position: fixed !important;
+    bottom: 0px;
+  }
+  
+  ::ng-deep .actions-cell {
+    padding: 5px 0 0 0.9rem !important;
+    
+  }
+  
+  ::ng-deep .align-right {
+    text-align: right !important;
+  }

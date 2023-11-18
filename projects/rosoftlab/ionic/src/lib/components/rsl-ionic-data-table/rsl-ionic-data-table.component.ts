@@ -5,7 +5,7 @@ import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseQueryData, BaseService, Rule } from '@rosoftlab/core';
 import { BaseModelFormly } from '@rosoftlab/formly';
-import { ColumnMode, SelectionType, TableColumn } from '@swimlane/ngx-datatable';
+import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
 import * as jsonLogic from 'json-logic-js/logic.js';
 import { IonicDataTableLayoutConfig } from '../../decorators/ionic-datatable-layout';
 import { IonicDialogService } from '../../ionic-dialog.service';
@@ -206,8 +206,11 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
     }
     this.allColumns=[];
     this.columns=[];
-    this.allColumns = Reflect.getMetadata('IonicDataTableLayout', this.model).map((item: TableColumn) => {
-      item.name = this.translate.instant(item.name);
+    this.allColumns = Reflect.getMetadata('IonicDataTableLayout', this.model).map((item: IonicDataTableLayoutConfig) => {
+      if (!item.isTranslated) {
+        item.name = this.translate.instant(item.name);
+        item.isTranslated = true
+      }
       return item;
     });
 
