@@ -38,6 +38,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { TranslateModule } from '@ngx-translate/core';
+import { GenericTableComponent, SearchableDropdownComponent } from './components';
 
 const COMMON_MODULES = [
   CommonModule,
@@ -52,14 +53,19 @@ const COMMON_MODULES = [
 ];
 
 @NgModule({
-  imports: [
-    ...COMMON_MODULES,
-    TranslateModule.forRoot({})
+  declarations: [
+    GenericTableComponent,
+    SearchableDropdownComponent,
   ],
-  exports: [
+  imports: [
     ...COMMON_MODULES,
     TranslateModule
   ],
+  exports: [
+    ...COMMON_MODULES,
+    GenericTableComponent,
+    SearchableDropdownComponent,
+    TranslateModule],
 })
 export class RSLMaterialModule {
 }

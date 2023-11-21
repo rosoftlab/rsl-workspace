@@ -3,4 +3,5 @@
  */
 
 export * from './lib/core';
-export * from './services/dialog.service-implementation';
+export * from './lib/services/dialog.service-implementation';
+

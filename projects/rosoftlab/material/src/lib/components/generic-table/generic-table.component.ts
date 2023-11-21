@@ -9,19 +9,16 @@ import { BaseQueryData, BaseService, CellTextAlign, GridLayoutFormat, Rule } fro
 import * as jsonLogic from 'json-logic-js/logic.js';
 import { Observable, Subject, Subscription, fromEvent, merge, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
-import { DialogServiceMaterial } from '../../../services/dialog.service-implementation';
 import { GridLayoutModel, MaterialBaseModel } from '../../models';
-import { RSLMaterialModule } from '../../rsl-material-module';
 import { GridLayoutService } from '../../services';
+import { DialogServiceMaterial } from '../../services/dialog.service-implementation';
 declare var $: any;
 
 @Component({
-  standalone: true,
   selector: 'rsl-generic-table',
   templateUrl: './generic-table.component.html',
   styleUrls: ['./generic-table.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  imports: [RSLMaterialModule]
 })
 export class GenericTableComponent<T extends MaterialBaseModel> implements OnInit, OnChanges, AfterViewInit {
   // displayedColumns = ['code']; //, 'name', 'cif', 'city', 'address', 'state', 'priceListName', 'delete'];

@@ -5,18 +5,15 @@ import { AbstractControl, ControlValueAccessor, NgControl, UntypedFormControl } 
 import { BaseModel, BaseQueryData, BaseService } from '@rosoftlab/core';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { RSLMaterialModule } from '../../rsl-material-module';
 
 @Component({
-  standalone: true,
   selector: 'rsl-searchable-dropdown',
   templateUrl: './searchable-dropdown.component.html',
   host: {
     '[class.example-floating]': 'shouldLabelFloat',
     '[id]': 'id',
     '[attr.aria-describedby]': 'describedBy',
-  },
-  imports: [RSLMaterialModule]
+  }
 })
 export class SearchableDropdownComponent<T extends BaseModel> implements OnInit, OnDestroy, ControlValueAccessor {
   static nextId = 0;
