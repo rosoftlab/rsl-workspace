@@ -5,8 +5,9 @@ import { AuthService } from '../../shared/services/auth.service';
 import { StorageService } from '../../shared/services/storage.service';
 
 @Component({
-  selector: 'app-auth-callback',
-  templateUrl: './auth-callback.component.html'
+    selector: 'app-auth-callback',
+    templateUrl: './auth-callback.component.html',
+    standalone: false
 })
 export class AuthCallbackComponent implements OnInit {
 

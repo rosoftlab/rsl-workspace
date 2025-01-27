@@ -15,21 +15,20 @@ import { KENDO_TREEVIEW } from '@progress/kendo-angular-treeview';
 import * as svgIcons from '@progress/kendo-svg-icons';
 import { ReactiveDictionary, SocketService, WsAuthService } from 'projects/rosoftlab/rdict/src/public-api';
 @Component({
-  standalone: true,
-  selector: 'app-data-processing',
-  templateUrl: './data-processing.component.html',
-  styleUrls: ['./data-processing.component.scss'],
-  imports: [
-    CommonModule,
-    FormsModule,
-    KENDO_DROPDOWNLIST, KENDO_SPREADSHEET, KENDO_STEPPER, KENDO_CALENDAR,
-    KENDO_LABEL, KENDO_BUTTON, KENDO_BREADCRUMB,
-    KENDO_LISTBOX, KENDO_SVGICON, KENDO_TREEVIEW
-  ]
-  // ,
-  // providers: [
-  //   { provide: SOCKET_URL, useValue: 'http://localhost:5100' },
-  // ]
+    selector: 'app-data-processing',
+    templateUrl: './data-processing.component.html',
+    styleUrls: ['./data-processing.component.scss'],
+    imports: [
+        CommonModule,
+        FormsModule,
+        KENDO_DROPDOWNLIST, KENDO_SPREADSHEET, KENDO_STEPPER, KENDO_CALENDAR,
+        KENDO_LABEL, KENDO_BUTTON, KENDO_BREADCRUMB,
+        KENDO_LISTBOX, KENDO_SVGICON, KENDO_TREEVIEW
+    ]
+    // ,
+    // providers: [
+    //   { provide: SOCKET_URL, useValue: 'http://localhost:5100' },
+    // ]
 })
 export class DataProcessingComponent implements OnInit {
   private rdict: ReactiveDictionary | undefined;

@@ -15,19 +15,20 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/app",
+            "outputPath": {
+              "base": "dist/app"
+            },
             "index": "demo/src/index.html",
-            "main": "demo/src/main.ts",
-            "polyfills": "demo/src/polyfills.ts",
+            "polyfills": [
+              "demo/src/polyfills.ts"
+            ],
             "tsConfig": "demo/tsconfig.app.json",
             "assets": ["demo/src/favicon.ico", "demo/src/assets"],
             "styles": ["demo/src/styles.scss"],
             "scripts": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
             "namedChunks": true,
@@ -37,7 +38,8 @@
             "allowedCommonJsDependencies": [
               "highlight-loader",
               "json-formatter-js"
-            ]
+            ],
+            "browser": "demo/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -46,8 +48,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "demo/src/environments/environment.ts",
@@ -68,9 +68,7 @@
               ]
             },
             "docker": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,

@@ -5,16 +5,15 @@ import { FormlyKendoModule } from '@ngx-formly/kendo';
 import { TranslateModule } from '@ngx-translate/core';
 ;
 @Component({
-  standalone: true,
-  selector: 'app-rdict-crud',
-  templateUrl: './rdict-crud.component.html',
-  styleUrls: ['./rdict-crud.component.scss'],
-  imports: [
-    FormlyModule,
-    ReactiveFormsModule,
-    FormlyKendoModule,
-    TranslateModule
-  ]
+    selector: 'app-rdict-crud',
+    templateUrl: './rdict-crud.component.html',
+    styleUrls: ['./rdict-crud.component.scss'],
+    imports: [
+        FormlyModule,
+        ReactiveFormsModule,
+        FormlyKendoModule,
+        TranslateModule
+    ]
 })
 export class RdictCrudComponent implements OnInit {
   baseForm = new FormGroup({});

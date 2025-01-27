@@ -13,20 +13,19 @@ import { Menu } from '../../../models';
 import { ReactiveDictionary } from '../../../reactive-dictionary';
 import { SocketService, UserService, WsAuthService } from '../../../services';
 @Component({
-  selector: 'rdict-full',
-  templateUrl: './full.component.html',
-  styleUrls: ['./full.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    TranslateModule,
-    CommonModule,
-    ButtonsModule,
-    ToolBarModule,
-    LayoutModule,
-    KENDO_SVGICON
-  ],
+    selector: 'rdict-full',
+    templateUrl: './full.component.html',
+    styleUrls: ['./full.component.scss'],
+    imports: [
+        CommonModule,
+        RouterModule,
+        TranslateModule,
+        CommonModule,
+        ButtonsModule,
+        ToolBarModule,
+        LayoutModule,
+        KENDO_SVGICON
+    ]
 })
 export class FullComponent implements OnInit {
   public selected = "Inbox";

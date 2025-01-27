@@ -21,13 +21,12 @@ interface ImportDataProp {
   propertiesToImport: string[]
 }
 @Component({
-  standalone: true,
-  selector: 'app-repeat-datatable',
-  templateUrl: './repeat-datatable.component.html',
-  styleUrls: ['./repeat-datatable.component.scss'],
-  imports: [
-    WrappersModule
-  ]
+    selector: 'app-repeat-datatable',
+    templateUrl: './repeat-datatable.component.html',
+    styleUrls: ['./repeat-datatable.component.scss'],
+    imports: [
+        WrappersModule
+    ]
 })
 export class RepeatDatatableComponent extends FieldArrayType implements OnInit {
   /**

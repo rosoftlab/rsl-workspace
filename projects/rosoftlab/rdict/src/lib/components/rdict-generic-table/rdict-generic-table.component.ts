@@ -14,25 +14,22 @@ import { RdictTableTitle } from './rdict-table-title';
 declare var $: any;
 
 @Component({
-  selector: 'rsl-rdict-generic-table',
-  templateUrl: './rdict-generic-table.component.html',
-  styleUrls: ['./rdict-generic-table.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    // MatPaginatorModule,
-    // MatTableModule,
-    TranslateModule,
-    KENDO_GRID,
-    KENDO_TOOLBAR,
-    KENDO_LABEL,
-    RdictTableTitle
-  ],
-  providers: [
-
-  ]
+    selector: 'rsl-rdict-generic-table',
+    templateUrl: './rdict-generic-table.component.html',
+    styleUrls: ['./rdict-generic-table.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    imports: [
+        CommonModule,
+        RouterModule,
+        // MatPaginatorModule,
+        // MatTableModule,
+        TranslateModule,
+        KENDO_GRID,
+        KENDO_TOOLBAR,
+        KENDO_LABEL,
+        RdictTableTitle
+    ],
+    providers: []
 })
 export class GenericRdictTableComponent implements OnInit {
   dataSource: unknown[] //MatTableDataSource<any> = new MatTableDataSource();

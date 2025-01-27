@@ -9,8 +9,9 @@ import { BaseService } from '../services/base.service';
 import { DialogService } from '../services/dialog.service';
 const DialogSERVICE = new InjectionToken<string>('DialogService');
 @Component({
-  selector: 'app-base.form.edit',
-  template: ''
+    selector: 'app-base.form.edit',
+    template: '',
+    standalone: false
 })
 export abstract class BaseFormEditComponent<T extends BaseModel> implements OnInit {
   baseForm: UntypedFormGroup;

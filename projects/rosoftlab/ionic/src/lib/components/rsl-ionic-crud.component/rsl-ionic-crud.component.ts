@@ -11,12 +11,10 @@ import { Observable, from } from 'rxjs';
 import { IonicDialogService } from '../../ionic-dialog.service';
 import { RslIonicModuleModule } from '../../rsl-ionic-module.module';
 @Component({
-  standalone: true,
-  selector: 'rslc-ionic-crud',
-  templateUrl: './rsl-ionic-crud.component.html',
-  styleUrls: ['./rsl-ionic-crud.component.css'],
-  imports: [RslIonicModuleModule]
-
+    selector: 'rslc-ionic-crud',
+    templateUrl: './rsl-ionic-crud.component.html',
+    styleUrls: ['./rsl-ionic-crud.component.css'],
+    imports: [RslIonicModuleModule]
 })
 export class GenericIonicCrudComponent<T extends BaseModelFormly, U extends BaseServiceFormly<T>> implements OnInit {
   baseForm: UntypedFormGroup;

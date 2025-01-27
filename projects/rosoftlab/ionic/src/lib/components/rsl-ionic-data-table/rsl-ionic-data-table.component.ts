@@ -12,11 +12,10 @@ import { IonicDialogService } from '../../ionic-dialog.service';
 import { RslIonicModuleModule } from '../../rsl-ionic-module.module';
 export declare type SortDirection = 'asc' | 'desc' | '';
 @Component({
-  standalone: true,
-  selector: 'app-rsl-ionic-data-table',
-  templateUrl: './rsl-ionic-data-table.component.html',
-  styleUrls: ['./rsl-ionic-data-table.component.scss'],
-  imports: [RslIonicModuleModule],
+    selector: 'app-rsl-ionic-data-table',
+    templateUrl: './rsl-ionic-data-table.component.html',
+    styleUrls: ['./rsl-ionic-data-table.component.scss'],
+    imports: [RslIonicModuleModule]
 })
 export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends BaseService<T>> implements OnInit {
   @ViewChild('actionsTmpl', { static: true }) actionsTmpl: TemplateRef<any>;

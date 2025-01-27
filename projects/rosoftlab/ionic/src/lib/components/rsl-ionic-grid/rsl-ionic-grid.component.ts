@@ -11,10 +11,9 @@ import { IonicDialogService } from '../../ionic-dialog.service';
 import { RslIonicModuleModule } from '../../rsl-ionic-module.module';
 export declare type SortDirection = 'asc' | 'desc' | '';
 @Component({
-  standalone: true,
-  selector: 'rsl-ionic-grid',
-  templateUrl: './rsl-ionic-grid.component.html',  
-  imports: [RslIonicModuleModule],
+    selector: 'rsl-ionic-grid',
+    templateUrl: './rsl-ionic-grid.component.html',
+    imports: [RslIonicModuleModule]
 })
 export class RslIonicGridComponent<T extends BaseModelFormly, U extends BaseService<T>> implements OnInit {
   public title: string;

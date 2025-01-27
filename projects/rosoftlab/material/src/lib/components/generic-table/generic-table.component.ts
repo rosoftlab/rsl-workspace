@@ -15,10 +15,11 @@ import { DialogServiceMaterial } from '../../services/dialog.service-implementat
 declare var $: any;
 
 @Component({
-  selector: 'rsl-generic-table',
-  templateUrl: './generic-table.component.html',
-  styleUrls: ['./generic-table.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'rsl-generic-table',
+    templateUrl: './generic-table.component.html',
+    styleUrls: ['./generic-table.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class GenericTableComponent<T extends MaterialBaseModel> implements OnInit, OnChanges, AfterViewInit {
   // displayedColumns = ['code']; //, 'name', 'cif', 'city', 'address', 'state', 'priceListName', 'delete'];
