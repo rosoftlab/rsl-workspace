@@ -1,0 +1,20 @@
+<kendo-grid [data]="dataSource" 
+      [sortable]="true" 
+      [filterable]="showSerach"
+      (add)="addHandler()">
+  <kendo-toolbar>
+    <table-title text="{{title}}"></table-title>
+    <kendo-toolbar-messages>Test</kendo-toolbar-messages>
+    <!-- <kendo-toolbar-separator></kendo-toolbar-separator> -->
+    <kendo-toolbar-spacer></kendo-toolbar-spacer>
+    <kendo-toolbar-button text="Add new" kendoGridAddTool></kendo-toolbar-button>
+  </kendo-toolbar>
+  <!-- <kendo-toolbar>
+    
+    <kendo-toolbar-spacer></kendo-toolbar-spacer>
+    <button kendoGridAddCommand type="button">Add new</button>
+  </kendo-toolbar> -->
+  <kendo-grid-column *ngFor="let column of allColumns" field="{{ column.propertyName }}"
+    title=" {{column.translateKey | translate}}">
+  </kendo-grid-column>
+</kendo-grid>

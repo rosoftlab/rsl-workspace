@@ -4,6 +4,7 @@ import { join } from 'path';
 
 export const PACKAGES = [
   'core',
+  'rdict',
   'formly',
   'statemachine',
   // 'schematics',
@@ -11,7 +12,8 @@ export const PACKAGES = [
   // UI
   // 'bootstrap',
   'ionic', 
-  'material',  
+  'material'
+  
   // 'primeng',
   // 'kendo',
   // 'nativescript',

@@ -51,6 +51,8 @@ PACKAGES.map((name) => {
   if (pkgJson.peerDependencies && pkgJson.peerDependencies['@rosoftlab/statemachine']) {
     pkgJson.peerDependencies['@rosoftlab/statemachine'] = mainPkg.version;
   }
-
+  if (pkgJson.peerDependencies && pkgJson.peerDependencies['@rosoftlab/rdict']) {
+    pkgJson.peerDependencies['@rosoftlab/rdict'] = mainPkg.version;
+  }
   fs.writeFileSync(pkgPath, JSON.stringify(pkgJson, null, 2));
 });

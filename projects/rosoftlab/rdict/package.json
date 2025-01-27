@@ -1,0 +1,43 @@
+{
+  "name": "@rosoftlab/rdict",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^18.2.0",
+    "@angular/core": "^18.2.0",
+    "socket.io-client": "^4.8.1",
+    "socket.io-msgpack-parser": "^3.0.2",
+    "socket.io-parser": "^4.2.4",
+    "@rosoftlab/core": "0.0.0-ROSOFTLAB-VERSION",
+    "@progress/kendo-angular-grid": "^17.1.1",
+    "@progress/kendo-data-query": "^1.0.0",
+    "@progress/kendo-drawing": "^1.21.0",
+    "@progress/kendo-licensing": "^1.0.2",
+    "@progress/kendo-angular-buttons": "17.1.1",
+    "@progress/kendo-angular-common": "17.1.1",
+    "@progress/kendo-angular-dateinputs": "17.1.1",
+    "@progress/kendo-angular-layout": "17.1.1",
+    "@progress/kendo-angular-dropdowns": "17.1.1",
+    "@progress/kendo-angular-excel-export": "17.1.1",
+    "@progress/kendo-angular-icons": "17.1.1",
+    "@progress/kendo-angular-inputs": "17.1.1",
+    "@progress/kendo-angular-intl": "17.1.1",
+    "@progress/kendo-angular-l10n": "17.1.1",
+    "@progress/kendo-angular-label": "17.1.1",
+    "@progress/kendo-angular-pager": "17.1.1",
+    "@progress/kendo-angular-pdf-export": "17.1.1",
+    "@progress/kendo-angular-popup": "17.1.1",
+    "@progress/kendo-angular-toolbar": "17.1.1",
+    "@progress/kendo-angular-utils": "17.1.1",
+    "@progress/kendo-angular-treeview": "17.1.1",
+    "@progress/kendo-angular-navigation": "17.1.1",
+    "@progress/kendo-angular-dialog": "17.1.1",
+    "@progress/kendo-svg-icons": "^4.0.0",
+    "@progress/kendo-angular-progressbar": "17.1.1",
+    "@angular/localize": "^18.2.9",
+    "@progress/kendo-theme-default": "^10.0.1"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

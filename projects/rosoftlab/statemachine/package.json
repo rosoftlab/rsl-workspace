@@ -2,12 +2,12 @@
   "name": "@rosoftlab/statemachine",
   "version": "0.0.0-ROSOFTLAB-VERSION",
   "peerDependencies": {
-    "@angular/common": "^16.2.10",
-    "@angular/core": "^16.2.10",
+    "@angular/common": "^18.2.9",
+    "@angular/core": "^18.2.9",
     "@rosoftlab/core": "0.0.0-ROSOFTLAB-VERSION"
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.6.2"
   },
   "sideEffects": false,
   "repository": {

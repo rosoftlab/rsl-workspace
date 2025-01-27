@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+	  {
+		"label": "ng: serve rdict-example",
+		"type": "shell",
+		"command": "ng",
+		"args": ["serve", "rdict-example"],
+		"problemMatcher": []
+	  },
+	  {
+		"label": "terminate ng serve",
+		"type": "process",
+		"command": "terminate",
+		"problemMatcher": []
+	  }
+	]
+  }
+  
