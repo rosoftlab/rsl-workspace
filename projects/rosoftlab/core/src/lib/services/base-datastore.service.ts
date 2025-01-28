@@ -1,13 +1,14 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { compare } from 'fast-json-patch';
-import * as qs from 'qs';
+import queryString from 'query-string';
 import { Observable, Observer, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { DatastoreConfig } from '../interfaces/datastore-config.interface';
 import { ModelConfig } from '../interfaces/model-config.interface';
 import { BaseQueryData } from '../models/base-query-data';
 import { BaseModel } from '../models/base.model';
+import { MetadataStorage } from '../models/metadata-storage';
 import { CacheService } from './cache.service';
 export type ModelType<T extends BaseModel> = new (datastore: BaseDatastore, data: any) => T;
 
@@ -303,7 +304,7 @@ export class BaseDatastore {
       return customUrl;
     }
 
-    const modelConfig: ModelConfig = Reflect.getMetadata('BaseModelConfig', modelType);
+    const modelConfig: ModelConfig = MetadataStorage.getMetadata('BaseModelConfig', modelType);
 
     const baseUrl = modelConfig.baseUrl || this.datastoreConfig.baseUrl;
     const apiVersion = modelConfig.apiVersion || this.datastoreConfig.apiVersion;
@@ -352,7 +353,7 @@ export class BaseDatastore {
   }
 
   protected parseMeta(body: any, modelType: ModelType<BaseModel>): any {
-    const metaModel: any = Reflect.getMetadata('BaseModelConfig', modelType).meta;
+    const metaModel: any = MetadataStorage.getMetadata('BaseModelConfig', modelType).meta;
     return new metaModel(body);
   }
 
@@ -376,7 +377,7 @@ export class BaseDatastore {
   }
 
   public get datastoreConfig(): DatastoreConfig {
-    const configFromDecorator: DatastoreConfig = Reflect.getMetadata('BaseDatastoreConfig', this.constructor);
+    const configFromDecorator: DatastoreConfig = MetadataStorage.getMetadata('BaseDatastoreConfig', this.constructor);
     return Object.assign(configFromDecorator, this.config);
   }
 
@@ -394,7 +395,7 @@ export class BaseDatastore {
   }
 
   protected getModelPropertyNames(model: BaseModel) {
-    return Reflect.getMetadata('AttributeMapping', model);
+    return MetadataStorage.getMetadata('AttributeMapping', model);
   }
 
   public buildHeaders(customHeaders?: HttpHeaders): HttpHeaders {
@@ -427,7 +428,7 @@ export class BaseDatastore {
           httpParams = httpParams.set(key, params[key]);
         });
     }
-    const modelConfig: ModelConfig = Reflect.getMetadata('BaseModelConfig', modelType);
+    const modelConfig: ModelConfig = MetadataStorage.getMetadata('BaseModelConfig', modelType);
     httpParams = httpParams.set('bypassCache', modelConfig.bypassCache || false);
     return httpParams;
   }
@@ -473,7 +474,7 @@ export class BaseDatastore {
     return attributes;
   }
   private _toQueryString(params: any): string {
-    return qs.stringify(params, { arrayFormat: 'brackets' });
+    return queryString.stringify(params, { arrayFormat: 'bracket' });
   }
 
 

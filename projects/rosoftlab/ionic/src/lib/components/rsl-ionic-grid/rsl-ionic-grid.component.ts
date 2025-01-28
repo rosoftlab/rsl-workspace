@@ -3,7 +3,7 @@ import { Component, Injector, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationStart, Router, UrlSegment } from '@angular/router';
 import { LoadingController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { BaseQueryData, BaseService, GridLayoutFormat, Rule } from '@rosoftlab/core';
+import { BaseQueryData, BaseService, GridLayoutFormat, MetadataStorage, Rule } from '@rosoftlab/core';
 import { BaseModelFormly } from '@rosoftlab/formly';
 import * as jsonLogic from 'json-logic-js/logic.js';
 import { IonicListLayoutConfig } from '../../interfaces';
@@ -11,10 +11,9 @@ import { IonicDialogService } from '../../ionic-dialog.service';
 import { RslIonicModuleModule } from '../../rsl-ionic-module.module';
 export declare type SortDirection = 'asc' | 'desc' | '';
 @Component({
-  standalone: true,
-  selector: 'rsl-ionic-grid',
-  templateUrl: './rsl-ionic-grid.component.html',  
-  imports: [RslIonicModuleModule],
+    selector: 'rsl-ionic-grid',
+    templateUrl: './rsl-ionic-grid.component.html',
+    imports: [RslIonicModuleModule]
 })
 export class RslIonicGridComponent<T extends BaseModelFormly, U extends BaseService<T>> implements OnInit {
   public title: string;
@@ -179,7 +178,7 @@ export class RslIonicGridComponent<T extends BaseModelFormly, U extends BaseServ
     if (!this.model) {
       this.model = this.modelService.newModel();
     }
-    this.gridLayout = Reflect.getMetadata('IonicListLayout', this.model);
+    this.gridLayout = MetadataStorage.getMetadata('IonicListLayout', this.model);
   }
   deleteModel(model) {
     const msg = 'Do you want to delete ' + model[this.deletePropertyName] + '?';

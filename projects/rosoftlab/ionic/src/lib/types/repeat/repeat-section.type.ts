@@ -22,14 +22,12 @@ interface ImportDataProp {
   propertiesToImport: string[]
 }
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  standalone: true,
-  selector: 'formly-repeat-section',
-  templateUrl: './repeat-section.html',
-  styleUrls: ['./repeat-section.scss'],
-  imports: [
-    WrappersModule
-  ]
+    selector: 'formly-repeat-section',
+    templateUrl: './repeat-section.html',
+    styleUrls: ['./repeat-section.scss'],
+    imports: [
+        WrappersModule
+    ]
 })
 export class RepeatTypeComponent extends FieldArrayType {
   /**

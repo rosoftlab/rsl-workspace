@@ -11,13 +11,12 @@ export interface FormlyInputFieldConfig extends FormlyFieldConfig<InputProps> {
   type: 'input' | Type<FormlyFieldInput>;
 }
 @Component({
-  standalone: true,
-  selector: 'app-ionic-sm-buttons',
-  templateUrl: './ionic-sm-buttons.component.html',
-  styleUrls: ['./ionic-sm-buttons.component.css'],
-  imports: [
-    WrappersModule
-  ]
+    selector: 'app-ionic-sm-buttons',
+    templateUrl: './ionic-sm-buttons.component.html',
+    styleUrls: ['./ionic-sm-buttons.component.css'],
+    imports: [
+        WrappersModule
+    ]
 })
 export class RslIonicSmButtonsComponent extends FieldType<FieldTypeConfig<InputProps>> implements OnInit {
   smActions$: Observable<SmAction[]>

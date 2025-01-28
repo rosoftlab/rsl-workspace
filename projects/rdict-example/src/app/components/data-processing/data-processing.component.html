@@ -1,0 +1,90 @@
+<div class="example-wrapper">
+  <form #form="ngForm">
+    <kendo-stepper [(currentStep)]="currentStep" [steps]="steps"
+      (currentStepChange)="onStepChange($event)"></kendo-stepper>
+    <kendo-breadcrumb [items]="selections"></kendo-breadcrumb>
+    <div class="step-content">
+      <ng-container *ngIf="currentStep === 0">
+        <h3>Step 1: Data și unitate de productie</h3>
+        <div class="row example-wrapper">
+          <div class="col-12 example-col">
+            <p>Data</p>
+
+            <kendo-calendar name="date" [(ngModel)]="model.date" #date="ngModel" required
+              type="classic"></kendo-calendar>
+
+          </div>
+          <div class="col-12 example-col">
+
+            <p>Unitatea de productie</p>
+            <kendo-dropdownlist #ddl name="location" [data]="locations" textField="name" valueField="mongo_id"
+              [valuePrimitive]="true" [(ngModel)]="model.selectedLocationId" required>
+            </kendo-dropdownlist>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="currentStep === 1">
+        <h3>Step 2: Preluare date</h3>
+        <div class="row example-wrapper">
+          <div class="col-12 example-col">
+            <p>Importuri</p>
+            <kendo-listbox kendoListBoxDataBinding [data]="importList" [toolbar]="false">
+              <ng-template kendoListBoxItemTemplate let-dataItem>
+                <div class="listbox-item">
+                  <span class="item-name">{{ dataItem.name }}</span>
+                  <span class="item-status">
+                    <kendo-svgicon [icon]="getstatusIcon(dataItem.name)"
+                      [style.color]="getStatusColor(dataItem.name)"></kendo-svgicon>
+                  </span>
+                  <button kendoButton [svgIcon]="allIcons.moreVerticalIcon" class="item-menu-button"></button>
+                </div>
+              </ng-template>
+            </kendo-listbox>
+          </div>
+          <div class="col-12 example-col">
+
+            <p>Prelucrare date</p>
+            <kendo-dropdownlist #ddl name="dataPrecessingLayouts" [data]="dataPrecessingLayouts" textField="name"
+              valueField="mongo_id" [valuePrimitive]="true" [(ngModel)]="model.selectedDataPrecessingLayoutId" required>
+            </kendo-dropdownlist>
+          </div>
+          <div class="col-12 example-col">
+            <p>Exporturi</p>
+            <kendo-listbox kendoListBoxDataBinding [data]="exportList" [toolbar]="false">
+              <ng-template kendoListBoxItemTemplate let-dataItem>
+                <div class="listbox-item">
+                  <span class="item-name">{{ dataItem.name }}</span>
+                  <span class="item-status">
+                    <kendo-svgicon [icon]="getstatusIcon(dataItem.name)"
+                      [style.color]="getStatusColor(dataItem.name)"></kendo-svgicon>
+                  </span>
+                  <button kendoButton [svgIcon]="allIcons.moreVerticalIcon" class="item-menu-button"></button>
+                </div>
+              </ng-template>
+            </kendo-listbox>
+          </div>
+        </div>
+
+      </ng-container>
+
+      <ng-container *ngIf="currentStep === 2">
+        <h3>Step 3: Selectie coloane</h3>
+        <kendo-treeview [nodes]="columns" textField="text" kendoTreeViewHierarchyBinding childrenField="items"
+          [filterable]="true" kendoTreeViewExpandable kendoTreeViewCheckable [(checkedKeys)]="checkedKeys">
+        </kendo-treeview>
+      </ng-container>
+
+      <ng-container *ngIf="currentStep === 3">
+        <h3>Step 4: Prelucrare</h3>
+        <kendo-spreadsheet [sheets]="data2" style="height: 450px; width: 100%"> </kendo-spreadsheet>
+      </ng-container>
+    </div>
+
+    <div class="step-buttons">
+      <button kendoButton (click)="prevStep()" [disabled]="currentStep === 0">Back</button>
+      <button kendoButton (click)="nextStep()" [disabled]="currentStep === steps.length - 1"
+        themeColor="primary">Next</button>
+    </div>
+  </form>
+</div>

@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, Optional } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { Configurations } from '../configurations';
@@ -7,13 +7,14 @@ import { Configurations } from '../configurations';
   providedIn: 'root'
 })
 export class TranslateloaderService implements TranslateLoader {
-  private _apiUrl = 'No Value';
+  private _apiUrl = '';
   private headers: any = new HttpHeaders({
     Accept: 'application/json',
     'Content-Type': 'application/json'
   });
   constructor(private httpClient: HttpClient,
-    @Optional() config?: Configurations) {
+    config: Configurations) {
+    console.log(config)
     if (config) {
       this._apiUrl = config.baseUrl;
     }

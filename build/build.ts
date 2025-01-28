@@ -51,6 +51,14 @@ PACKAGES.map((name) => {
   if (pkgJson.peerDependencies && pkgJson.peerDependencies['@rosoftlab/statemachine']) {
     pkgJson.peerDependencies['@rosoftlab/statemachine'] = mainPkg.version;
   }
-
+  if (pkgJson.peerDependencies && pkgJson.peerDependencies['@rosoftlab/rdict']) {
+    pkgJson.peerDependencies['@rosoftlab/rdict'] = mainPkg.version;
+  }
+  if (pkgJson.dependencies && pkgJson.dependencies['@rosoftlab/rdict']) {
+    pkgJson.dependencies['@rosoftlab/rdict'] = mainPkg.version;
+  }
+  if (pkgJson.dependencies && pkgJson.dependencies['@rosoftlab/core']) {
+    pkgJson.dependencies['@rosoftlab/core'] = mainPkg.version;
+  }
   fs.writeFileSync(pkgPath, JSON.stringify(pkgJson, null, 2));
 });

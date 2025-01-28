@@ -1,10 +1,10 @@
-import { BaseModel } from '@rosoftlab/core';
+import { BaseModel, MetadataStorage } from '@rosoftlab/core';
 import { GridLayoutModel } from './grid-layout';
 export class MaterialBaseModel extends BaseModel {
 
     public getGridLayout(): GridLayoutModel[] {
         const result = Array<GridLayoutModel>();
-        const gridLayout: any = Reflect.getMetadata('GridLayout', this);
+        const gridLayout: any = MetadataStorage.getMetadata('GridLayout', this);
         if (gridLayout) {
             for (const layout of gridLayout) {
                 const data = new GridLayoutModel(layout.propertyName, layout.translateKey,

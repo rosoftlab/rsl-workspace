@@ -3,7 +3,7 @@ import { Component, ElementRef, Injector, Input, OnInit, TemplateRef, ViewChild 
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationStart, Router, UrlSegment } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { BaseQueryData, BaseService, Rule } from '@rosoftlab/core';
+import { BaseQueryData, BaseService, MetadataStorage, Rule } from '@rosoftlab/core';
 import { BaseModelFormly } from '@rosoftlab/formly';
 import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
 import * as jsonLogic from 'json-logic-js/logic.js';
@@ -12,11 +12,10 @@ import { IonicDialogService } from '../../ionic-dialog.service';
 import { RslIonicModuleModule } from '../../rsl-ionic-module.module';
 export declare type SortDirection = 'asc' | 'desc' | '';
 @Component({
-  standalone: true,
-  selector: 'app-rsl-ionic-data-table',
-  templateUrl: './rsl-ionic-data-table.component.html',
-  styleUrls: ['./rsl-ionic-data-table.component.scss'],
-  imports: [RslIonicModuleModule],
+    selector: 'app-rsl-ionic-data-table',
+    templateUrl: './rsl-ionic-data-table.component.html',
+    styleUrls: ['./rsl-ionic-data-table.component.scss'],
+    imports: [RslIonicModuleModule]
 })
 export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends BaseService<T>> implements OnInit {
   @ViewChild('actionsTmpl', { static: true }) actionsTmpl: TemplateRef<any>;
@@ -206,7 +205,7 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
     }
     this.allColumns=[];
     this.columns=[];
-    this.allColumns = Reflect.getMetadata('IonicDataTableLayout', this.model).map((item: IonicDataTableLayoutConfig) => {
+    this.allColumns = MetadataStorage.getMetadata('IonicDataTableLayout', this.model).map((item: IonicDataTableLayoutConfig) => {
       if (!item.isTranslated) {
         item.name = this.translate.instant(item.name);
         item.isTranslated = true

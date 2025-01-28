@@ -3,10 +3,9 @@ import { FieldWrapper } from '@ngx-formly/core';
 import { WrappersModule } from './wrappers.module';
 
 @Component({
-  standalone: true,
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'formly-accordion-panel',
-  template: `
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'formly-accordion-panel',
+    template: `
 
   <ion-accordion-group  [value]="['first']">
     <ion-accordion value="first">
@@ -22,6 +21,6 @@ import { WrappersModule } from './wrappers.module';
 
             
   `,
-  imports: [WrappersModule]
+    imports: [WrappersModule]
 })
 export class AccordionWrapperComponent extends FieldWrapper { }

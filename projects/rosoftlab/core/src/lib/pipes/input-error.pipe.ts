@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({
-  name: 'inputError'
+    name: 'inputError',
+    standalone: false
 })
 export class InputErrorPipe implements PipeTransform {
   constructor(protected translate: TranslateService) {

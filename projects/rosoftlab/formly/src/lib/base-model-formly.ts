@@ -1,6 +1,6 @@
 import { FormlyFieldConfig } from "@ngx-formly/core";
 // import { BaseModel, BaseService } from "@rosoftlab/core";
-import { BaseModel, BaseService } from "@rosoftlab/core";
+import { BaseModel, BaseService, MetadataStorage } from "@rosoftlab/core";
 import { FormlyModelConfig } from "./interfaces/formly-model-config";
 
 
@@ -10,14 +10,14 @@ export class BaseModelFormly extends BaseModel {
     return this.getFormlyFieldsForObject(baseService, this);
   }
   private getFormlyFieldsForObject(baseService: BaseService<BaseModelFormly>, instance: any) {
-    const formlyLayout: FormlyModelConfig[] = Reflect.getMetadata('FormlyLayout', instance);
+    const formlyLayout: FormlyModelConfig[] = MetadataStorage.getMetadata('FormlyLayout', instance);
     const formlyFields: FormlyFieldConfig[] = [];
     const that = instance;
     if (formlyLayout) {
       formlyLayout.forEach(property => {
         if (property.key !== 'id') {
           const value = that[property.key] !== undefined ? that[property.key] : property.defaultValue;
-          const propType = Reflect.getMetadata('design:type', instance, property.key)
+          const propType = MetadataStorage.getMetadata('design:type', instance, property.key)
           const required = property.required !== undefined ? property.required : false
           if (typeof propType === 'function' &&
             propType.prototype &&

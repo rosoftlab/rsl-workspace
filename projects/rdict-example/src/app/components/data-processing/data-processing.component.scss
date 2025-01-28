@@ -1,0 +1,59 @@
+.step-content {
+  margin: 20px 0;
+}
+
+.step-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.listbox-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+
+.item-name {
+  flex: 1;
+}
+
+.item-status {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.item-menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+.colors-wrapper {
+  display: flex;
+  padding: 0;
+  width: 100%;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.colors-wrapper li {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px;
+  margin: 4px;
+}
+
+.customClass {
+  color: purple;
+}
+
+.k-listbox {
+  width: 35em;
+}
