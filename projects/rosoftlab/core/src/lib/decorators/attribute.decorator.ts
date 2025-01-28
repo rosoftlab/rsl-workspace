@@ -1,8 +1,7 @@
-import 'reflect-metadata';
-// import * as Reflect from 'reflect-metadata';
 import { AttributeMetadata } from '../constants/symbols';
 import { DateConverter } from '../converters/date/date.converter';
 import { AttributeDecoratorOptions } from '../interfaces/attribute-decorator-options.interface';
+import { MetadataStorage } from '../models/metadata-storage';
 
 export function Attribute(options: AttributeDecoratorOptions = {}): PropertyDecorator {
   return (target: any, propertyName: string) => {
@@ -33,30 +32,30 @@ export function Attribute(options: AttributeDecoratorOptions = {}): PropertyDeco
     };
 
     const saveAnnotations = () => {
-      const metadata = Reflect.getMetadata('Attribute', target) || {};
+      const metadata = MetadataStorage.getMetadata('Attribute', target) || {};
 
       metadata[propertyName] = {
         marked: true
       };
 
-      Reflect.defineMetadata('Attribute', metadata, target);
+      MetadataStorage.setMetadata('Attribute', metadata, target);
 
-      const mappingMetadata = Reflect.getMetadata('AttributeMapping', target) || {};
+      const mappingMetadata = MetadataStorage.getMetadata('AttributeMapping', target) || {};
       const serializedPropertyName = options.serializedName !== undefined ? options.serializedName : propertyName;
       mappingMetadata[serializedPropertyName] = propertyName;
-      Reflect.defineMetadata('AttributeMapping', mappingMetadata, target);
+      MetadataStorage.setMetadata('AttributeMapping', mappingMetadata, target);
 
-      const requiredMetadata = Reflect.getMetadata('AttributeRequired', target) || {};
+      const requiredMetadata = MetadataStorage.getMetadata('AttributeRequired', target) || {};
       requiredMetadata[serializedPropertyName] = options.required !== undefined ? options.required : false;
-      Reflect.defineMetadata('AttributeRequired', requiredMetadata, target);
+      MetadataStorage.setMetadata('AttributeRequired', requiredMetadata, target);
 
-      const defaultMetadata = Reflect.getMetadata('AttributedefaultValue', target) || {};
+      const defaultMetadata = MetadataStorage.getMetadata('AttributedefaultValue', target) || {};
       defaultMetadata[serializedPropertyName] = options.defaultValue !== undefined ? options.defaultValue : null;
-      Reflect.defineMetadata('AttributedefaultValue', defaultMetadata, target);
+      MetadataStorage.setMetadata('AttributedefaultValue', defaultMetadata, target);
 
-      const formSubGroupMetadata = Reflect.getMetadata('AttributeformSubGroup', target) || {};
+      const formSubGroupMetadata = MetadataStorage.getMetadata('AttributeformSubGroup', target) || {};
       formSubGroupMetadata[serializedPropertyName] = options.formSubGroup !== undefined ? options.formSubGroup : null;
-      Reflect.defineMetadata('AttributeformSubGroup', formSubGroupMetadata, target);
+      MetadataStorage.setMetadata('AttributeformSubGroup', formSubGroupMetadata, target);
 
     };
 
@@ -67,7 +66,7 @@ export function Attribute(options: AttributeDecoratorOptions = {}): PropertyDeco
       newValue: any,
       isNew: boolean
     ) => {
-      const targetType = Reflect.getMetadata('design:type', target, propertyName);
+      const targetType = MetadataStorage.getMetadata('design:type', target, propertyName);
 
       if (!instance[AttributeMetadata]) {
         instance[AttributeMetadata] = {};
@@ -89,7 +88,7 @@ export function Attribute(options: AttributeDecoratorOptions = {}): PropertyDeco
     };
 
     const setter = function (newVal: any) {
-      const targetType = Reflect.getMetadata('design:type', target, propertyName);
+      const targetType = MetadataStorage.getMetadata('design:type', target, propertyName);
       const convertedValue = converter(targetType, newVal);
 
       if (convertedValue !== this['_' + (propertyName as string)]) {

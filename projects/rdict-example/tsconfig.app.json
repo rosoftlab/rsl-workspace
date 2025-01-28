@@ -4,7 +4,13 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
-    "types": []
+    "types": [],
+    "paths": {
+      "@rosoftlab/core": ["dist/@rosoftlab/core"],
+      "@rosoftlab/core/*": ["dist/@rosoftlab/core/*"],
+      "@rosoftlab/rdict": ["dist/@rosoftlab/rdict"],
+      "@rosoftlab/rdict/*": ["dist/@rosoftlab/rdict/*"],
+    }
   },
   "files": [
     "src/main.ts"

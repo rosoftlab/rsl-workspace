@@ -1,11 +1,11 @@
-import { } from 'reflect-metadata';
+import { MetadataStorage } from '@rosoftlab/core';
 import { IonicListLayoutConfig } from '../interfaces/ionic-list-layout-config';
 export function IonicListLayout(config: IonicListLayoutConfig) {
     return (target: any, propertyName: string) => {
-        const annotations = Reflect.getMetadata('IonicListLayout', target) || [];
+        const annotations = MetadataStorage.getMetadata('IonicListLayout', target) || [];
         config.key = propertyName;
         annotations.push(config);
 
-        Reflect.defineMetadata('IonicListLayout', annotations, target);
+        MetadataStorage.setMetadata('IonicListLayout', annotations, target);
     };
 }

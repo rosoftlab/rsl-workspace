@@ -1,6 +1,7 @@
 // import { Attribute, BaseModel, BaseModelConfig } from '@rosoftlab/core';
 
-import { Attribute, BaseModel, BaseModelConfig } from 'projects/rosoftlab/core/src/lib';
+import { Attribute, BaseModel, BaseModelConfig } from '@rosoftlab/core';
+;
 
 @BaseModelConfig({
     type: 'right',

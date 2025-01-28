@@ -8,15 +8,13 @@
         "src/*/src/public_api",
         "src/ui/*/src/public_api"
       ],      
-      "@assets/*": [
-        "demo/src/assets/*"
-      ],
       "@rosoftlab/material": [
         "dist/rosoftlab/material"
       ],
       "@rosoftlab/rdict": [
         "./dist/rosoftlab/rdict"
       ],
+     
       "@rosoftlab/statemachine": [
         "dist/rosoftlab/statemachine"
       ]

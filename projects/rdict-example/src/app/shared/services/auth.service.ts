@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, UserManager, UserManagerSettings, WebStorageStateStore } from 'oidc-client';
+import { User, UserManager, UserManagerSettings, WebStorageStateStore } from 'oidc-client-ts';
 import { environment } from 'projects/rdict-example/src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 
@@ -53,29 +53,29 @@ export class AuthService {
     return this.user != null ? this.user.profile?.email : '';
   }
   get firstName(): string {
-    return this.user != null ? this.user.profile?.['first_name'] : '';
+    return this.user != null ? (this.user.profile as { [key: string]: any })['first_name'] : '';
   }
   set firstName(newValue: string) {
     this.user!.profile!['first_name'] = newValue;
   }
   get lastName(): string {
-    return this.user != null ? this.user.profile?.['last_name'] : '';
+    return this.user != null ? (this.user.profile as { [key: string]: any })['last_name'] : '';
   }
   set lastName(newValue: string) {
     this.user!.profile!['last_name'] = newValue;
   }
   get userCode(): string {
-    return this.user != null ? this.user.profile?.['user_code'] : '';
+    return this.user != null ? this.user.profile?.['user_code'] as string : '';
   }
   get roles(): string {
-    return this.user != null ? this.user.profile?.['roles'] : '';
+    return this.user != null ? this.user.profile?.['roles'] as string : '';
   }
 
   get organisationId(): string {
-    return this.user != null ? this.user.profile?.['organization_id'] : '';
+    return this.user != null ? this.user.profile?.['organization_id'] as string : '';
   }
   get organisationName(): string {
-    return this.user != null ? this.user.profile?.['organization_name'] : '';
+    return this.user != null ? this.user.profile?.['organization_name'] as string : '';
   }
   async signout() {
     await this.manager.signoutRedirect();

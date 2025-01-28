@@ -1,4 +1,5 @@
 import { BaseMetaModel } from '../models/base-meta.model';
+import { MetadataStorage } from '../models/metadata-storage';
 
 export function BaseModelConfig(config: any = {}) {
   return (target: any) => {
@@ -6,6 +7,6 @@ export function BaseModelConfig(config: any = {}) {
       config['meta'] = BaseMetaModel;
     }
 
-    Reflect.defineMetadata('BaseModelConfig', config, target);
+    MetadataStorage.setMetadata('BaseModelConfig', config, target);
   };
 }

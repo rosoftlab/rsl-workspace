@@ -229,13 +229,6 @@ export class GenericRdictTableComponent implements OnInit {
           return item;
         });
         this.columns = [];
-        // this.allColumns = Reflect.getMetadata('IonicDataTableLayout', this.model).map((item: IonicDataTableLayoutConfig) => {
-        //   if (!item.isTranslated) {
-        //     item.name = this.translate.instant(item.name);
-        //     item.isTranslated = true
-        //   }
-        //   return item;
-        // });
 
         this.allColumns.sort((a, b) => a.order - b.order);
 

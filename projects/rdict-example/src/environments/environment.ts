@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  baseUrl: window['env']['baseUrl'] || 'https://opti-api-dev.rosoftlab.net',
-  authUrl: window['env']['authUrl'] ||'https://opti-identity-dev.rosoftlab.net',
+  baseUrl: 'http://repom-dev-api.rosoftlab.net',
+  authUrl: 'http://repom-dev-identity.rosoftlab.net',
   production: false
 };
 

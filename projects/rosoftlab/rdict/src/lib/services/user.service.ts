@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseQueryData, BaseService, DatastoreCore } from 'projects/rosoftlab/core/src/lib';
+import { BaseQueryData, BaseService, DatastoreCore } from "@rosoftlab/core";
 import { Observable } from 'rxjs';
 import { Menu } from '../models/menu';
 import { Right } from '../models/right';

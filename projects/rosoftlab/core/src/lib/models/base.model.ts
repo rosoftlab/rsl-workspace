@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AttributeMetadata } from '../constants/symbols';
 import { ModelConfig } from '../interfaces/model-config.interface';
 import { BaseDatastore, ModelType } from '../services/base-datastore.service';
+import { MetadataStorage } from './metadata-storage';
 export class BaseModel {
   public highlighted: boolean;
   public id: any;
@@ -90,7 +91,7 @@ export class BaseModel {
   }
 
   get modelConfig(): ModelConfig {
-    return Reflect.getMetadata('BaseModelConfig', this.constructor);
+    return MetadataStorage.getMetadata('BaseModelConfig', this.constructor);
   }
 
 
@@ -114,17 +115,17 @@ export class BaseModel {
   }
 
   public getModelPropertyNames(model: BaseModel) {
-    return Reflect.getMetadata('AttributeMapping', model);
+    return MetadataStorage.getMetadata('AttributeMapping', model);
   }
   public getModelRequiredPropertyNames(model: BaseModel) {
-    return Reflect.getMetadata('AttributeRequired', model);
+    return MetadataStorage.getMetadata('AttributeRequired', model);
   }
   public getModelDefaultPropertyValues(model: BaseModel) {
-    return Reflect.getMetadata('AttributedefaultValue', model);
+    return MetadataStorage.getMetadata('AttributedefaultValue', model);
   }
 
   public getModelSubGroupPropertyNames(model: BaseModel) {
-    return Reflect.getMetadata('AttributeformSubGroup', model);
+    return MetadataStorage.getMetadata('AttributeformSubGroup', model);
   }
 
   public getFromGroup(fb: UntypedFormBuilder): UntypedFormGroup {
@@ -185,7 +186,7 @@ export class BaseModel {
     }
   }
 
- 
+
 
   public getSerializedModel() {
     const attributesMetadata: any = this[AttributeMetadata];

@@ -28,7 +28,7 @@ export const appConfig: ApplicationConfig = {
       }
     },
 
-    { provide: SOCKET_URL, useValue: 'http://192.168.6.14:33001' },
+    { provide: SOCKET_URL, useValue:  environment.baseUrl },
     provideAnimations(),
     BaseDatastore,
     DatastoreCore,

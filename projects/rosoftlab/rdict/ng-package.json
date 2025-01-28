@@ -3,5 +3,13 @@
   "dest": "../../../dist/@rosoftlab/rdict",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  } , 
+  "allowedNonPeerDependencies": [
+    "tslib",
+    "@progress/*",
+    "socket.io-client",
+    "socket.io-msgpack-parser",
+    "socket.io-parser",
+    "@rosoftlab/*"    
+  ]
 }
