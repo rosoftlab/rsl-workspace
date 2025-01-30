@@ -45,7 +45,7 @@ export const routes: Routes = [
                             },
                             {
                                 path: 'edit/:id',
-                                component: GenericRdictTableComponent,
+                                component: RdictCrudComponent,
                                 data: {
                                     // showSerach: true,
                                 }
@@ -54,10 +54,29 @@ export const routes: Routes = [
                     },
                     {
                         path: "export_layout",
-                        component: GenericRdictTableComponent,
-                        data: {
-                            showSerach: true,
-                        }
+                        children: [
+                            {
+                                path: '',
+                                component: GenericRdictTableComponent,
+                                data: {
+                                    showSerach: true,
+                                },
+                            },
+                            {
+                                path: 'add',
+                                component: RdictCrudComponent,
+                                data: {
+                                    // showSerach: true,
+                                }
+                            },
+                            {
+                                path: 'edit/:id',
+                                component: RdictCrudComponent,
+                                data: {
+                                    // showSerach: true,
+                                }
+                            }
+                        ]
                     },
                     {
                         path: "locations",

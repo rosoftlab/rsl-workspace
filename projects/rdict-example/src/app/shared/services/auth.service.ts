@@ -91,7 +91,7 @@ export function getClientSettings(): UserManagerSettings {
     client_id: 'WebApp',
     redirect_uri: origin + '/auth-callback',
     post_logout_redirect_uri: origin,
-    response_type: "id_token token",
+    response_type: "code",
     scope: "openid profile common file repom",
     filterProtocolClaims: true,
     loadUserInfo: true,

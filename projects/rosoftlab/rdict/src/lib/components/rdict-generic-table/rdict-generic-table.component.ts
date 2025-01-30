@@ -219,6 +219,8 @@ export class GenericRdictTableComponent implements OnInit {
   async getListLayout() {
     if (this.model) {
       this.tableLayout = await this.rdict.asyncGet("config.models." + this.model + ".tableLayout")
+      const formLayout=await this.rdict.asyncGet("config.models." + this.model + ".formLayout");
+      console.log(formLayout);
       if (this.tableLayout) {
         this.title = this.translate.instant(this.tableLayout["title"]);
         this.allColumns = this.tableLayout["columns"].map(item => {

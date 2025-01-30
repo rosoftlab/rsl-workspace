@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '@rosoftlab/rdict';
+// import { UserService } from '@rosoftlab/rdict';
+import { UserService } from 'projects/rosoftlab/rdict/src/public-api';
 import { AuthService } from '../../shared/services/auth.service';
 import { StorageService } from '../../shared/services/storage.service';
 
 @Component({
-    selector: 'app-auth-callback',
-    templateUrl: './auth-callback.component.html',
-    standalone: false
+  selector: 'app-auth-callback',
+  templateUrl: './auth-callback.component.html',
+  standalone: false
 })
 export class AuthCallbackComponent implements OnInit {
 
@@ -23,10 +24,12 @@ export class AuthCallbackComponent implements OnInit {
   async ngOnInit() {
 
     // check for error
-    if (this.route!.snapshot!.fragment!.indexOf('error') >= 0) {
-      this.error = true;
-      return;
-    }
+    try {
+      if (this.route!.snapshot!.fragment!.indexOf('error') >= 0) {
+        this.error = true;
+        return;
+      }
+    } catch (e) { }
     this.authService.completeAuthentication();
     this.authService.authNavStatus$.subscribe(f => {
       //console.log(f);

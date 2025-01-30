@@ -12,8 +12,9 @@
     "build-example": "ng build example",
     "start-docker": "ng serve example --configuration docker --port 19281 --host=localhost",
     "demo-docker": "npm run start-docker",
+    "build-rdict": "ng build @rosoftlab/rdict --configuration development",
     "build-demo-rdict": "ng build rdict-example",
-    "demo-rdict": "ng serve rdict-example --port 33080 --host=0.0.0.0"
+    "demo-rdict": "ng serve rdict-example --port 33080 --host=0.0.0.0 --configuration development"
   },
   "private": false,
   "dependencies": {

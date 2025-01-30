@@ -8,7 +8,7 @@ import { FORMLY_CONFIG } from '@ngx-formly/core';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 // import { BaseDatastore, Configurations, DatastoreCore } from 'dist/@rosoftlab/core';
 // import { SOCKET_URL } from 'dist/@rosoftlab/rdict';
-import { BaseDatastore, Configurations, DatastoreCore } from 'projects/rosoftlab/core/src/public-api';
+import { BaseDatastore, Configurations, DatastoreCore } from '@rosoftlab/core';
 import { SOCKET_URL } from 'projects/rosoftlab/rdict/src/public-api';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
@@ -28,7 +28,7 @@ export const appConfig: ApplicationConfig = {
       }
     },
 
-    { provide: SOCKET_URL, useValue:  environment.baseUrl },
+    { provide: SOCKET_URL, useValue: environment.baseUrl }, // "http://localhost:5200"
     provideAnimations(),
     BaseDatastore,
     DatastoreCore,
