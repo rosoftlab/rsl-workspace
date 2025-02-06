@@ -174,3 +174,18 @@ kendo-drawer-container {
 .event-log li:last-child {
   margin-bottom: -1px;
 }
+
+
+.k-grid {
+  height: 100%;
+}
+
+kendo-drawer-content {
+  height: 100%;
+  background-color: lavenderblush;
+}
+
+rsl-rdict-generic-table {
+  display: block;
+  height: 100%;
+}
