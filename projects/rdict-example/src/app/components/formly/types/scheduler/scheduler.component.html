@@ -1,0 +1,38 @@
+<div [formGroup]="formGroup" class="scheduler-fields">
+  <fieldset class="k-form-fieldset">
+    <legend class="k-form-legend">
+      Add New Event
+    </legend>
+    <kendo-formfield>
+      <kendo-label [for]="title" text="Title" labelCssClass="k-form-label"></kendo-label>
+      <kendo-textbox #title placeholder="Title" formControlName="Title" />
+    </kendo-formfield>
+
+    <kendo-formfield>
+      <kendo-label [for]="'datepickerstart'" text="Start" labelCssClass="k-form-label"></kendo-label>
+      <kendo-datepicker *ngIf="formGroup?.get('IsAllDay').value" #datepickerstart
+        formControlName="Start"></kendo-datepicker>
+      <kendo-datetimepicker #datepickerstart *ngIf="!formGroup?.get('IsAllDay').value"
+        formControlName="Start"></kendo-datetimepicker>
+    </kendo-formfield>
+    <kendo-formfield>
+      <kendo-label [for]="'datepickerend'" text="Start" labelCssClass="k-form-label"></kendo-label>
+      <kendo-datepicker *ngIf="formGroup?.get('IsAllDay').value" #datepickerend
+        formControlName="End"></kendo-datepicker>
+      <kendo-datetimepicker #datepickerend *ngIf="!formGroup?.get('IsAllDay').value"
+        formControlName="End"></kendo-datetimepicker>
+    </kendo-formfield>
+
+    <kendo-formfield>
+      <ng-container>
+        <span class="k-checkbox-wrap">
+          <input id="k-is-allday-chkbox" type="checkbox" kendoCheckBox formControlName="IsAllDay" />
+        </span>
+        <label [labelClass]="false" class="k-checkbox-label" for="k-is-allday-chkbox">All Day Event</label>
+      </ng-container>
+    </kendo-formfield>
+    <div>
+      <kendo-recurrence-editor formControlName="RecurrenceRule"></kendo-recurrence-editor>
+    </div>
+  </fieldset>
+</div>

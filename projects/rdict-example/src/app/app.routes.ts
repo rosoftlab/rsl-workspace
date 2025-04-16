@@ -33,21 +33,22 @@ export const routes: Routes = [
                                 path: '',
                                 component: GenericRdictTableComponent,
                                 data: {
-                                    // showSerach: true,
+                                    fileLayout: 'assets/layouts/data.json',
+                                    editColumn: "name"
                                 }
                             },
                             {
                                 path: 'add',
                                 component: RdictCrudComponent,
                                 data: {
-                                    // showSerach: true,
+                                    fileLayout: 'assets/layouts/data.json'
                                 }
                             },
                             {
                                 path: 'edit/:id',
                                 component: RdictCrudComponent,
                                 data: {
-                                    // showSerach: true,
+                                    fileLayout: 'assets/layouts/data.json'
                                 }
                             }
                         ]
@@ -60,6 +61,7 @@ export const routes: Routes = [
                                 component: GenericRdictTableComponent,
                                 data: {
                                     showSerach: true,
+                                    editColumn: "name"
                                 },
                             },
                             {
@@ -80,20 +82,114 @@ export const routes: Routes = [
                     },
                     {
                         path: "locations",
-                        component: GenericRdictTableComponent,
-                        data: {
-                            showSerach: true,
-                        }
+                        children: [
+                            {
+                                path: '',
+                                component: GenericRdictTableComponent,
+                                data: {
+                                    showSerach: true,
+                                    editColumn: "name"
+                                },
+                            },
+                            {
+                                path: 'add',
+                                component: RdictCrudComponent,
+                                data: {
+                                    // showSerach: true,
+                                }
+                            },
+                            {
+                                path: 'edit/:id',
+                                component: RdictCrudComponent,
+                                data: {
+                                    // showSerach: true,
+                                }
+                            }
+                        ]
                     },
                     {
                         path: "data_processing_layout",
-                        component: GenericRdictTableComponent,
-                        data: {
-                            showSerach: true,
-                        }
+                        children: [
+                            {
+                                path: '',
+                                component: GenericRdictTableComponent,
+                                data: {
+                                    showSerach: true,
+                                    editColumn: "name"
+                                },
+                            },
+                            {
+                                path: 'add',
+                                component: RdictCrudComponent,
+                                data: {
+                                    // showSerach: true,
+                                }
+                            },
+                            {
+                                path: 'edit/:id',
+                                component: RdictCrudComponent,
+                                data: {
+                                    // showSerach: true,
+                                }
+                            }
+                        ]
                     },
                     {
-                        path: "scheduler",
+                        path: "data_types",
+                        children: [
+                            {
+                                path: '',
+                                component: GenericRdictTableComponent,
+                                data: {
+                                    showSerach: true,
+                                    editColumn: "name"
+                                },
+                            },
+                            {
+                                path: 'add',
+                                component: RdictCrudComponent,
+                                data: {
+                                    // showSerach: true,
+                                }
+                            },
+                            {
+                                path: 'edit/:id',
+                                component: RdictCrudComponent,
+                                data: {
+                                    // showSerach: true,
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        path: "data_sources",
+                        children: [
+                            {
+                                path: '',
+                                component: GenericRdictTableComponent,
+                                data: {
+                                    showSerach: true,
+                                    editColumn: "name"
+                                },
+                            },
+                            {
+                                path: 'add',
+                                component: RdictCrudComponent,
+                                data: {
+                                    // showSerach: true,
+                                }
+                            },
+                            {
+                                path: 'edit/:id',
+                                component: RdictCrudComponent,
+                                data: {
+                                    // showSerach: true,
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        path: "plugins/scheduled",
                         component: DataSchedulerComponent
                     },
                     {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { UserService } from '@rosoftlab/rdict';
-import { UserService } from 'projects/rosoftlab/rdict/src/public-api';
+import { ReactiveDictionary, UserService } from 'projects/rosoftlab/rdict/src/public-api';
 import { AuthService } from '../../shared/services/auth.service';
 import { StorageService } from '../../shared/services/storage.service';
 
@@ -19,7 +19,10 @@ export class AuthCallbackComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private storageService: StorageService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private rdict: ReactiveDictionary) {
+
+  }
 
   async ngOnInit() {
 
@@ -30,7 +33,8 @@ export class AuthCallbackComponent implements OnInit {
         return;
       }
     } catch (e) { }
-    this.authService.completeAuthentication();
+    await this.authService.completeAuthentication();
+    await this.rdict.initialize(this.authService.getToken);
     this.authService.authNavStatus$.subscribe(f => {
       //console.log(f);
       if (f) {

@@ -7,10 +7,10 @@ import { registerTranslateExtension } from '../../translate.extension';
 @NgModule({
   imports: [
     CommonModule,
-
+   
   ],
   providers: [
-      { provide: FORMLY_CONFIG, multi: true, useFactory: registerTranslateExtension, deps: [TranslateService] },
-    ],
+    { provide: FORMLY_CONFIG, multi: true, useFactory: registerTranslateExtension, deps: [TranslateService] },
+  ],
 })
 export class CrudFormlyTransaltionModule { }

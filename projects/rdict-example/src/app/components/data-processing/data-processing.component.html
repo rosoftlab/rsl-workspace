@@ -12,13 +12,16 @@
 
             <kendo-calendar name="date" [(ngModel)]="model.date" #date="ngModel" required
               type="classic"></kendo-calendar>
+            <!-- <kendo-multiviewcalendar #multiviewcalendar selection="range" [(value)]="rangeSelectionValue"
+              (selectionRangeChange)="handleSelectionRange($event)">
+            </kendo-multiviewcalendar> -->
 
           </div>
           <div class="col-12 example-col">
 
             <p>Unitatea de productie</p>
-            <kendo-dropdownlist #ddl name="location" [data]="locations" textField="name" valueField="mongo_id"
-              [valuePrimitive]="true" [(ngModel)]="model.selectedLocationId" required>
+            <kendo-dropdownlist #ddloc name="location" [data]="locations" textField="name" valueField="mongo_id"
+              [(ngModel)]="model.selectedLocation" required>
             </kendo-dropdownlist>
           </div>
         </div>
@@ -46,7 +49,7 @@
 
             <p>Prelucrare date</p>
             <kendo-dropdownlist #ddl name="dataPrecessingLayouts" [data]="dataPrecessingLayouts" textField="name"
-              valueField="mongo_id" [valuePrimitive]="true" [(ngModel)]="model.selectedDataPrecessingLayoutId" required>
+              valueField="mongo_id" [(ngModel)]="model.selectedDataPrecessingLayout" required>
             </kendo-dropdownlist>
           </div>
           <div class="col-12 example-col">
@@ -70,14 +73,30 @@
 
       <ng-container *ngIf="currentStep === 2">
         <h3>Step 3: Selectie coloane</h3>
-        <kendo-treeview [nodes]="columns" textField="text" kendoTreeViewHierarchyBinding childrenField="items"
-          [filterable]="true" kendoTreeViewExpandable kendoTreeViewCheckable [(checkedKeys)]="checkedKeys">
+        <div class="example-config">Checked keys: {{ checkedKeys.join(",") }}</div>
+        <kendo-treeview [nodes]="treeNodes" textField="desc" kendoTreeViewExpandable kendoTreeViewFlatDataBinding
+          kendoTreeViewCheckable idField="id" parentIdField="parentId" [(checkedKeys)]="checkedKeys" checkBy="checkKey"
+          (checkedKeysChange)="onCheckedKeysChange($event)" >
         </kendo-treeview>
+
       </ng-container>
 
       <ng-container *ngIf="currentStep === 3">
         <h3>Step 4: Prelucrare</h3>
-        <kendo-spreadsheet [sheets]="data2" style="height: 450px; width: 100%"> </kendo-spreadsheet>
+
+        <div class="spreadsheet-container">
+          <div class="k-loading-panel" *ngIf="loading">
+            <div class="k-loading-panel-mask"></div>
+            <div class="k-loading-panel-wrapper">
+              <kendo-loader type="infinite-spinner" themeColor="primary" size="large"></kendo-loader>
+              <div class="k-loading-panel-text">Loading data ...</div>
+            </div>
+          </div>
+          <kendo-spreadsheet #spreadsheetRef [sheets]="data2" [activeSheet]="Data" style="height: 100%; width: 100%">
+          </kendo-spreadsheet>
+        </div>
+
+
       </ng-container>
     </div>
 

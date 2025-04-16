@@ -1,0 +1,171 @@
+[
+  {
+    "model": "export_layout",
+    "tableLayout": {
+      "title": "Export.Layout.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Import.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "import_layout",
+    "tableLayout": {
+      "title": "Import.Layout.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Import.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        },
+        {
+          "key": "productionUnitId",
+          "type": "select",
+          "props": {
+            "label": "ProductionUnit",
+            "options": "administration.locations",
+            "translate": true,
+            "required": true,
+            "valueProp": "mongo_id",
+            "labelProp": "name"
+          }
+        },
+        {
+          "key": "pluginId",
+          "type": "select",
+          "props": {
+            "label": "Import Plugin",
+            "options": "plugins.available",
+            "translate": true,
+            "required": true,
+            "valueProp": "name",
+            "labelProp": "name"
+          }
+        },
+        {
+          "key": "cron",
+          "type": "cron"
+         
+        }
+      ]
+    }
+  },
+  {
+    "model": "locations",
+    "tableLayout": {
+      "title": "Location.Layout.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Import.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "data_processing_layout",
+    "tableLayout": {
+      "title": "Data.Processing.Layout.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Import.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        }
+      ]
+    }
+  }
+]

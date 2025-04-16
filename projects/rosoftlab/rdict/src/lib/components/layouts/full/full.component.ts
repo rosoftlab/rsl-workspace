@@ -11,21 +11,21 @@ import { menuIcon, SVGIcon } from "@progress/kendo-svg-icons";
 import { map, Observable } from 'rxjs';
 import { Menu } from '../../../models';
 import { ReactiveDictionary } from '../../../reactive-dictionary';
-import { SocketService, UserService, WsAuthService } from '../../../services';
+import { UserService } from '../../../services';
 @Component({
-    selector: 'rdict-full',
-    templateUrl: './full.component.html',
-    styleUrls: ['./full.component.scss'],
-    imports: [
-        CommonModule,
-        RouterModule,
-        TranslateModule,
-        CommonModule,
-        ButtonsModule,
-        ToolBarModule,
-        LayoutModule,
-        KENDO_SVGICON
-    ]
+  selector: 'rdict-full',
+  templateUrl: './full.component.html',
+  styleUrls: ['./full.component.scss'],
+  imports: [
+    CommonModule,
+    RouterModule,
+    TranslateModule,
+    CommonModule,
+    ButtonsModule,
+    ToolBarModule,
+    LayoutModule,
+    KENDO_SVGICON
+  ]
 })
 export class FullComponent implements OnInit {
   public selected = "Inbox";
@@ -35,22 +35,18 @@ export class FullComponent implements OnInit {
   hasItems: boolean = false;
   public items: Array<{ [Key: string]: unknown }> = [];
   public icons = allIcons;
-  private rdict: ReactiveDictionary | undefined;
+  //private rdict: ReactiveDictionary | undefined;
   apptitle: string = "Test"
   constructor(
     private userService: UserService,
     private router: Router,
-    private socketService: SocketService,
     public translate: TranslateService,
-    private wsAuthService: WsAuthService
+    private rdict: ReactiveDictionary
   ) {
     this.getMenu();
   }
 
   async ngOnInit() {
-    this.rdict = ReactiveDictionary.getInstance(this.socketService,this.wsAuthService.Token);
-    if (this.rdict.size == 0)
-      await this.rdict.asyncInit();
     this.apptitle = await this.rdict.asyncGet("appname")
 
   }

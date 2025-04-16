@@ -14,11 +14,12 @@ export * from './models/base-query-data';
 export * from './models/base.model';
 export * from './models/error-response.model';
 export * from './models/rule';
-export * from './pipes/Nl2brPipe.pipe';
 export * from './pipes/input-error.pipe';
+export * from './pipes/Nl2brPipe.pipe';
 export * from './providers';
 export * from './resolvers';
 export * from './rsl-base-module';
 export * from './services/base.service';
+export * from './services/local-file.service';
 export * from './validators/pattern-validator';
 

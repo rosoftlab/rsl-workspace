@@ -3,35 +3,41 @@ import { ActivatedRoute, ActivatedRouteSnapshot, NavigationStart, Router, Router
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 // import { Rule } from '@rosoftlab/core';
 import { CommonModule } from '@angular/common';
-import { KENDO_GRID } from '@progress/kendo-angular-grid';
+import { AddEvent, KENDO_GRID, RemoveEvent } from '@progress/kendo-angular-grid';
 import { KENDO_LABEL } from '@progress/kendo-angular-label';
 import { KENDO_TOOLBAR } from '@progress/kendo-angular-toolbar';
 // import { ColumnMode, SelectionType, SortDirection } from '@swimlane/ngx-datatable';
+import { KENDO_BUTTONS } from "@progress/kendo-angular-buttons";
+import { KENDO_DIALOG } from '@progress/kendo-angular-dialog';
+import { pencilIcon, plusIcon, SVGIcon, trashIcon } from '@progress/kendo-svg-icons';
+import { LocalFileService } from "@rosoftlab/core";
 import { ReactiveDictionary } from '../../reactive-dictionary';
-import { WsAuthService } from '../../services';
-import { SocketService } from '../../services/socket.service';
+import { MaterialDialogService } from '../../services/material-dialog.service';
 import { RdictTableTitle } from './rdict-table-title';
 declare var $: any;
 
 @Component({
-    selector: 'rsl-rdict-generic-table',
-    templateUrl: './rdict-generic-table.component.html',
-    styleUrls: ['./rdict-generic-table.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    imports: [
-        CommonModule,
-        RouterModule,
-        // MatPaginatorModule,
-        // MatTableModule,
-        TranslateModule,
-        KENDO_GRID,
-        KENDO_TOOLBAR,
-        KENDO_LABEL,
-        RdictTableTitle
-    ],
-    providers: []
+  selector: 'rsl-rdict-generic-table',
+  templateUrl: './rdict-generic-table.component.html',
+  styleUrls: ['./rdict-generic-table.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  imports: [
+    CommonModule,
+    RouterModule,
+    // MatPaginatorModule,
+    // MatTableModule,
+    TranslateModule,
+    KENDO_GRID,
+    KENDO_TOOLBAR,
+    KENDO_LABEL,
+    KENDO_BUTTONS,
+    KENDO_DIALOG,
+    RdictTableTitle
+  ],
+  providers: []
 })
 export class GenericRdictTableComponent implements OnInit {
+
   dataSource: unknown[] //MatTableDataSource<any> = new MatTableDataSource();
   public title: string;
   model: string;
@@ -49,6 +55,7 @@ export class GenericRdictTableComponent implements OnInit {
   @Input() canEdit: boolean;
   @Input() editOnClick: boolean = false;
   @Input() editOnDblClick: boolean = false;
+  fileLayout: string;
   data: any[] = [];
   pageIndex: number = 1;
   pageSize: number = 30
@@ -80,17 +87,20 @@ export class GenericRdictTableComponent implements OnInit {
   filterValue: string;
   oldOffsetY: number;
   hasSearch: false
-  rdict: ReactiveDictionary | undefined;
   selectedItem: any;
-
+  public svgEdit: SVGIcon = pencilIcon;
+  public svgDelete: SVGIcon = trashIcon;
+  public svgAdd: SVGIcon = plusIcon;
+  tableRdict: ReactiveDictionary;
+  editColumn: string | null;
   constructor(
     public router: Router,
     public route: ActivatedRoute,
     public translate: TranslateService,
     private injector: Injector,
-    private socketService: SocketService,
-    private wsAuthService: WsAuthService,
-    private el: ElementRef) {
+    private localFileService: LocalFileService,
+    private rdict: ReactiveDictionary,
+    private dialogService: MaterialDialogService) {
   }
   async ngOnInit() {
     this.setValueFromSnapshot(this, this.route.snapshot, 'model', "");
@@ -108,6 +118,9 @@ export class GenericRdictTableComponent implements OnInit {
     this.setValueFromSnapshot(this, this.route.snapshot, 'canEdit', true);
     this.setValueFromSnapshot(this, this.route.snapshot, 'editOnClick', false);
     this.setValueFromSnapshot(this, this.route.snapshot, 'editOnDblClick', false);
+    this.setValueFromSnapshot(this, this.route.snapshot, 'editColumn', null);
+
+    this.setValueFromSnapshot(this, this.route.snapshot, 'fileLayout', '');
 
     const currentUrlSegments: UrlSegment[] = this.router.url.split('/').map(segment => new UrlSegment(segment, {}));
     this.basePath = currentUrlSegments.map(segment => segment.path).join('/');
@@ -122,13 +135,8 @@ export class GenericRdictTableComponent implements OnInit {
         // Perform actions or update component as needed
       }
     });
-    this.rdict = ReactiveDictionary.getInstance(this.socketService,this.wsAuthService.Token);
-    if (this.rdict.size == 0)
-      await this.rdict.asyncInit();
-    await this.getListLayout()
-    await this.loadData()
-    // this.isLoading = true;
-    // this.onScroll(0);
+    this.getListLayout()
+    this.loadData()
   }
   setValueFromSnapshot<T>(component: any, snapshot: ActivatedRouteSnapshot, key: string, defaultValue: T): void {
     if (component[key] === undefined) {
@@ -140,130 +148,146 @@ export class GenericRdictTableComponent implements OnInit {
     }
   }
   async loadData() {
-    var x = await this.rdict.getTable(this.dictPath)
-    const result = x.map(dictionary => {
-      // Convert Map to object and filter out __guid
-      const filteredObject = {};
-      for (const [key, value] of dictionary.entries()) {
-        if (key !== '__guid') {
-          filteredObject[key] = value;
+    this.rdict.getAsObservable(this.dictPath).subscribe({
+      next: rdictData => {
+        this.tableRdict = rdictData;
+        this.tableRdict.onChanges().subscribe({
+          next: (changes) => {
+            console.log("Changes detected grid:", changes);
+            this.onChangeEvent(changes);
+          }
+        })
+        this.tableRdict.onDelete().subscribe({
+          next: (changes) => {
+            console.log("Delete detected grid:", changes);
+            this.ondDeleteEvent(changes);
+          }
+        })
+        this.rdict.getTableAsObservable(this.dictPath, this.tableRdict).subscribe({
+          next: value => {
+            this.dataSource = value;
+          },
+          error: err => console.error('Error:', err.message),
+        });
+      },
+      error: err => console.error('Error:', err.message),
+    });
+
+  }
+  onChangeEvent(changes: any) {
+    if (changes) {
+      const key = changes?.key as string;
+      const value = changes?.value;
+      if (key && value) {
+
+        const index = this.dataSource.findIndex((item: any) => item.__idx === key);
+        if (index > -1) {
+          this.dataSource[index] = value;
+        } else {
+          //get the object from rdict
+          this.tableRdict.getAsObservable(key).subscribe({
+            next: value => {
+              var dd = value.getPlainObject();
+              this.dataSource.push(dd);
+            }
+          });
+
         }
       }
-      return filteredObject;
-    });
-    this.dataSource = result//new MatTableDataSource(result);
-  }
-  // async handleChange(event) {
-  //   this.filterValue = event.target.value.toLowerCase();
-  //   this.data = [];
-  //   this.pageIndex = 1
-  //   this.loadData();
-  // }
-  // loadData(event = null) {
-  //   const filters = [];
-  //   let sorts = '';
-  //   this.isLoading = true;
-  //   if (this.defaultSort) {
-  //     if (this.defaultSortDirection === 'desc') {
-  //       sorts = '-' + this.defaultSort;
-  //     } else {
-  //       sorts = this.defaultSort;
-  //     }
-  //   }
-  //   if (this.showSerach) {
-  //     if (this.filterValue) {
-  //       const y = '(' + this.searchFields.replace(',', '|') + ')';
-  //       filters.push(y + '@=*' + this.filterValue);
-  //     }
-  //   }
-  //   if (this.defaultFilter) {
-  //     filters.push(this.defaultFilter)
-  //   }
-  //   setTimeout(() => {
-  //     const filtersValue = filters.join(', ');
-  //     this.modelService.getAll(this.pageIndex, this.pageSize, sorts, filtersValue, this.customInclude).subscribe(
-  //       (response: BaseQueryData<T>) => {
-  //         if (this.pageIndex !== response.getMeta().meta.count) {
-  //           this.pageIndex++
-  //         } else {
-  //           if (event) event.target.disabled = true;
-  //         }
-  //         // if (this.filterValue)
-  //         //   this.data = response.getModels();
-  //         // else
-  //         const rows = [...this.data, ...response.getModels()];
-  //         this.data = rows;
-  //         // this.data = this.data.concat();
-
-  //         if (event) event.target.complete();
-  //         this.isLoading = false;
-  //       })
-  //   }, 700);
-  // }
-  // async handleRefresh(event) {
-  //   this.pageIndex = 1
-  //   this.data = [];
-  //   this.loadData();
-  //   event.target.complete();
-  // }
-  // onAdd() {
-  //   console.log(this.basePath)
-  //   this.router.navigate([this.basePath + '/add'])
-  //   // this.navCtrl.navigateForward(this.basePath + '/add');
-  // }
-  // editModel(model: BaseModelFormly) {
-  //   if (this.canEdit)
-  //     this.router.navigate([this.basePath + '/edit/', model.id]);
-  //   // this.navCtrl.navigateForward(this.basePath + '/edit/' + model.id);
-  // }
-  async getListLayout() {
-    if (this.model) {
-      this.tableLayout = await this.rdict.asyncGet("config.models." + this.model + ".tableLayout")
-      const formLayout=await this.rdict.asyncGet("config.models." + this.model + ".formLayout");
-      console.log(formLayout);
-      if (this.tableLayout) {
-        this.title = this.translate.instant(this.tableLayout["title"]);
-        this.allColumns = this.tableLayout["columns"].map(item => {
-          if (!item.isTranslated) {
-            item.name = this.translate.instant(item.translateKey);
-            item.isTranslated = true
-          }
-          return item;
-        });
-        this.columns = [];
-
-        this.allColumns.sort((a, b) => a.order - b.order);
-
-        // if (this.canDelete || this.canEdit) {
-        //   this.allColumns.push({
-        //     // cellTemplate: null,
-        //     name: '',
-        //     // cellClass: 'actions-cell',
-        //     draggable: false,
-        //     sortable: false,
-        //     visible: true
-        //     // width: 100,
-        //     // maxWidth: 100,
-        //     // minWidth: 100
-        //   })
-        // }
-        // this.columns = this.allColumns.filter((item: IonicDataTableLayoutConfig) => item.visible);
-
-        this.displayedColumns = [];
-        // if (this.allowReorderItems) {
-        //   this.displayedColumns.push('position')
-        // }
-        this.displayedColumns.push.apply(this.displayedColumns, this.allColumns.map(x => x.propertyName));
-
-      }
     }
+  }
+  ondDeleteEvent(changes: any) {
+    if (changes) {
+      const key = changes?.key as string;
+      if (key) {
+        const index = this.dataSource.findIndex((item: any) => item.__idx === key);
+        if (index > -1) {
+          this.dataSource.splice(index, 1);
+        }
+        // this.tableRdict.delete(key)
+      }
 
+    }
+  }
+  getListLayout() {
+    if (this.model) {
+      if (this.fileLayout) {
+        //load from file
+        this.localFileService.getJsonData(this.fileLayout).subscribe({
+          next: value => {
+            if (value) {
+              const layout = value.find(item => item.model === this.model);
+              this.setLayout(layout?.tableLayout);
+            }
+          },
+          error: err => console.error('Error:', err.message),
+        })
+      } else
+        //Use rdict layout
+        this.rdict.getAsObservable("config.models." + this.model + ".tableLayout").subscribe(
+          {
+            next: value => {
+              this.setLayout(value);
+            },
+            error: err => console.error('Error:', err.message),
+          }
+        )
+    }
+  }
+
+  private setLayout(layout: any) {
+    if (layout) {
+      this.tableLayout = layout;
+      this.title = this.translate.instant(this.tableLayout["title"]);
+      this.allColumns = this.tableLayout["columns"].map(item => {
+        if (!item.isTranslated) {
+          item.name = this.translate.instant(item.translateKey);
+          item.isTranslated = true
+          item.isEditLink = false;
+          if (this.editColumn && this.editColumn === item.propertyName) {
+            item.isEditLink = true;
+          }
+        }
+        return item;
+      });
+      this.columns = [];
+
+      this.allColumns.sort((a, b) => a.order - b.order);
+      this.displayedColumns = [];
+      this.displayedColumns.push.apply(this.displayedColumns, this.allColumns.map(x => x.propertyName));
+    }
   }
   public addHandler(): void {
-    console.log("add")
-    this.router.navigate([this.basePath + '/add'])
-    // this.editDataItem = new Product();
-    // this.isNew = true;
+    this.router.navigate([`${this.basePath}/add`])
   }
+  public editHandler(args: AddEvent): void {
+    this.edit(args.dataItem);
+    // this.editDataItem = args.dataItem;
+    // this.isNew = false;
+  }
+  public edit(dataItem: any): void {
+    this.router.navigate([`${this.basePath}/edit/${dataItem.__idx}`])
+  }
+  public removeHandler(args: RemoveEvent): void {
+    this.dialogService.confirmDelete().subscribe({
+      next: (result) => {
+        if (result) {
+          this.tableRdict.deleteAsObservable(args.dataItem.__idx).subscribe({
+            next: (result) => {
+              this.dataSource.splice(args.rowIndex, 1);
+            }
+          });
+        }
+      }
+    });
+    // this.editService.remove(args.dataItem);
 
+  }
+  public getCellValue(item: any, propertyName: string): any {
+    if (item instanceof ReactiveDictionary) {
+      console.log(item)
+    } else {
+      return item[propertyName];
+    }
+  }
 }

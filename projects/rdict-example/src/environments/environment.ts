@@ -3,6 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  // baseUrl: 'http://localhost:33030'
+  // authUrl: 'http://localhost:33050'
   baseUrl: 'https://repom-dev-api.rosoftlab.net',
   authUrl: 'https://repom-dev-identity.rosoftlab.net',
   production: false

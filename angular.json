@@ -3,7 +3,6 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-
     "@rosoftlab/core": {
       "projectType": "library",
       "root": "projects/rosoftlab/core",
@@ -166,7 +165,6 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "project": "projects/rosoftlab/rdict/ng-package.json"
-      
           },
           "configurations": {
             "production": {
@@ -213,6 +211,7 @@
             "tsConfig": "projects/rdict-example/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "projects/rdict-example/src/assets",
               {
                 "glob": "**/*",
                 "input": "projects/rdict-example/public"

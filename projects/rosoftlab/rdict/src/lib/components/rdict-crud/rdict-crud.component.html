@@ -1,3 +1,10 @@
-<form [formGroup]="baseForm" (ngSubmit)="onSubmit(model)">
-  <formly-form [form]="baseForm" [fields]="fields" [model]="model" [options]="options"></formly-form>
-</form>
+<kendo-toolbar>
+  <kendo-toolbar-spacer></kendo-toolbar-spacer>
+  <kendo-toolbar-button text="Save" showText="both" [svgIcon]="saveIcon" showIcon="both" themeColor="primary"
+    [disabled]="false" (click)="onSave()">
+  </kendo-toolbar-button>
+</kendo-toolbar>
+
+  <form [formGroup]="baseForm" (ngSubmit)="onSubmit(model)">
+    <formly-form [form]="baseForm" [fields]="fields" [model]="model" [options]="options"></formly-form>
+  </form>
