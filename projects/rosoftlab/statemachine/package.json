@@ -2,8 +2,8 @@
   "name": "@rosoftlab/statemachine",
   "version": "0.0.0-ROSOFTLAB-VERSION",
   "peerDependencies": {
-    "@angular/common": "^18.2.9",
-    "@angular/core": "^18.2.9",
+    "@angular/common": "^19.2.8",
+    "@angular/core": "^19.2.8",
     "@rosoftlab/core": "0.0.0-ROSOFTLAB-VERSION"
   },
   "dependencies": {
