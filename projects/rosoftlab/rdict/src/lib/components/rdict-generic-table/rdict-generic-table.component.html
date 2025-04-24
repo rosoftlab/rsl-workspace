@@ -5,7 +5,7 @@
     <kendo-toolbar-messages>Test</kendo-toolbar-messages>
     <!-- <kendo-toolbar-separator></kendo-toolbar-separator> -->
     <kendo-toolbar-spacer></kendo-toolbar-spacer>
-    <kendo-toolbar-button kendoButton [svgIcon]="svgAdd" text="Add new" kendoGridAddTool></kendo-toolbar-button>
+    <kendo-toolbar-button *ngIf="hasAdd" kendoButton [svgIcon]="svgAdd" text="Add new" kendoGridAddTool></kendo-toolbar-button>
   </kendo-toolbar>
 
   <!-- <kendo-toolbar>
@@ -23,22 +23,28 @@
     <ng-template *ngIf="column.isEditLink; else defaultTemplate" kendoGridCellTemplate let-dataItem>
       <!-- Create a link that calls editHandler(dataItem) -->
       <a href="javascript:void(0)" (click)="edit(dataItem)" class="edit-link">
-        {{ getCellValue(dataItem,column.propertyName) }}
+        {{ getCellValue(dataItem,column) }}
       </a>
     </ng-template>
+        
+    <!-- <ng-template *ngIf="column.type=='reference'; else defaultTemplate" kendoGridCellTemplate let-dataItem>
+      <a href="javascript:void(0)" (click)="edit(dataItem)" class="edit-link">
+        {{ getCellValue$(dataItem,column) | async }}
+      </a>
+    </ng-template> -->
     <!-- Default template for non-link columns -->
     <ng-template #defaultTemplate kendoGridCellTemplate let-dataItem>
-      {{ getCellValue(dataItem,column.propertyName) }}
+      {{ getCellValue(dataItem,column) }}
     </ng-template>
   </kendo-grid-column>
 
 
-  <kendo-grid-command-column title="" [width]="100">
+  <kendo-grid-command-column *ngIf="canEdit && canDelete" title="" [width]="100">
     <ng-template kendoGridCellTemplate>
       <!-- <button kendoButton  kendoGridEditCommand  [svgIcon]="svgEdit" themeColor="light" ></button>
       <button kendoButton  kendoGridRemoveCommand [svgIcon]="svgDelete" themeColor="error"></button> -->
-      <button kendoGridEditCommand [svgIcon]="svgEdit" themeColor="light"></button>
-      <button kendoGridRemoveCommand [svgIcon]="svgDelete" themeColor="error"></button>
+      <button *ngIf="canEdit" kendoGridEditCommand [svgIcon]="svgEdit" themeColor="light"></button>
+      <button *ngIf="canDelete" kendoGridRemoveCommand [svgIcon]="svgDelete" themeColor="error"></button>
     </ng-template>
   </kendo-grid-command-column>
 </kendo-grid>

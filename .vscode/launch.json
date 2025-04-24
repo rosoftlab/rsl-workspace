@@ -12,8 +12,9 @@
       "url": "http://localhost:33080",
       "sourceMaps": true,
       "trace": true,
-      // "preLaunchTask": "ng: serve rdict-example",
-      // "postDebugTask": "terminate ng serve"
+     "skipFiles": [
+      "zone.js",
+    ]
     },
     {
       "type": "chrome",

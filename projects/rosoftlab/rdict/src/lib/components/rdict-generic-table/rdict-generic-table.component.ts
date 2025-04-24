@@ -7,10 +7,10 @@ import { AddEvent, KENDO_GRID, RemoveEvent } from '@progress/kendo-angular-grid'
 import { KENDO_LABEL } from '@progress/kendo-angular-label';
 import { KENDO_TOOLBAR } from '@progress/kendo-angular-toolbar';
 // import { ColumnMode, SelectionType, SortDirection } from '@swimlane/ngx-datatable';
-import { KENDO_BUTTONS } from "@progress/kendo-angular-buttons";
+import { KENDO_BUTTONS } from '@progress/kendo-angular-buttons';
 import { KENDO_DIALOG } from '@progress/kendo-angular-dialog';
 import { pencilIcon, plusIcon, SVGIcon, trashIcon } from '@progress/kendo-svg-icons';
-import { LocalFileService } from "@rosoftlab/core";
+import { LocalFileService } from '@rosoftlab/core';
 import { ReactiveDictionary } from '../../reactive-dictionary';
 import { MaterialDialogService } from '../../services/material-dialog.service';
 import { RdictTableTitle } from './rdict-table-title';
@@ -37,8 +37,7 @@ declare var $: any;
   providers: []
 })
 export class GenericRdictTableComponent implements OnInit {
-
-  dataSource: unknown[] //MatTableDataSource<any> = new MatTableDataSource();
+  dataSource: unknown[]; //MatTableDataSource<any> = new MatTableDataSource();
   public title: string;
   model: string;
   @Input() showSerach: boolean;
@@ -58,7 +57,7 @@ export class GenericRdictTableComponent implements OnInit {
   fileLayout: string;
   data: any[] = [];
   pageIndex: number = 1;
-  pageSize: number = 30
+  pageSize: number = 30;
 
   basePath: string;
   dictPath: string;
@@ -69,14 +68,15 @@ export class GenericRdictTableComponent implements OnInit {
   // @ViewChild('table') table: MatTable<any>;
   // @ViewChild('table', { read: ElementRef }) public matTableRef: ElementRef;
 
-
   @Output() selectedObject: EventEmitter<any> = new EventEmitter<any>();
-  @Output() click: EventEmitter<{ propertyName: string, model: any }> = new EventEmitter<{ propertyName: string, model: any }>();
+  @Output() click: EventEmitter<{ propertyName: string; model: any }> = new EventEmitter<{ propertyName: string; model: any }>();
   @Output() editModel: EventEmitter<any> = new EventEmitter<any>();
 
   columns = [];
   tableLayout = {};
   allColumns = [];
+  referenceColumns=[];
+  referenceData=new Map<string,Map<string, any>>();
   displayedColumns: string[];
   // ColumnMode = ColumnMode;
   // SelectionType = SelectionType;
@@ -86,7 +86,7 @@ export class GenericRdictTableComponent implements OnInit {
   isLoading: boolean;
   filterValue: string;
   oldOffsetY: number;
-  hasSearch: false
+  hasSearch: false;
   selectedItem: any;
   public svgEdit: SVGIcon = pencilIcon;
   public svgDelete: SVGIcon = trashIcon;
@@ -100,10 +100,10 @@ export class GenericRdictTableComponent implements OnInit {
     private injector: Injector,
     private localFileService: LocalFileService,
     private rdict: ReactiveDictionary,
-    private dialogService: MaterialDialogService) {
-  }
+    private dialogService: MaterialDialogService
+  ) {}
   async ngOnInit() {
-    this.setValueFromSnapshot(this, this.route.snapshot, 'model', "");
+    this.setValueFromSnapshot(this, this.route.snapshot, 'model', '');
     this.setValueFromSnapshot(this, this.route.snapshot, 'showSerach', false);
     this.setValueFromSnapshot(this, this.route.snapshot, 'searchFields', null);
     this.setValueFromSnapshot(this, this.route.snapshot, 'customInclude', null);
@@ -122,21 +122,21 @@ export class GenericRdictTableComponent implements OnInit {
 
     this.setValueFromSnapshot(this, this.route.snapshot, 'fileLayout', '');
 
-    const currentUrlSegments: UrlSegment[] = this.router.url.split('/').map(segment => new UrlSegment(segment, {}));
-    this.basePath = currentUrlSegments.map(segment => segment.path).join('/');
-    const filteredSegments = currentUrlSegments.filter(segment => segment.path !== '');
-    this.dictPath = filteredSegments.map(segment => segment.path).join('.');
+    const currentUrlSegments: UrlSegment[] = this.router.url.split('/').map((segment) => new UrlSegment(segment, {}));
+    this.basePath = currentUrlSegments.map((segment) => segment.path).join('/');
+    const filteredSegments = currentUrlSegments.filter((segment) => segment.path !== '');
+    this.dictPath = filteredSegments.map((segment) => segment.path).join('.');
     this.model = filteredSegments.length > 0 ? filteredSegments[filteredSegments.length - 1].path : ''; // Default to empty string if no valid segments
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         // Navigation to another page is about to occur
         this.data = [];
-        this.pageIndex = 1
+        this.pageIndex = 1;
         // Perform actions or update component as needed
       }
     });
-    this.getListLayout()
-    this.loadData()
+    this.getListLayout();
+    this.loadData();
   }
   setValueFromSnapshot<T>(component: any, snapshot: ActivatedRouteSnapshot, key: string, defaultValue: T): void {
     if (component[key] === undefined) {
@@ -149,49 +149,46 @@ export class GenericRdictTableComponent implements OnInit {
   }
   async loadData() {
     this.rdict.getAsObservable(this.dictPath).subscribe({
-      next: rdictData => {
+      next: (rdictData) => {
         this.tableRdict = rdictData;
         this.tableRdict.onChanges().subscribe({
           next: (changes) => {
-            console.log("Changes detected grid:", changes);
+            console.log('Changes detected grid:', changes);
             this.onChangeEvent(changes);
           }
-        })
+        });
         this.tableRdict.onDelete().subscribe({
           next: (changes) => {
-            console.log("Delete detected grid:", changes);
+            console.log('Delete detected grid:', changes);
             this.ondDeleteEvent(changes);
           }
-        })
+        });
         this.rdict.getTableAsObservable(this.dictPath, this.tableRdict).subscribe({
-          next: value => {
+          next: (value) => {
             this.dataSource = value;
           },
-          error: err => console.error('Error:', err.message),
+          error: (err) => console.error('Error:', err.message)
         });
       },
-      error: err => console.error('Error:', err.message),
+      error: (err) => console.error('Error:', err.message)
     });
-
   }
   onChangeEvent(changes: any) {
     if (changes) {
       const key = changes?.key as string;
       const value = changes?.value;
       if (key && value) {
-
         const index = this.dataSource.findIndex((item: any) => item.__idx === key);
         if (index > -1) {
           this.dataSource[index] = value;
         } else {
           //get the object from rdict
           this.tableRdict.getAsObservable(key).subscribe({
-            next: value => {
+            next: (value) => {
               var dd = value.getPlainObject();
               this.dataSource.push(dd);
             }
           });
-
         }
       }
     }
@@ -206,7 +203,6 @@ export class GenericRdictTableComponent implements OnInit {
         }
         // this.tableRdict.delete(key)
       }
-
     }
   }
   getListLayout() {
@@ -214,51 +210,79 @@ export class GenericRdictTableComponent implements OnInit {
       if (this.fileLayout) {
         //load from file
         this.localFileService.getJsonData(this.fileLayout).subscribe({
-          next: value => {
+          next: (value) => {
             if (value) {
-              const layout = value.find(item => item.model === this.model);
+              const layout = value.find((item) => item.model === this.model);
               this.setLayout(layout?.tableLayout);
             }
           },
-          error: err => console.error('Error:', err.message),
-        })
-      } else
-        //Use rdict layout
-        this.rdict.getAsObservable("config.models." + this.model + ".tableLayout").subscribe(
-          {
-            next: value => {
-              this.setLayout(value);
-            },
-            error: err => console.error('Error:', err.message),
-          }
-        )
+          error: (err) => console.error('Error:', err.message)
+        });
+      }
+      //Use rdict layout
+      else
+        this.rdict.getAsObservable('config.models.' + this.model + '.tableLayout').subscribe({
+          next: (value) => {
+            this.setLayout(value);
+          },
+          error: (err) => console.error('Error:', err.message)
+        });
     }
   }
 
   private setLayout(layout: any) {
     if (layout) {
       this.tableLayout = layout;
-      this.title = this.translate.instant(this.tableLayout["title"]);
-      this.allColumns = this.tableLayout["columns"].map(item => {
+      this.title = this.translate.instant(this.tableLayout['title']);
+      this.allColumns = this.tableLayout['columns'].map((item) => {
         if (!item.isTranslated) {
           item.name = this.translate.instant(item.translateKey);
-          item.isTranslated = true
+          item.isTranslated = true;
           item.isEditLink = false;
           if (this.editColumn && this.editColumn === item.propertyName) {
             item.isEditLink = true;
           }
+          if (!item.type) {
+            item.type = 'property';
+          }
         }
         return item;
       });
+      //Get reference columns
+      const referenceColumns = this.allColumns.filter((item) => item.reference !== undefined && item.reference !== null);
+      if (referenceColumns.length > 0) {
+        referenceColumns.forEach((item) => {
+          this.rdict.getTableAsObservable(item.reference).subscribe({
+            next: (value) => {
+              if (value) {
+                console.log('Reference data:', value);
+                this.referenceData.set(item.reference, this.arrayToMap(value,item.referenceKey));
+              }
+            },
+            error: (err) => console.error('Error:', err.message)
+          });
+        });
+      }
       this.columns = [];
 
       this.allColumns.sort((a, b) => a.order - b.order);
       this.displayedColumns = [];
-      this.displayedColumns.push.apply(this.displayedColumns, this.allColumns.map(x => x.propertyName));
+      this.displayedColumns.push.apply(
+        this.displayedColumns,
+        this.allColumns.map((x) => x.propertyName)
+      );
     }
   }
+   arrayToMap<T>(array: T[], keyProperty: keyof T): Map<string, T> {
+    const map = new Map<string, T>();
+    for (const item of array) {
+      const key = String(item[keyProperty]); // ensure it's a string
+      map.set(key, item);
+    }
+    return map;
+  }
   public addHandler(): void {
-    this.router.navigate([`${this.basePath}/add`])
+    this.router.navigate([`${this.basePath}/add`]);
   }
   public editHandler(args: AddEvent): void {
     this.edit(args.dataItem);
@@ -266,7 +290,7 @@ export class GenericRdictTableComponent implements OnInit {
     // this.isNew = false;
   }
   public edit(dataItem: any): void {
-    this.router.navigate([`${this.basePath}/edit/${dataItem.__idx}`])
+    this.router.navigate([`${this.basePath}/edit/${dataItem.__idx}`]);
   }
   public removeHandler(args: RemoveEvent): void {
     this.dialogService.confirmDelete().subscribe({
@@ -281,13 +305,16 @@ export class GenericRdictTableComponent implements OnInit {
       }
     });
     // this.editService.remove(args.dataItem);
-
   }
-  public getCellValue(item: any, propertyName: string): any {
-    if (item instanceof ReactiveDictionary) {
-      console.log(item)
+  public getCellValue(item: any, column: any): any {
+    if (typeof item !== 'object' || item === null) {
+      return null; // or `undefined` or some fallback
+    }
+    if (column.type=="reference" ) {
+      const value= this.referenceData.get(column.reference)?.get(item[column.propertyName])?.[column.referenceProperty] ?? item[column.propertyName];
+      return value;
     } else {
-      return item[propertyName];
+      return item[column.propertyName];
     }
   }
 }

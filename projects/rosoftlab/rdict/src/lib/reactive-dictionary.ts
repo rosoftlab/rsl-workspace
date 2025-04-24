@@ -236,7 +236,7 @@ export class ReactiveDictionary extends Map<string, any> {
     if (!data) data = await this.asyncGet(key);
     if (!data) return new Map();
 
-    console.log('getTable', data);
+    // console.log('getTable', data);
 
     const entries = await Promise.all(
       Array.from(data.entries()).map(async ([k, v]) => {
@@ -258,7 +258,7 @@ export class ReactiveDictionary extends Map<string, any> {
   async getTable_old(key: string, data: any = null): Promise<any[]> {
     if (!data) data = await this.asyncGet(key); // Get rooms from the ReactiveDictionary
     if (!data) return []; // Return an empty array if data is undefined
-    console.log('getTable', data);
+    // console.log('getTable', data);
     // Filter and get only entries that are instances of ReactiveDictionary
     const result =
       (await Promise.all(

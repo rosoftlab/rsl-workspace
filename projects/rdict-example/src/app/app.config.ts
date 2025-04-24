@@ -32,8 +32,8 @@ export const appConfig: ApplicationConfig = {
       }
     },
 
-    // { provide: SOCKET_URL, useValue: "http://localhost:5200" }, // environment.baseUrl
-    { provide: SOCKET_URL, useValue:  environment.baseUrl }, //
+    { provide: SOCKET_URL, useValue: "http://localhost:5200" }, // environment.baseUrl
+    // { provide: SOCKET_URL, useValue:  environment.baseUrl }, //
     provideAnimations(),
     BaseDatastore,
     DatastoreCore,
