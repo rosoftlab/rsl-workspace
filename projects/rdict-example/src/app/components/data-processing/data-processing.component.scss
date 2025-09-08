@@ -2,9 +2,13 @@
   margin: 20px 0;
 }
 
-.step-buttons {
+.steppyContainer {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 20px;
+  .k-stepper.k-stepper-linear{
+    width: 70%;
+  }
 }
 
 .listbox-item {
@@ -30,8 +34,6 @@
   border: none;
   cursor: pointer;
 }
-
-
 
 .colors-wrapper {
   display: flex;
@@ -96,4 +98,3 @@
   text-align: center;
   color: #ffffff;
 }
-

@@ -1,6 +1,9 @@
 <kendo-toolbar>
+  <kendo-toolbar-button text="Back" showText="both" [svgIcon]="backIcon" showIcon="both" themeColor="primary"
+    [disabled]="false" (click)="onBack()">
+  </kendo-toolbar-button>
   <kendo-toolbar-spacer></kendo-toolbar-spacer>
-  <kendo-toolbar-button text="Save" showText="both" [svgIcon]="saveIcon" showIcon="both" themeColor="primary"
+  <kendo-toolbar-button text="Save" showText="both" [svgIcon]="saveIcon" showIcon="both" themeColor="success"
     [disabled]="false" (click)="onSave()">
   </kendo-toolbar-button>
 </kendo-toolbar>
@@ -8,3 +11,4 @@
   <form [formGroup]="baseForm" (ngSubmit)="onSubmit(model)">
     <formly-form [form]="baseForm" [fields]="fields" [model]="model" [options]="options"></formly-form>
   </form>
+<div kendoDialogContainer></div>

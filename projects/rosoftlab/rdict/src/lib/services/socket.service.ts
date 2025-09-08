@@ -1,15 +1,24 @@
 import { Inject, Injectable } from '@angular/core';
+import { FilterRequest } from '@rosoftlab/core';
+import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 import { SOCKET_URL } from '../core';
+type Kwargs = Record<string, any>;
+interface ExecPayload {
+  did: string;
+  function_name: string;
+  args?: any[]; // optional; send only if non-empty
+  kwargs?: Kwargs; // optional; send only if non-empty
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
   private socket: Socket;
-  private socketUrl: string
-  constructor(
-    @Inject(SOCKET_URL) socketUrl: string,) {
-    this.socketUrl = socketUrl
+  private socketUrl: string;
+  constructor(@Inject(SOCKET_URL) socketUrl: string) {
+    this.socketUrl = socketUrl;
     // Replace with your actual server URL
     // this.socket.on("connect", () => {
     //   const engine = this.socket.io.engine;
@@ -28,34 +37,16 @@ export class SocketService {
         withCredentials: true,
         // parser: msgpackParser,
         auth: {
-          token: authToken, // Include the authentication token
+          token: authToken // Include the authentication token
         }
-        // ,
-        // query: {
-        //   "access_token": authToken
-        // }
       });
-
-      // const originalEmit = this.socket.emit;
-      // this.socket.emit = (event, ...args) => {
-      //   // Transform dates before sending
-      //   const transformedData = this.transformDatesForEncoding(args[0]);
-      //   originalEmit.call(this.socket, event, transformedData);
-      //   return this.socket;
-      // };
-
-      // Intercept incoming data and apply date transformation
-      // this.socket.onAny((event, data) => {
-      //   const transformedData = this.transformDatesForDecoding(data);
-      //   this.socket.emit(event, transformedData);  // Emit the transformed data back
-      // });
     }
   }
   getInitialData(): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
       this.socket.on('init', (data: any) => {
         if (data) {
-          resolve(data["dict_data"]);
+          resolve(data['dict_data']);
         } else {
           reject('No data received from init event');
         }
@@ -67,7 +58,7 @@ export class SocketService {
       // (rdict.get('__guid'), data, this.socket.id)
       if (rdict.get('__guid') === data.did) {
         // ('Set the data')
-        rdict.asyncSet(data.key, data.value, false)
+        rdict.asyncSet(data.key, data.value, false);
       }
     });
   }
@@ -76,7 +67,7 @@ export class SocketService {
       // (rdict.get('__guid'), data, this.socket.id)
       if (rdict.get('__guid') === data.did) {
         // ('Set the data')
-        rdict.asyncDelete(data.key, false)
+        rdict.asyncDelete(data.key, false);
       }
     });
   }
@@ -85,14 +76,69 @@ export class SocketService {
     return new Promise((resolve, reject) => {
       this.socket.emit('lazy_load', { did, key }, (response: any) => {
         if (response && response.error) {
-          reject(response.error);  // Handle error if present
+          reject(response.error); // Handle error if present
         } else {
-          resolve(response);  // Resolve with the response data
+          resolve(response); // Resolve with the response data
         }
       });
     });
   }
+  // requestFilteredData(guid, key, request: FilterRequest): Promise<any> {
+  //   return new Promise((resolve, reject) => {
+  //     this.socket.emit('get_filtered_views', { did: guid, key: key, request: request }, (response: any) => {
+  //       if (response && response.error) {
+  //         reject(response.error); // Handle error if present
+  //       } else {
+  //         resolve(response); // Resolve with the response data
+  //       }
+  //     });
+  //   });
+  // }
 
+  // Observable wrapper for requestFilteredData
+  // This allows you to use it in an RxJS pipeline
+  requestFilteredData(guid: string, key: string, request: FilterRequest): Observable<any> {
+    return new Observable<any>((observer) => {
+      this.socket.emit('get_filtered_views', { did: guid, key, request }, (response: any) => {
+        if (response && response.error) {
+          observer.error(response.error);
+        } else {
+          observer.next(response);
+          observer.complete();
+        }
+      });
+
+      // teardown logic if subscriber unsubscribes before callback fires
+      return () => {
+        // no direct way to cancel a single emit/callback in socket.io,
+        // but you could optionally remove a listener here if you used on(...)
+      };
+    });
+  }
+  executeFunction(did: string, functionName: string, args: any[] = [], kwargs: Kwargs = {}): Observable<any> {
+    const payload: ExecPayload = {
+      did,
+      function_name: functionName,
+      ...(args && args.length ? { args } : {}),
+      ...(kwargs && Object.keys(kwargs).length ? { kwargs } : {})
+    };
+    return new Observable<any>((observer) => {
+      this.socket.emit('execute_function', payload, (response: any) => {
+        if (response && response.error) {
+          observer.error(response.error);
+        } else {
+          observer.next(response);
+          observer.complete();
+        }
+      });
+
+      // teardown logic if subscriber unsubscribes before callback fires
+      return () => {
+        // no direct way to cancel a single emit/callback in socket.io,
+        // but you could optionally remove a listener here if you used on(...)
+      };
+    });
+  }
   // Emit the 'set' event to update the data on the server
   emitSet(did: string, key: string, value: any): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -124,7 +170,7 @@ export class SocketService {
       return { __date__: obj.toISOString() };
     } else if (Array.isArray(obj)) {
       return obj.map(this.transformDatesForEncoding);
-    } else if (obj !== null && typeof obj === "object") {
+    } else if (obj !== null && typeof obj === 'object') {
       return Object.keys(obj).reduce((acc, key) => {
         acc[key] = this.transformDatesForEncoding(obj[key]);
         return acc;
@@ -134,8 +180,8 @@ export class SocketService {
   }
 
   transformDatesForDecoding(obj: any): any {
-    if (typeof obj === "object" && obj !== null) {
-      if ("__date__" in obj) {
+    if (typeof obj === 'object' && obj !== null) {
+      if ('__date__' in obj) {
         return new Date(obj.__date__);
       }
       return Object.keys(obj).reduce((acc, key) => {
@@ -145,6 +191,4 @@ export class SocketService {
     }
     return obj;
   }
-
-
 }

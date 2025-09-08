@@ -55,6 +55,28 @@ export class MaterialDialogService {
       });
     });
   }
+   showError(content?: string, title?: string, confirmButtonText?: string, cancelButtonText?: string): Observable<boolean> {
+    const dialog: DialogRef = this.dialogService.open({
+      title: title || "Error",
+      content: content || "Error message?",
+      width: 450,
+      height: 200,
+      minWidth: 250,
+    });
+    // Return an Observable<boolean>
+    return new Observable((observer) => {
+      dialog.result.subscribe((result) => {
+        if (result instanceof DialogCloseResult) {
+          // Dialog was closed without an action
+          observer.next(false);
+        } else {
+          const actionResult = result as { text: string, result: boolean };
+          observer.next(actionResult.result);
+        }
+        observer.complete(); // Complete the observable
+      });
+    });
+  }
   showSaveMessage(message?: string): void {
     this.state.content = message || "Your data has been saved.";
     this.state.type = { style: "success", icon: true };

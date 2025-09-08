@@ -1,0 +1,118 @@
+.cron-container {
+  // font-family: monospace;
+  // color: #eee;
+  // background: #111;
+  // padding: 1rem;
+  // border-radius: 8px;
+  // max-width: 800px;
+  // margin: 2rem auto;
+}
+
+.field-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.field-labels span.active {
+  color: #ff6358;
+  font-weight: bold;
+}
+
+.field-labels span {
+  cursor: pointer;
+  user-select: none;
+}
+
+.field-help table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  // color: #ccc;
+}
+
+.field-help td {
+  padding: 0.25rem 0.5rem;
+}
+
+.description {
+  // font-size: 1.25rem;
+  // color: #ccc;
+}
+
+.next {
+  // font-size: 0.9rem;
+  // color: #888;
+}
+
+.next::first-letter, .description::first-letter {
+  text-transform: capitalize;
+}
+
+.error {
+  color: #f55;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+
+.cron-inputs {
+  display: flex;
+}
+::ng-deep .cron-inputs kendo-textbox input {
+  text-align: center;
+}
+.cron-inputs kendo-textbox {
+  // width: 18%;
+  text-align: center;
+  // padding: 0.5rem;
+  font-size: 14px;
+  // border: none;
+  border-top: 1px solid var(--kendo-color-border, rgba(0, 0, 0, 0.08));
+  border-bottom: 1px solid var(--kendo-color-border, rgba(0, 0, 0, 0.08));
+  border-radius: 0;
+  outline: none;
+  transition: border-color 0.2s;
+
+
+  
+}
+
+/* First input: left, top, bottom border */
+.cron-inputs kendo-textbox:first-child {
+  border-left: 1px solid var(--kendo-color-border, rgba(0, 0, 0, 0.08));
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+/* Middle inputs: top, bottom only */
+.cron-inputs kendo-textbox:not(:first-child):not(:last-child) {
+  border-left: none;
+  border-right: none;
+}
+
+/* Last input: right, top, bottom border */
+.cron-inputs kendo-textbox:last-child {
+  border-right: 1px solid var(--kendo-color-border, rgba(0, 0, 0, 0.08));
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+/* Hover and focus styles */
+// .cron-inputs kendo-textbox:hover,
+// .cron-inputs kendo-textbox:focus {
+//   border-top-color: #666;
+//   border-bottom-color: #666;
+// }
+
+// /* Specific borders on hover/focus */
+// .cron-inputs kendo-textbox:first-child:hover,
+// .cron-inputs kendo-textbox:first-child:focus {
+//   border-left-color: #666;
+// }
+
+// .cron-inputs kendo-textbox:last-child:hover,
+// .cron-inputs kendo-textbox:last-child:focus {
+//   border-right-color: #666;
+// }

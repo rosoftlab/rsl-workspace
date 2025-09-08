@@ -1,0 +1,35 @@
+<div class="cron-container">
+  <div class="description" *ngIf="description">ruleaza {{ description }}</div>
+  <div class="next" title="{{nextRunTitle}}" *ngIf="nextRun">urmatorul la {{ nextRun }}</div>
+  <div class="error" *ngIf="error">{{ error }}</div>
+
+  <div class="cron-inputs">
+    <ng-container *ngFor="let part of cronParts; index as i">
+      <kendo-textbox
+       class="k-text-center"
+        #inputRef
+        [ngModel]="part"
+        (ngModelChange)="setPart(i, $event)"
+        (focus)="onFocus(i)"
+        [class.active]="activeIndex === i"
+      ></kendo-textbox>
+    </ng-container>
+  </div>
+
+  <div class="field-labels">
+    <ng-container *ngFor="let label of fieldLabels; index as i">
+      <span [class.active]="activeIndex === i" (click)="focusInput(i)">
+        {{ label }}
+      </span>
+    </ng-container>
+  </div>
+
+  <div class="field-help">
+    <table>
+      <tr *ngFor="let row of fieldHelpTables[activeIndex]">
+        <td><code>{{ row[0] }}</code></td>
+        <td>{{ row[1] }}</td>
+      </tr>
+    </table>
+  </div>
+</div>

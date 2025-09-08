@@ -1,89 +1,108 @@
 <div class="example-wrapper">
-  <form #form="ngForm">
-    <kendo-stepper [(currentStep)]="currentStep" [steps]="steps"
-      (currentStepChange)="onStepChange($event)"></kendo-stepper>
+  <form>
+    <div class="steppyContainer">
+      <button [size]="'large'" class="prevStep" kendoButton (click)="prevStep()" [disabled]="currentStep === 0">Back</button>
+      <kendo-stepper [(currentStep)]="currentStep" [steps]="steps"></kendo-stepper>
+      <button [size]="'large'" class="nextStep" kendoButton (click)="nextStep()" [disabled]="isNextDisabled" themeColor="primary">{{nextText()}}</button>
+    </div>
+
     <kendo-breadcrumb [items]="selections"></kendo-breadcrumb>
     <div class="step-content">
       <ng-container *ngIf="currentStep === 0">
         <h3>Step 1: Data și unitate de productie</h3>
-        <div class="row example-wrapper">
+        <div class="row example-wrapper" [formGroup]="step0Form">
           <div class="col-12 example-col">
-            <p>Data</p>
-
-            <kendo-calendar name="date" [(ngModel)]="model.date" #date="ngModel" required
-              type="classic"></kendo-calendar>
-            <!-- <kendo-multiviewcalendar #multiviewcalendar selection="range" [(value)]="rangeSelectionValue"
-              (selectionRangeChange)="handleSelectionRange($event)">
-            </kendo-multiviewcalendar> -->
-
+            <kendo-formfield>
+              <kendo-label [for]="date" text="Data"></kendo-label>
+              <kendo-calendar #date name="date" formControlName="date" required type="classic"></kendo-calendar>
+              <kendo-formerror>Selectati data</kendo-formerror>
+            </kendo-formfield>
           </div>
           <div class="col-12 example-col">
-
-            <p>Unitatea de productie</p>
-            <kendo-dropdownlist #ddloc name="location" [data]="locations" textField="name" valueField="mongo_id"
-              [(ngModel)]="model.selectedLocation" required>
-            </kendo-dropdownlist>
+            <kendo-formfield showErrors="initial">
+              <kendo-label [for]="ddloc" text="Unitatea de productie"></kendo-label>
+              <kendo-dropdownlist #ddloc name="location" [data]="locations$ | async" textField="name"
+                valueField="mongo_id" formControlName="selectedLocation" required> </kendo-dropdownlist>
+              <kendo-formerror>Selectati unitatea de productie</kendo-formerror>
+            </kendo-formfield>
           </div>
         </div>
       </ng-container>
 
       <ng-container *ngIf="currentStep === 1">
         <h3>Step 2: Preluare date</h3>
-        <div class="row example-wrapper">
-          <div class="col-12 example-col">
-            <p>Importuri</p>
-            <kendo-listbox kendoListBoxDataBinding [data]="importList" [toolbar]="false">
-              <ng-template kendoListBoxItemTemplate let-dataItem>
-                <div class="listbox-item">
-                  <span class="item-name">{{ dataItem.name }}</span>
-                  <span class="item-status">
-                    <kendo-svgicon [icon]="getstatusIcon(dataItem.name)"
-                      [style.color]="getStatusColor(dataItem.name)"></kendo-svgicon>
-                  </span>
-                  <button kendoButton [svgIcon]="allIcons.moreVerticalIcon" class="item-menu-button"></button>
-                </div>
-              </ng-template>
-            </kendo-listbox>
-          </div>
-          <div class="col-12 example-col">
+        <kendo-grid [data]="imports$ | async" [pageSize]="10" [pageable]="false" [sortable]="false" [filterable]="false" [groupable]="false"
+          [height]="420">
+          <kendo-grid-column field="plugin_name" title="Plugin" [width]="140"></kendo-grid-column>
+          <kendo-grid-column field="file_name" title="Fisier" [width]="120"></kendo-grid-column>
+          <kendo-grid-column field="errors" title="Erori" [width]="100"></kendo-grid-column>
+          <kendo-grid-messages noRecords="Nu exista importuri pentru data si locatia selectata">
+          </kendo-grid-messages>
+        </kendo-grid>
+        <!-- <ng-container *ngIf="importList$ | async as importList">
+          <kendo-listbox kendoListBoxDataBinding [data]="importList" [toolbar]="false">
+            <ng-template kendoListBoxItemTemplate let-dataItem>
+              <div class="listbox-item">
+                <span class="item-name">{{ dataItem.name }}</span>
+                <span class="item-status">
+                  <kendo-svgicon [icon]="getstatusIcon(dataItem.name)"
+                    [style.color]="getStatusColor(dataItem.name)"></kendo-svgicon>
+                </span>
+                <button kendoButton [svgIcon]="allIcons.moreVerticalIcon" class="item-menu-button"></button>
+              </div>
+            </ng-template>
+          </kendo-listbox>
+        </ng-container> -->
 
-            <p>Prelucrare date</p>
-            <kendo-dropdownlist #ddl name="dataPrecessingLayouts" [data]="dataPrecessingLayouts" textField="name"
-              valueField="mongo_id" [(ngModel)]="model.selectedDataPrecessingLayout" required>
-            </kendo-dropdownlist>
-          </div>
-          <div class="col-12 example-col">
+        <!-- <div class="col-12 example-col">
             <p>Exporturi</p>
-            <kendo-listbox kendoListBoxDataBinding [data]="exportList" [toolbar]="false">
-              <ng-template kendoListBoxItemTemplate let-dataItem>
-                <div class="listbox-item">
-                  <span class="item-name">{{ dataItem.name }}</span>
-                  <span class="item-status">
-                    <kendo-svgicon [icon]="getstatusIcon(dataItem.name)"
-                      [style.color]="getStatusColor(dataItem.name)"></kendo-svgicon>
-                  </span>
-                  <button kendoButton [svgIcon]="allIcons.moreVerticalIcon" class="item-menu-button"></button>
+            <ng-container *ngIf="exportList$ | async as exportList">
+              <kendo-listbox kendoListBoxDataBinding [data]="exportList" [toolbar]="false">
+                <ng-template kendoListBoxItemTemplate let-dataItem>
+                  <div class="listbox-item">
+                    <span class="item-name">{{ dataItem.name }}</span>
+                    <span class="item-status">
+                      <kendo-svgicon [icon]="getstatusIcon(dataItem.name)"
+                        [style.color]="getStatusColor(dataItem.name)"></kendo-svgicon>
+                    </span>
+                    <button kendoButton [svgIcon]="allIcons.moreVerticalIcon" class="item-menu-button"></button>
+                  </div>
+                </ng-template>
+              </kendo-listbox>
+            </ng-container>
+          </div> -->
+
+      </ng-container>
+
+      <!-- <ng-container *ngIf="currentStep === 2">
+        <h3>Step 3: Selectie macheta</h3>
+        <div class="row">
+          <div class="col-12">
+            <kendo-dropdownlist #ddl name="dataProcessingLayouts" [data]="dataProcessingLayouts$ | async"
+              textField="name" valueField="mongo_id" [(ngModel)]="model.selectedDataPrecessingLayout" required
+              (valueChange)="machetaValueChange($event)">
+            </kendo-dropdownlist>
+            <div class="spreadsheet-container">
+              <div class="k-loading-panel" *ngIf="loading">
+                <div class="k-loading-panel-mask"></div>
+                <div class="k-loading-panel-wrapper">
+                  <kendo-loader type="infinite-spinner" themeColor="primary" size="large"></kendo-loader>
+                  <div class="k-loading-panel-text">Loading data ...</div>
                 </div>
-              </ng-template>
-            </kendo-listbox>
+              </div>
+              <kendo-spreadsheet #spreadsheetMachetaRef [menuItems]="[]" style="height: 100%; width: 100%">
+              </kendo-spreadsheet>
+            </div>
           </div>
         </div>
-
-      </ng-container>
+      </ng-container> -->
 
       <ng-container *ngIf="currentStep === 2">
-        <h3>Step 3: Selectie coloane</h3>
-        <div class="example-config">Checked keys: {{ checkedKeys.join(",") }}</div>
-        <kendo-treeview [nodes]="treeNodes" textField="desc" kendoTreeViewExpandable kendoTreeViewFlatDataBinding
-          kendoTreeViewCheckable idField="id" parentIdField="parentId" [(checkedKeys)]="checkedKeys" checkBy="checkKey"
-          (checkedKeysChange)="onCheckedKeysChange($event)" >
-        </kendo-treeview>
-
-      </ng-container>
-
-      <ng-container *ngIf="currentStep === 3">
-        <h3>Step 4: Prelucrare</h3>
-
+        <h3>Step 3: Prelucrare</h3>
+        <kendo-dropdownlist #ddl2 name="dataProcessingLayouts2" [data]="dataProcessingLayouts$ | async" textField="name"
+          valueField="mongo_id" [(ngModel)]="model.selectedDataPrecessingLayout" required
+          (valueChange)="machetaValueChange($event)">
+        </kendo-dropdownlist>
         <div class="spreadsheet-container">
           <div class="k-loading-panel" *ngIf="loading">
             <div class="k-loading-panel-mask"></div>
@@ -92,18 +111,10 @@
               <div class="k-loading-panel-text">Loading data ...</div>
             </div>
           </div>
-          <kendo-spreadsheet #spreadsheetRef [sheets]="data2" [activeSheet]="Data" style="height: 100%; width: 100%">
-          </kendo-spreadsheet>
+          <kendo-spreadsheet #spreadsheetRef style="height: 100%; width: 100%"> </kendo-spreadsheet>
         </div>
-
-
+        <div kendoDialogContainer></div>
       </ng-container>
-    </div>
-
-    <div class="step-buttons">
-      <button kendoButton (click)="prevStep()" [disabled]="currentStep === 0">Back</button>
-      <button kendoButton (click)="nextStep()" [disabled]="currentStep === steps.length - 1"
-        themeColor="primary">Next</button>
     </div>
   </form>
 </div>

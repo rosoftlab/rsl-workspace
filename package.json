@@ -1,6 +1,6 @@
 {
   "name": "@rosoftlab/core",
-  "version": "1.0.2-alpha-14",
+  "version": "1.0.3-alpha-2",
   "scripts": {
     "ng": "ng",
     "build": "ts-node --dir build build.ts",
@@ -30,6 +30,12 @@
     "@angular/platform-browser": "^19.2.8",
     "@angular/platform-browser-dynamic": "^19.2.8",
     "@angular/router": "^19.2.8",
+    "@capacitor/app": "7.0.2",
+    "@capacitor/cli": "7.4.3",
+    "@capacitor/core": "7.4.3",
+    "@capacitor/haptics": "7.0.2",
+    "@capacitor/keyboard": "7.0.2",
+    "@capacitor/status-bar": "7.0.2",
     "@ionic/angular": "~7.8.6",
     "@msgpack/msgpack": "^3.1.1",
     "@ngx-formly/core": "^6.3.12",

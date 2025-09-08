@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { from, mergeMap, Observable, Subject } from 'rxjs';
+import { FilterRequest } from '@rosoftlab/core';
+import { catchError, from, mergeMap, Observable, Subject, tap, throwError } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import { SocketService } from './services/socket.service';
+type Kwargs = Record<string, any>;
 // import { mergeMap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root' // This makes the service a singleton and available throughout the app
@@ -9,18 +11,14 @@ import { SocketService } from './services/socket.service';
 export class ReactiveDictionary extends Map<string, any> {
   private static instance: Map<string, ReactiveDictionary> = new Map<string, ReactiveDictionary>();
   private _socketService: SocketService;
-  private changes$: Subject<any> = new Subject<any>();
-  private deletes$: Subject<any> = new Subject<any>();
+  private changeEvent$: Subject<any> = new Subject<any>();
+  private deleteEvent$: Subject<any> = new Subject<any>();
 
   private isInitialized: boolean = false;
   private _authToken: string = null;
   constructor(socketService: SocketService) {
     super();
-
     this._socketService = socketService;
-    // this._socketService.initSocket(authToken)
-
-    // this._socketService.getSetEvent(this)
   }
   public async initialize(authToken: string) {
     this._authToken = authToken;
@@ -29,34 +27,6 @@ export class ReactiveDictionary extends Map<string, any> {
     this._socketService.getDeleteEvent(this);
     await this.asyncInit();
   }
-
-  // override keys(): IterableIterator<string> {
-  //   const excludedKeys = ['__guid', '__type']; // Key to exclude
-  //   const iterator = super.keys();
-
-  //   const filteredIterator = {
-  //     [Symbol.iterator]: () => ({
-  //       next: () => {
-  //         let result;
-
-  //         // Loop until we find a valid key or run out of keys
-  //         do {
-  //           result = iterator.next(); // Get the next entry ([key, value])
-  //           if (result.done) return { done: true }; // Stop if done
-
-  //           const key = result.value; // Destructure the entry
-  //           const value = super.get(key);
-  //           // Check if the key is in excludedKeys or if the value is an object
-  //           if (!excludedKeys.includes(key) && !(typeof value === 'object' && value !== null)) {
-  //             return { value: key, done: false }; // Return the valid key
-  //           }
-  //         } while (true); // Continue until a valid key is found
-  //       }
-  //     })
-  //   };
-
-  //   return filteredIterator as IterableIterator<string>;
-  // }
   // Asynchronous method to get a value by key
   async asyncGet(key: string): Promise<any> {
     // console.log('Get key: ', key);
@@ -98,7 +68,7 @@ export class ReactiveDictionary extends Map<string, any> {
       else return null;
     }
   }
-  transform_for_serialization(value: any) {
+  private transform_for_serialization(value: any) {
     // Transform a value to a format that can be serialized.
     const dict_type = value['__type'];
     if (dict_type === 'lazy') return { __type: 'lazy' };
@@ -115,7 +85,7 @@ export class ReactiveDictionary extends Map<string, any> {
       }
     }
     this.set(key, value);
-    this.changes$.next({ key, value });
+    this.changeEvent$.next({ key, value });
   }
   async asyncDelete(key: string, emmit_event: boolean = true): Promise<void> {
     if (this.has(key)) {
@@ -127,10 +97,10 @@ export class ReactiveDictionary extends Map<string, any> {
         }
       }
       this.delete(key);
-      this.deletes$.next({ key });
+      this.deleteEvent$.next({ key });
     }
   }
-  deleteAsObservable(key: string, emmit_event: boolean = true): Observable<any> {
+  delete$(key: string, emmit_event: boolean = true): Observable<any> {
     return from(this.asyncDelete(key, emmit_event));
   }
   // Asynchronous method to initialize with a set of key-value pairs
@@ -190,12 +160,12 @@ export class ReactiveDictionary extends Map<string, any> {
     }
     return value;
   }
-  getAsObservable(key: string): Observable<any> {
+  get$(key: string): Observable<any> {
     return from(this.asyncGet(key));
   }
 
-  getTableAsObservable(key: string, data: any = null): Observable<any[]> {
-    return from(this.getTable(key, data)).pipe(
+  getArray$(key: string, data: any = null): Observable<any[]> {
+    return from(this.getArray(key, data)).pipe(
       mergeMap((dictionaryMap) => {
         if (!(dictionaryMap instanceof Map)) {
           throw new Error('Expected a Map but received something else');
@@ -214,29 +184,11 @@ export class ReactiveDictionary extends Map<string, any> {
     );
   }
 
-  getTableAsObservable_old(key: string, data: any = null): Observable<any[]> {
-    return from(this.getTable(key, data)).pipe(
-      mergeMap((dictionary) => {
-        if (!Array.isArray(dictionary)) {
-          throw new Error('Expected an array but received something else');
-        }
-
-        const isArrayOfReactiveDictionaries = dictionary.every((item) => item instanceof ReactiveDictionary);
-
-        if (!isArrayOfReactiveDictionaries) {
-          throw new Error('Expected an array of ReactiveDictionary instances but received something else');
-        }
-
-        // ✅ WRAP THIS IN from(...) to make it emit real data, not a Promise
-        return from(this.processTableData(dictionary));
-      })
-    );
-  }
-  async getTable(key: string, data: any = null): Promise<Map<string, ReactiveDictionary>> {
+  async getArray(key: string, data: any = null): Promise<Map<string, ReactiveDictionary>> {
     if (!data) data = await this.asyncGet(key);
     if (!data) return new Map();
 
-    // console.log('getTable', data);
+    // console.log('getArray', data);
 
     const entries = await Promise.all(
       Array.from(data.entries()).map(async ([k, v]) => {
@@ -255,32 +207,15 @@ export class ReactiveDictionary extends Map<string, any> {
     return new Map(validEntries);
   }
 
-  async getTable_old(key: string, data: any = null): Promise<any[]> {
-    if (!data) data = await this.asyncGet(key); // Get rooms from the ReactiveDictionary
-    if (!data) return []; // Return an empty array if data is undefined
-    // console.log('getTable', data);
-    // Filter and get only entries that are instances of ReactiveDictionary
-    const result =
-      (await Promise.all(
-        Array.from(data.entries()).map(async (key: any, index: number) => {
-          const entry = (await data.asyncGet(key[0])) as ReactiveDictionary;
-          if (entry instanceof ReactiveDictionary) {
-            entry.set('__idx', key[0]);
-          }
-          return entry;
-        })
-      )) || []; // Return an empty array if the above yields undefined
-
-    return result.filter((entry: any) => entry instanceof ReactiveDictionary);
-  }
-  async getTableWithoutGuid(key: string): Promise<any[]> {
+  async getArrayWithoutGuid(key: string): Promise<any[]> {
     const data = await this.asyncGet(key);
     if (!data) return [];
 
     // Reuse the common processing logic
     return this.processTableData(data);
   }
-  async processTableData(data: any): Promise<any[]> {
+
+  private async processTableData(data: any): Promise<any[]> {
     if (data instanceof ReactiveDictionary) {
       const result =
         (await Promise.all(
@@ -321,45 +256,18 @@ export class ReactiveDictionary extends Map<string, any> {
     }
   }
 
-  // async processTableData(data: any): Promise<any[]> {
-  //     // Filter and get only entries that are instances of ReactiveDictionary
-  //     const result = await Promise.all(
-  //         Array.from(data.entries()).map(async ([key]) => {
-  //             const entry = await data.asyncGet(key) as ReactiveDictionary
-  //             if (entry instanceof ReactiveDictionary) {
-  //                 entry.set('__idx', key);
-  //                 }
-  //             return entry;
-  //         })
-  //     ) || [];
-
-  //     // Filter out entries that are not ReactiveDictionary instances
-  //     const filteredResults = result.filter((entry: any) => entry instanceof ReactiveDictionary);
-
-  //     // Remove __guid from each dictionary and return the plain object
-  //     return filteredResults.map(dictionary => {
-  //         const filteredObject: Record<string, any> = {};
-  //         for (const [key, value] of dictionary.entries()) {
-  //             if (key !== '__guid') {
-  //                 filteredObject[key] = value;
-  //             }
-  //         }
-  //         return filteredObject;
-  //     });
-  // }
-
-  onChanges(): Observable<any> {
-    return this.changes$.asObservable();
+  onChange$(): Observable<any> {
+    return this.changeEvent$.asObservable();
   }
-  onDelete(): Observable<any> {
-    return this.deletes$.asObservable();
+  onDelete$(): Observable<any> {
+    return this.deleteEvent$.asObservable();
   }
   private getNextOid(): string | null {
     const numericKeys = Array.from(this.keys())
       .filter((k) => /^\d+$/.test(k)) // keep only purely numeric keys
       .map((k) => parseInt(k, 10));
 
-    if (numericKeys.length === 0) return null;
+    if (numericKeys.length === 0) return '0';
 
     const maxKey = Math.max(...numericKeys);
     return (maxKey + 1).toString();
@@ -375,7 +283,34 @@ export class ReactiveDictionary extends Map<string, any> {
       }
     }
   }
-  modelFormList(property: string, value: any): any {
-    return this.get('__modelFormList');
+  getFilteredView(key: string, request: FilterRequest): Observable<any> {
+    const guid = this.get('__guid'); // however you’re retrieving it
+
+    return this._socketService.requestFilteredData(guid, key, request).pipe(
+      // tap((data) => {
+      //   // you can still inspect/log the data here if you like
+      //   console.log('received filtered view:', data);
+      // }),
+      catchError((err) => {
+        console.error('Error fetching filtered view:', err);
+        // re-throw so subscribers can handle it
+        return throwError(() => err);
+      })
+    );
+  }
+  executeFunction(functionName: string, args: any[] = [], kwargs: Kwargs = {}): Observable<any> {
+    const guid = this.get('__guid'); // however you’re retrieving it
+
+    return this._socketService.executeFunction(guid, functionName, args, kwargs).pipe(
+      tap((data) => {
+        // you can still inspect/log the data here if you like
+        console.log('received filtered view:', data);
+      }),
+      catchError((err) => {
+        console.error('Error fetching filtered view:', err);
+        // re-throw so subscribers can handle it
+        return throwError(() => err);
+      })
+    );
   }
 }

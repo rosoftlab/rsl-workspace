@@ -5,6 +5,7 @@
 export const environment = {
   baseUrl: 'https://repom-dev-api.rosoftlab.net',
   authUrl: 'http://192.168.6.14:33050',
+  rdictApi: 'http://localhost:5200',
   // authUrl: 'https://repom-dev-identity.rosoftlab.net',
   production: false
 };

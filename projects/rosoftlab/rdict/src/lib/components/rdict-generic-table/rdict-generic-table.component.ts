@@ -75,8 +75,8 @@ export class GenericRdictTableComponent implements OnInit {
   columns = [];
   tableLayout = {};
   allColumns = [];
-  referenceColumns=[];
-  referenceData=new Map<string,Map<string, any>>();
+  referenceColumns = [];
+  referenceData = new Map<string, Map<string, any>>();
   displayedColumns: string[];
   // ColumnMode = ColumnMode;
   // SelectionType = SelectionType;
@@ -94,16 +94,18 @@ export class GenericRdictTableComponent implements OnInit {
   tableRdict: ReactiveDictionary;
   editColumn: string | null;
   constructor(
-    public router: Router,
-    public route: ActivatedRoute,
-    public translate: TranslateService,
-    private injector: Injector,
-    private localFileService: LocalFileService,
-    private rdict: ReactiveDictionary,
-    private dialogService: MaterialDialogService
+    protected router: Router,
+    protected route: ActivatedRoute,
+    protected translate: TranslateService,
+    protected injector: Injector,
+    protected localFileService: LocalFileService,
+    protected rdict: ReactiveDictionary,
+    protected dialogService: MaterialDialogService
   ) {}
   async ngOnInit() {
-    this.setValueFromSnapshot(this, this.route.snapshot, 'model', '');
+    this.setValueFromSnapshot(this, this.route.snapshot, 'model', null);
+    this.setValueFromSnapshot(this, this.route.snapshot, 'dictPath', null);
+
     this.setValueFromSnapshot(this, this.route.snapshot, 'showSerach', false);
     this.setValueFromSnapshot(this, this.route.snapshot, 'searchFields', null);
     this.setValueFromSnapshot(this, this.route.snapshot, 'customInclude', null);
@@ -148,22 +150,22 @@ export class GenericRdictTableComponent implements OnInit {
     }
   }
   async loadData() {
-    this.rdict.getAsObservable(this.dictPath).subscribe({
+    this.rdict.get$(this.dictPath).subscribe({
       next: (rdictData) => {
         this.tableRdict = rdictData;
-        this.tableRdict.onChanges().subscribe({
+        this.tableRdict.onChange$().subscribe({
           next: (changes) => {
             console.log('Changes detected grid:', changes);
             this.onChangeEvent(changes);
           }
         });
-        this.tableRdict.onDelete().subscribe({
+        this.tableRdict.onDelete$().subscribe({
           next: (changes) => {
             console.log('Delete detected grid:', changes);
             this.ondDeleteEvent(changes);
           }
         });
-        this.rdict.getTableAsObservable(this.dictPath, this.tableRdict).subscribe({
+        this.rdict.getArray$(this.dictPath, this.tableRdict).subscribe({
           next: (value) => {
             this.dataSource = value;
           },
@@ -183,7 +185,7 @@ export class GenericRdictTableComponent implements OnInit {
           this.dataSource[index] = value;
         } else {
           //get the object from rdict
-          this.tableRdict.getAsObservable(key).subscribe({
+          this.tableRdict.get$(key).subscribe({
             next: (value) => {
               var dd = value.getPlainObject();
               this.dataSource.push(dd);
@@ -221,7 +223,7 @@ export class GenericRdictTableComponent implements OnInit {
       }
       //Use rdict layout
       else
-        this.rdict.getAsObservable('config.models.' + this.model + '.tableLayout').subscribe({
+        this.rdict.get$('config.models.' + this.model + '.tableLayout').subscribe({
           next: (value) => {
             this.setLayout(value);
           },
@@ -252,11 +254,11 @@ export class GenericRdictTableComponent implements OnInit {
       const referenceColumns = this.allColumns.filter((item) => item.reference !== undefined && item.reference !== null);
       if (referenceColumns.length > 0) {
         referenceColumns.forEach((item) => {
-          this.rdict.getTableAsObservable(item.reference).subscribe({
+          this.rdict.getArray$(item.reference).subscribe({
             next: (value) => {
               if (value) {
-                console.log('Reference data:', value);
-                this.referenceData.set(item.reference, this.arrayToMap(value,item.referenceKey));
+                // console.log('Reference data:', value);
+                this.referenceData.set(item.reference, this.arrayToMap(value, item.referenceKey));
               }
             },
             error: (err) => console.error('Error:', err.message)
@@ -273,7 +275,7 @@ export class GenericRdictTableComponent implements OnInit {
       );
     }
   }
-   arrayToMap<T>(array: T[], keyProperty: keyof T): Map<string, T> {
+  arrayToMap<T>(array: T[], keyProperty: keyof T): Map<string, T> {
     const map = new Map<string, T>();
     for (const item of array) {
       const key = String(item[keyProperty]); // ensure it's a string
@@ -296,7 +298,7 @@ export class GenericRdictTableComponent implements OnInit {
     this.dialogService.confirmDelete().subscribe({
       next: (result) => {
         if (result) {
-          this.tableRdict.deleteAsObservable(args.dataItem.__idx).subscribe({
+          this.tableRdict.delete$(args.dataItem.__idx).subscribe({
             next: (result) => {
               this.dataSource.splice(args.rowIndex, 1);
             }
@@ -310,8 +312,9 @@ export class GenericRdictTableComponent implements OnInit {
     if (typeof item !== 'object' || item === null) {
       return null; // or `undefined` or some fallback
     }
-    if (column.type=="reference" ) {
-      const value= this.referenceData.get(column.reference)?.get(item[column.propertyName])?.[column.referenceProperty] ?? item[column.propertyName];
+    if (column.type == 'reference') {
+      const value =
+        this.referenceData.get(column.reference)?.get(item[column.propertyName])?.[column.referenceProperty] ?? item[column.propertyName];
       return value;
     } else {
       return item[column.propertyName];

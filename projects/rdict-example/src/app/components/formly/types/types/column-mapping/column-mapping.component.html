@@ -1,0 +1,49 @@
+<div *ngIf="spreadsheet" class="row-container">
+  <kendo-label text="Header row">
+    <kendo-numerictextbox placeholder="Enter header row" [value]="headerRow" format="##" [min]="1"></kendo-numerictextbox>
+  </kendo-label>
+  <button kendoButton [size]="'large'" (click)="onAutoFill()">Autofill columns</button>
+</div>
+<kendo-grid
+  [kendoGridBinding]="items.value"
+  [pageSize]="5"
+  [pageable]="true"
+  [sortable]="true"
+  [navigable]="true"
+  [pageSize]="100"
+  (add)="addHandler($event)"
+  (remove)="removeHandler($event)"
+  (cellClick)="cellClickHandler($event)"
+  (cellClose)="cellCloseHandler($event)"
+  style="height: 600px"
+>
+  <ng-template kendoGridToolbarTemplate>
+    <button [size]="'large'" kendoGridAddCommand>Add new</button>
+  </ng-template>
+  <kendo-grid-column field="sheet_column" title="Coloana"></kendo-grid-column>
+  <kendo-grid-column field="sheet_column_name" title="Nume"></kendo-grid-column>
+  <!-- [kendoGridInCellEditing]="createFormGroup" -->
+
+  <kendo-grid-column field="field" title="Sursa">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      {{ getJoinedName(dataItem.field) }}
+    </ng-template>
+
+    <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
+      <kendo-dropdownlist [formControl]="formGroup.get('field')" [data]="joined$ | async" textField="name" valueField="oid" [valuePrimitive]="true" [filterable]="true" (filterChange)="handleFilter($event)"> </kendo-dropdownlist>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column field="isExport" editor="boolean" title="Is Export"></kendo-grid-column>
+
+  <!-- <kendo-grid-column field="Discontinued" title="Tip date">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      {{ getDataTypeName(dataItem.data_type_oid) }}
+    </ng-template>
+
+    <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
+      <kendo-dropdownlist [formControl]="formGroup.get('data_type_oid')" [data]="dataTypes$ | async" textField="name"
+        valueField="oid" [valuePrimitive]="true">
+      </kendo-dropdownlist>
+    </ng-template>
+  </kendo-grid-column> -->
+</kendo-grid>

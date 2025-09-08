@@ -35,7 +35,7 @@
     }
   },
   {
-    "model": "import_layout",
+    "model": "scheduled",
     "tableLayout": {
       "title": "Import.Layout.Title",
       "columns": [
@@ -53,10 +53,10 @@
           "textAlign": "left"
         },
         {
-          "type":"reference",
-          "reference":"administration.locations",
-          "referenceKey":"mongo_id",
-          "referenceProperty":"name",
+          "type": "reference",
+          "reference": "administration.locations",
+          "referenceKey": "mongo_id",
+          "referenceProperty": "name",
           "propertyName": "productionUnitId",
           "header": "ProductionUnit",
           "translateKey": "ProductionUnit",
@@ -66,20 +66,20 @@
           "subProperty": null,
           "formating": null,
           "format": null,
-          "order": 0,
+          "order": 1,
           "textAlign": "left"
         },
         {
-          "propertyName": "name",
-          "header": "Name",
-          "translateKey": "General.Name",
+          "propertyName": "cron_expr",
+          "header": "Run At",
+          "translateKey": "Plugin.Scheduled.Cron",
           "width": null,
           "grow": 0,
           "shrink": 0,
           "subProperty": null,
           "formating": null,
           "format": null,
-          "order": 0,
+          "order": 2,
           "textAlign": "left"
         }
       ]
@@ -110,7 +110,7 @@
         },
         {
           "key": "pluginId",
-          "type": "select",
+          "type": "plugin-selector",
           "props": {
             "label": "Import Plugin",
             "options": "administration.plugins.available",
@@ -121,9 +121,8 @@
           }
         },
         {
-          "key": "cron",
+          "key": "cron_expr",
           "type": "cron"
-         
         }
       ]
     }
@@ -189,11 +188,30 @@
         {
           "key": "name",
           "type": "input",
+          "className": "name",
           "props": {
             "label": "General.Name",
             "translate": true,
             "required": true
           }
+        },
+        {
+          "key": "template",
+          "type": "spreadsheet",
+          "className": "theEntireSplitter",
+          "fieldGroup": [
+            {
+              "key": "fileId"
+            },
+            {
+              "key": "mapping",
+              "className": "lasa-ma-c",
+              "type": "column-mapping",
+              "fieldArray": {
+                "fieldGroup": [{ "key": "sheet_column" }, { "key": "sheet_column_name" }, { "key": "field" }, { "key": "isExport" }, { "key": "formula" }]
+              }
+            }
+          ]
         }
       ]
     }
@@ -201,7 +219,7 @@
   {
     "model": "runs",
     "tableLayout": {
-      "title": "plugins.Runs.Layout.Title",
+      "title": "Jobs",
       "columns": [
         {
           "propertyName": "plugin_name",
@@ -220,6 +238,19 @@
           "propertyName": "start_date",
           "header": "Start Date",
           "translateKey": "Start Date",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "center"
+        },
+        {
+          "propertyName": "end_date",
+          "header": "End Date",
+          "translateKey": "End Date",
           "width": null,
           "grow": 0,
           "shrink": 0,

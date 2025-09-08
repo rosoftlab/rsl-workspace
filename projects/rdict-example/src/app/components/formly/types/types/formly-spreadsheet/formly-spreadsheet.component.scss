@@ -1,0 +1,5 @@
+.spreadsheet-container {
+  position: relative;
+  height: calc(100% - 2px); /* Adjust height to account for borders */
+  border: 1px solid #ccc;
+}
