@@ -223,8 +223,8 @@
       "columns": [
         {
           "propertyName": "plugin_name",
-          "header": "Name",
-          "translateKey": "General.Name",
+          "header": "Plugin",
+          "translateKey": "General.Plugin",
           "width": null,
           "grow": 0,
           "shrink": 0,
@@ -235,43 +235,55 @@
           "textAlign": "left"
         },
         {
+          "propertyName": "file_name",
+          "header": "File Name",
+          "translateKey": "General.FileName",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "location_name",
+          "header": "Location",
+          "translateKey": "Location.Layout.Title",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "center"
+        },
+        {
+          "propertyName": "import_date",
+          "header": "Import Date",
+          "translateKey": "ImportDate ",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": "{0:dd/MM/yyyy}",
+          "order": 0,
+          "textAlign": "center"
+        }, {
           "propertyName": "start_date",
           "header": "Start Date",
-          "translateKey": "Start Date",
+          "translateKey": "StartDate ",
           "width": null,
           "grow": 0,
           "shrink": 0,
           "subProperty": null,
           "formating": null,
-          "format": null,
+          "format": "{0:dd/MM/yyyy HH:mm}",
           "order": 0,
           "textAlign": "center"
-        },
-        {
-          "propertyName": "end_date",
-          "header": "End Date",
-          "translateKey": "End Date",
-          "width": null,
-          "grow": 0,
-          "shrink": 0,
-          "subProperty": null,
-          "formating": null,
-          "format": null,
-          "order": 0,
-          "textAlign": "center"
-        },
-        {
-          "propertyName": "progress",
-          "header": "Progress",
-          "translateKey": "Progress",
-          "width": null,
-          "grow": 0,
-          "shrink": 0,
-          "subProperty": null,
-          "formating": null,
-          "format": null,
-          "order": 0,
-          "textAlign": "right"
         }
       ]
     },

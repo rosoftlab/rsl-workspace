@@ -1,5 +1,10 @@
-<kendo-grid [data]="dataSource" [sortable]="true" [filterable]="showSerach" [resizable]="true" (add)="addHandler()"
-  (edit)="editHandler($event)" (remove)="removeHandler($event)">
+<kendo-grid  [data]="dataSource" [sortable]="true"  [filterable]="showSerach" [resizable]="true" (add)="addHandler()"
+  (edit)="editHandler($event)" (remove)="removeHandler($event)"
+  (filterChange)="filterChange($event)"
+  (dataStateChange)="dataStateChange($event)"
+   
+   [pageable]="{pageSizes:pageSizes}"  [pageSize]="state.take"
+    [skip]="state.skip"  [sort]="state.sort" >
   <kendo-toolbar>
     <table-title text="{{title}}"></table-title>
     <kendo-toolbar-messages>Test</kendo-toolbar-messages>
@@ -18,7 +23,7 @@
   </kendo-grid-column> -->
 
   <kendo-grid-column *ngFor="let column of allColumns" [field]="column.propertyName"
-    [title]="column.translateKey | translate">
+    [title]="column.translateKey | translate" [format]="column.format" [filter]="inferFilterType(column)">
     <!-- Use ng-template to customize the column content -->
     <ng-template *ngIf="column.isEditLink; else defaultTemplate" kendoGridCellTemplate let-dataItem>
       <!-- Create a link that calls editHandler(dataItem) -->

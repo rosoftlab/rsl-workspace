@@ -3,16 +3,20 @@ import { ActivatedRoute, ActivatedRouteSnapshot, NavigationStart, Router, Router
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 // import { Rule } from '@rosoftlab/core';
 import { CommonModule } from '@angular/common';
-import { AddEvent, KENDO_GRID, RemoveEvent } from '@progress/kendo-angular-grid';
+import { AddEvent, DataStateChangeEvent, KENDO_GRID, PageChangeEvent, RemoveEvent } from '@progress/kendo-angular-grid';
 import { KENDO_LABEL } from '@progress/kendo-angular-label';
 import { KENDO_TOOLBAR } from '@progress/kendo-angular-toolbar';
 // import { ColumnMode, SelectionType, SortDirection } from '@swimlane/ngx-datatable';
 import { KENDO_BUTTONS } from '@progress/kendo-angular-buttons';
 import { KENDO_DIALOG } from '@progress/kendo-angular-dialog';
+import { IntlService } from '@progress/kendo-angular-intl';
+import { CompositeFilterDescriptor, State } from '@progress/kendo-data-query';
 import { pencilIcon, plusIcon, SVGIcon, trashIcon } from '@progress/kendo-svg-icons';
 import { LocalFileService } from '@rosoftlab/core';
+import { BehaviorSubject } from 'rxjs';
 import { ReactiveDictionary } from '../../reactive-dictionary';
 import { MaterialDialogService } from '../../services/material-dialog.service';
+import { kendoToFilterRequest } from './rdict-kendo';
 import { RdictTableTitle } from './rdict-table-title';
 declare var $: any;
 
@@ -43,7 +47,7 @@ export class GenericRdictTableComponent implements OnInit {
   @Input() showSerach: boolean;
   @Input() searchFields: string;
   @Input() customInclude: string;
-  @Input() defaultSort: string;
+  @Input() defaultSort: any;
   // @Input() defaultSortDirection: SortDirection;
   @Input() deletePropertyName: string;
   @Input() defaultFilter: string;
@@ -93,6 +97,16 @@ export class GenericRdictTableComponent implements OnInit {
   public svgAdd: SVGIcon = plusIcon;
   tableRdict: ReactiveDictionary;
   editColumn: string | null;
+
+  useView: boolean;
+  pageable: boolean;
+  pageSizes: number[];
+  public state: State = {
+    skip: 0,
+    take: 30
+  };
+  private stateChange = new BehaviorSubject<State>(this.state);
+  parentDict: ReactiveDictionary;
   constructor(
     protected router: Router,
     protected route: ActivatedRoute,
@@ -100,7 +114,8 @@ export class GenericRdictTableComponent implements OnInit {
     protected injector: Injector,
     protected localFileService: LocalFileService,
     protected rdict: ReactiveDictionary,
-    protected dialogService: MaterialDialogService
+    protected dialogService: MaterialDialogService,
+    private intl: IntlService
   ) {}
   async ngOnInit() {
     this.setValueFromSnapshot(this, this.route.snapshot, 'model', null);
@@ -110,7 +125,7 @@ export class GenericRdictTableComponent implements OnInit {
     this.setValueFromSnapshot(this, this.route.snapshot, 'searchFields', null);
     this.setValueFromSnapshot(this, this.route.snapshot, 'customInclude', null);
     this.setValueFromSnapshot(this, this.route.snapshot, 'defaultSort', null);
-    this.setValueFromSnapshot(this, this.route.snapshot, 'defaultSortDirection', '');
+    this.setValueFromSnapshot(this, this.route.snapshot, 'defaultSortDirection', null);
     this.setValueFromSnapshot(this, this.route.snapshot, 'deletePropertyName', 'name');
     this.setValueFromSnapshot(this, this.route.snapshot, 'defaultFilter', null);
     this.setValueFromSnapshot(this, this.route.snapshot, 'showHeader', true);
@@ -121,8 +136,11 @@ export class GenericRdictTableComponent implements OnInit {
     this.setValueFromSnapshot(this, this.route.snapshot, 'editOnClick', false);
     this.setValueFromSnapshot(this, this.route.snapshot, 'editOnDblClick', false);
     this.setValueFromSnapshot(this, this.route.snapshot, 'editColumn', null);
-
     this.setValueFromSnapshot(this, this.route.snapshot, 'fileLayout', '');
+
+    this.setValueFromSnapshot(this, this.route.snapshot, 'useView', false);
+    this.setValueFromSnapshot(this, this.route.snapshot, 'pageable', false);
+    this.setValueFromSnapshot(this, this.route.snapshot, 'pageSizes ', [10, 20, 30, 50, 100]);
 
     const currentUrlSegments: UrlSegment[] = this.router.url.split('/').map((segment) => new UrlSegment(segment, {}));
     this.basePath = currentUrlSegments.map((segment) => segment.path).join('/');
@@ -137,8 +155,19 @@ export class GenericRdictTableComponent implements OnInit {
         // Perform actions or update component as needed
       }
     });
+    if (this.useView) {
+      if (this.defaultSort) {
+        this.state.sort = this.defaultSort;
+      }
+      await this.getParentDict();
+    }
     this.getListLayout();
     this.loadData();
+  }
+  async getParentDict() {
+    const lastDotIndex = this.dictPath.lastIndexOf('.');
+    const parentPath = lastDotIndex !== -1 ? this.dictPath.substring(0, lastDotIndex) : this.dictPath;
+    this.parentDict = await this.rdict.asyncGet(parentPath);
   }
   setValueFromSnapshot<T>(component: any, snapshot: ActivatedRouteSnapshot, key: string, defaultValue: T): void {
     if (component[key] === undefined) {
@@ -149,7 +178,11 @@ export class GenericRdictTableComponent implements OnInit {
       component[key] = dataFromSnapshot !== undefined ? dataFromSnapshot : defaultValue;
     }
   }
-  async loadData() {
+  loadData() {
+    if (this.useView) {
+      this.loadDataView();
+      return;
+    }
     this.rdict.get$(this.dictPath).subscribe({
       next: (rdictData) => {
         this.tableRdict = rdictData;
@@ -175,22 +208,59 @@ export class GenericRdictTableComponent implements OnInit {
       error: (err) => console.error('Error:', err.message)
     });
   }
+  loadDataView() {
+    //Get the parent path
+
+    // const request = {
+    //   filters: '',
+    //   sorts: { import_date: 'desc' },
+    //   page: Math.floor(this.state.skip / this.state.take) + 1,
+    //   page_size: this.state.take
+    // };
+    const request = kendoToFilterRequest(this.state);
+    this.parentDict.getFilteredView(this.model, request).subscribe({
+      next: (view) => {
+        // console.log('View:', view);
+        this.dataSource = view;
+      }
+    });
+  }
   onChangeEvent(changes: any) {
     if (changes) {
       const key = changes?.key as string;
       const value = changes?.value;
-      if (key && value) {
-        const index = this.dataSource.findIndex((item: any) => item.__idx === key);
-        if (index > -1) {
-          this.dataSource[index] = value;
-        } else {
-          //get the object from rdict
-          this.tableRdict.get$(key).subscribe({
-            next: (value) => {
-              var dd = value.getPlainObject();
-              this.dataSource.push(dd);
-            }
-          });
+      if (key == 'transactions') {
+        //I have receibed transactions update
+        //Update all transactions in the table
+        const transactions = value;
+        for (const [key, value] of Object.entries(transactions)) {
+          const index = this.dataSource.findIndex((item: any) => item.__idx === key);
+          if (index > -1) {
+            this.dataSource[index] = value;
+          } else {
+            //get the object from rdict
+            // this.tableRdict.get$(key).subscribe({
+            //   next: (value) => {
+                // var dd = value.getPlainObject();
+                this.dataSource.push(value);
+            //   }
+            // });
+          }
+        }
+      } else {
+        if (key && value) {
+          const index = this.dataSource.findIndex((item: any) => item.__idx === key);
+          if (index > -1) {
+            this.dataSource[index] = value;
+          } else {
+            //get the object from rdict
+            this.tableRdict.get$(key).subscribe({
+              next: (value) => {
+                var dd = value.getPlainObject();
+                this.dataSource.push(dd);
+              }
+            });
+          }
         }
       }
     }
@@ -250,6 +320,7 @@ export class GenericRdictTableComponent implements OnInit {
         }
         return item;
       });
+      // console.log('All columns:', this.allColumns);
       //Get reference columns
       const referenceColumns = this.allColumns.filter((item) => item.reference !== undefined && item.reference !== null);
       if (referenceColumns.length > 0) {
@@ -315,9 +386,65 @@ export class GenericRdictTableComponent implements OnInit {
     if (column.type == 'reference') {
       const value =
         this.referenceData.get(column.reference)?.get(item[column.propertyName])?.[column.referenceProperty] ?? item[column.propertyName];
+      return this.formatValue(value, column.format);
       return value;
     } else {
-      return item[column.propertyName];
+      return this.formatValue(item[column.propertyName], column.format);
     }
+  }
+  public filterChange(filter: CompositeFilterDescriptor): void {
+    // console.log(filter);
+    // this.loadData();
+  }
+  public dataStateChange(state: DataStateChangeEvent): void {
+    this.state = state;
+
+    this.loadData();
+  }
+  public pageChange(state: PageChangeEvent): void {
+    console.log('State:', state);
+    this.stateChange.next(state);
+  }
+
+  public formatValue(value: any, format?: string): any {
+    if (value === null || value === undefined || !format) {
+      return value ?? '';
+    }
+
+    // Accept both "{0:...}" and plain "..." patterns
+    const inner = this.extractFormat(format);
+
+    // Heuristics: date vs number
+    if (this.looksLikeDateFormat(inner)) {
+      const d = value instanceof Date ? value : new Date(value);
+      return isNaN(d.getTime()) ? value : this.intl.formatDate(d, inner);
+    }
+
+    const num = typeof value === 'number' ? value : Number(value);
+    if (!Number.isNaN(num)) {
+      // supports "n", "n2", "c", "p", etc. and custom patterns
+      return this.intl.formatNumber(num, inner);
+    }
+
+    // Fallback: return as-is if not a date/number
+    return value;
+  }
+
+  private extractFormat(fmt: string): string {
+    const m = fmt.match(/^\{0:([^}]+)\}$/);
+    return m ? m[1] : fmt;
+  }
+
+  private looksLikeDateFormat(f: string): boolean {
+    // crude but effective: typical date tokens
+    return /d|M|y|H|h|m|s|E|a/.test(f) && !/^[cnp]/i.test(f);
+  }
+  public inferFilterType(col: any): 'date' | 'numeric' | 'boolean' | 'text' {
+    if (!col) return 'text';
+    const f = this.extractFormat(col.format || '');
+    if (this.looksLikeDateFormat(f)) return 'date';
+    if (/^(n\d*|c|p\d*|n)$/i.test(f)) return 'numeric'; // Kendo number patterns
+    if (col.type === 'boolean') return 'boolean';
+    return 'text';
   }
 }

@@ -1,8 +1,8 @@
 export interface FilterRequest {
   page?: number;
-  pageSize?: number;
+  page_size?: number;
   filters?: string;
   sorts?: any;
-  groupBy?: any;
-  distinctColumns?: any;
+  group_by?: any;
+  distinct_columns?: any;
 }

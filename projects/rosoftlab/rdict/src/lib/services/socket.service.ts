@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { FilterRequest } from '@rosoftlab/core';
-import { Observable } from 'rxjs';
+import { defer, filter, first, fromEvent, map, mergeMap, Observable, race, Subject, timeout } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 import { SOCKET_URL } from '../core';
 type Kwargs = Record<string, any>;
@@ -10,13 +10,41 @@ interface ExecPayload {
   args?: any[]; // optional; send only if non-empty
   kwargs?: Kwargs; // optional; send only if non-empty
 }
+interface ExecAck {
+  ok: boolean;
+  status?: 'started';
+  job_id?: string;
+  error?: any;
+}
 
+interface FunctionResult {
+  ok: true;
+  job_id: string;
+  did: string;
+  function_name: string;
+  result: any;
+}
+
+interface FunctionError {
+  ok: false;
+  job_id: string;
+  did: string;
+  function_name: string;
+  error: any;
+  traceback?: string;
+}
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
   private socket: Socket;
   private socketUrl: string;
+  private disconnect$ = new Subject<void>();
+
+  // shared event streams
+  private result$!: Observable<FunctionResult>;
+  private error$!: Observable<FunctionError>;
+  private disconnected$!: Observable<string | undefined>;
   constructor(@Inject(SOCKET_URL) socketUrl: string) {
     this.socketUrl = socketUrl;
     // Replace with your actual server URL
@@ -34,12 +62,23 @@ export class SocketService {
   initSocket(authToken: string) {
     if (this.socket == null && authToken !== null) {
       this.socket = io(this.socketUrl, {
+        reconnectionDelayMax: 10000,
+        transports: ['websocket'],
         withCredentials: true,
+        //ackTimeout: 60000,
+        timeout: 60000,
+        //retries: 50,
         // parser: msgpackParser,
         auth: {
           token: authToken // Include the authentication token
         }
       });
+      this.result$ = fromEvent<FunctionResult>(this.socket, 'function_result');
+      this.error$ = fromEvent<FunctionError>(this.socket, 'function_error');
+      this.disconnected$ = fromEvent<string | undefined>(this.socket, 'disconnect');
+
+      // When socket disconnects, push to our teardown subject
+      this.disconnected$.subscribe(() => this.disconnect$.next());
     }
   }
   getInitialData(): Promise<Record<string, any>> {
@@ -103,7 +142,8 @@ export class SocketService {
         if (response && response.error) {
           observer.error(response.error);
         } else {
-          observer.next(response);
+          const transformedResponse = this.convertDates(response);
+          observer.next(transformedResponse);
           observer.complete();
         }
       });
@@ -115,30 +155,31 @@ export class SocketService {
       };
     });
   }
-  executeFunction(did: string, functionName: string, args: any[] = [], kwargs: Kwargs = {}): Observable<any> {
-    const payload: ExecPayload = {
-      did,
-      function_name: functionName,
-      ...(args && args.length ? { args } : {}),
-      ...(kwargs && Object.keys(kwargs).length ? { kwargs } : {})
-    };
-    return new Observable<any>((observer) => {
-      this.socket.emit('execute_function', payload, (response: any) => {
-        if (response && response.error) {
-          observer.error(response.error);
+  convertDates(obj: any): any {
+    if (obj === null || obj === undefined) return obj;
+
+    if (Array.isArray(obj)) {
+      return obj.map((item) => this.convertDates(item));
+    }
+
+    if (typeof obj === 'object') {
+      const newObj: any = {};
+      for (const key of Object.keys(obj)) {
+        const value = obj[key];
+
+        // detect ISO date strings
+        if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}[ T]\d/.test(value)) {
+          newObj[key] = new Date(value.replace(' ', 'T')); // replace space with T for safety
         } else {
-          observer.next(response);
-          observer.complete();
+          newObj[key] = this.convertDates(value); // recurse
         }
-      });
+      }
+      return newObj;
+    }
 
-      // teardown logic if subscriber unsubscribes before callback fires
-      return () => {
-        // no direct way to cancel a single emit/callback in socket.io,
-        // but you could optionally remove a listener here if you used on(...)
-      };
-    });
+    return obj;
   }
+
   // Emit the 'set' event to update the data on the server
   emitSet(did: string, key: string, value: any): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -191,4 +232,87 @@ export class SocketService {
     }
     return obj;
   }
+  //#region executeFunction
+
+  executeFunction_old(did: string, functionName: string, args: any[] = [], kwargs: Kwargs = {}): Observable<any> {
+    const payload: ExecPayload = {
+      did,
+      function_name: functionName,
+      ...(args && args.length ? { args } : {}),
+      ...(kwargs && Object.keys(kwargs).length ? { kwargs } : {})
+    };
+    return new Observable<any>((observer) => {
+      this.socket.emit('execute_function', payload, (response: any) => {
+        if (response && response.error) {
+          observer.error(response.error);
+        } else {
+          observer.next(response);
+          observer.complete();
+        }
+      });
+
+      // teardown logic if subscriber unsubscribes before callback fires
+      return () => {
+        // no direct way to cancel a single emit/callback in socket.io,
+        // but you could optionally remove a listener here if you used on(...)
+      };
+    });
+  }
+
+  executeFunction(
+    did: string,
+    functionName: string,
+    args: any[] = [],
+    kwargs: Record<string, any> = {},
+    waitMs = 120_000,
+    awaitResult: boolean = true
+  ): Observable<any> {
+    const payload = {
+      did,
+      function_name: functionName,
+      ...(args?.length ? { args } : {}),
+      ...(kwargs && Object.keys(kwargs).length ? { kwargs } : {})
+    };
+
+    const ack$ = new Observable<{ ok: boolean; job_id?: string; error?: any }>((observer) => {
+      this.socket.emit('execute_function', payload, (ack: any) => {
+        observer.next(ack);
+        observer.complete();
+      });
+      return () => {};
+    });
+
+    if (!awaitResult) {
+      // Return immediately with the server ACK
+      return ack$;
+    }
+
+    // Wait for function_result / function_error matching the job_id
+    return defer(() => ack$).pipe(
+      mergeMap((ack) => {
+        if (!ack?.ok || !ack.job_id) {
+          const msg = ack?.error ?? 'Bad ACK or missing job_id';
+          throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
+        }
+        const jobId = ack.job_id!;
+        const jobResult$ = this.result$.pipe(filter((e: any) => e.job_id === jobId));
+        const jobError$ = this.error$.pipe(filter((e: any) => e.job_id === jobId));
+
+        return race(jobResult$, jobError$).pipe(
+          first(),
+          map((evt: any) => {
+            if (evt?.ok === false) {
+              const msg = evt.error ?? `Server error for ${functionName} (job ${jobId})`;
+              throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
+            }
+            return evt.result;
+          })
+        );
+      }),
+      timeout(waitMs),
+      // takeUntil(this.disconnect$)
+    );
+  }
+
+  //#endregion
 }

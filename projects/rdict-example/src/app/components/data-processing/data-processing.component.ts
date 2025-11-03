@@ -368,9 +368,10 @@ export class DataProcessingComponent implements OnInit {
   }
   private loadImports() {
     const request = {
-      filters: `start_date=${this.model.date.toISOString().split('T')[0]}`,
-      sorts: { oid: 'asc' }
-    };
+        filters: `import_date==${this.model.date.toISOString().split('T')[0]},location_id==${this.model.selectedLocation?.oid}`,
+        sorts: { file_name: 'asc' },
+        page_size: 100,
+      };
 
     this.imports$ = this.plugins.getFilteredView('runs', request);
     //  .subscribe((data: any) => {

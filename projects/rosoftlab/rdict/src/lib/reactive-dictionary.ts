@@ -287,10 +287,10 @@ export class ReactiveDictionary extends Map<string, any> {
     const guid = this.get('__guid'); // however you’re retrieving it
 
     return this._socketService.requestFilteredData(guid, key, request).pipe(
-      // tap((data) => {
-      //   // you can still inspect/log the data here if you like
-      //   console.log('received filtered view:', data);
-      // }),
+      tap((data) => {
+        // you can still inspect/log the data here if you like
+        // console.log('received filtered view:', data);
+      }),
       catchError((err) => {
         console.error('Error fetching filtered view:', err);
         // re-throw so subscribers can handle it
@@ -298,16 +298,22 @@ export class ReactiveDictionary extends Map<string, any> {
       })
     );
   }
-  executeFunction(functionName: string, args: any[] = [], kwargs: Kwargs = {}): Observable<any> {
+  executeFunction(
+    functionName: string,
+    args: any[] = [],
+    kwargs: Kwargs = {},
+    waitMs = 120_000,
+    awaitResult: boolean = true
+  ): Observable<any> {
     const guid = this.get('__guid'); // however you’re retrieving it
 
-    return this._socketService.executeFunction(guid, functionName, args, kwargs).pipe(
+    return this._socketService.executeFunction(guid, functionName, args, kwargs, waitMs, awaitResult).pipe(
       tap((data) => {
         // you can still inspect/log the data here if you like
-        console.log('received filtered view:', data);
+        console.log('received execute function:', data);
       }),
       catchError((err) => {
-        console.error('Error fetching filtered view:', err);
+        console.error('Error execute function:', err);
         // re-throw so subscribers can handle it
         return throwError(() => err);
       })

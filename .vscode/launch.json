@@ -12,9 +12,12 @@
       "url": "http://localhost:33080",
       "sourceMaps": true,
       "trace": true,
-     "skipFiles": [
-      "zone.js",
-    ]
+      "skipFiles": [
+        "${workspaceFolder}/**/node_modules/zone.js/**",
+        "**/node_modules/zone.js/**",
+        "**/zone.js",
+        "**/zone-*.js"
+      ],
     },
     {
       "type": "chrome",
