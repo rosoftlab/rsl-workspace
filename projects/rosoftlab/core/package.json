@@ -2,14 +2,14 @@
   "name": "@rosoftlab/core",
   "version": "0.0.0-ROSOFTLAB-VERSION",
   "peerDependencies": {
-    "@angular/common": "^19.2.8",
-    "@angular/core": "^19.2.8",
+    "@angular/common": "^20.3.15",
+    "@angular/core": "^20.3.15",
     "fast-json-patch": "^3.1.1",
     "date-fns": "^4.1.0",
     "@types/qs": "^6.9.18",
-    "@ngx-translate/core": "^16.0.4",
+    "@ngx-translate/core": "^17.0.0",
     "json-logic-js": "^2.0.5",
-    "@angular/cdk": "^19.2.11",
+    "@angular/cdk": "^20.2.14",
     "oidc-client-ts": "^3.4.1"
   },
   "dependencies": {
