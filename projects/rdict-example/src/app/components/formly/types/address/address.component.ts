@@ -1,5 +1,5 @@
 // address-type.component.ts (Standalone Component)
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FieldType } from '@ngx-formly/core';
@@ -16,13 +16,12 @@ import { KENDO_LABEL } from '@progress/kendo-angular-label';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    CommonModule,
     KENDO_FORMFIELD,
     KENDO_LABEL,
     KENDO_TEXTBOX,
     KENDO_DROPDOWNLIST,
-    KENDO_NUMERICTEXTBOX,
-  ],
+    KENDO_NUMERICTEXTBOX
+],
   template: `
     <div [formGroup]="formGroup" class="address-fields">
       <kendo-formfield>

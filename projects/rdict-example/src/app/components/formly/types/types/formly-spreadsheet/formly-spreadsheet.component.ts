@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FormlyModule } from '@ngx-formly/core';
@@ -14,7 +14,7 @@ import { SpreadsheetService } from 'projects/rdict-example/src/app/services/spre
   selector: 'app-formly-spreadsheet',
   templateUrl: './formly-spreadsheet.component.html',
   styleUrls: ['./formly-spreadsheet.component.scss'],
-  imports: [FormlyModule, CommonModule, ReactiveFormsModule, FormlyKendoModule, TranslateModule, KENDO_TOOLBAR, KENDO_SPREADSHEET, KENDO_SPLITTER],
+  imports: [FormlyModule, ReactiveFormsModule, FormlyKendoModule, TranslateModule, KENDO_TOOLBAR, KENDO_SPREADSHEET, KENDO_SPLITTER],
 })
 export class FormlySpreadsheetComponent extends FieldType implements OnInit, AfterViewInit {
   @ViewChild('spreadsheetRef', { static: true })

@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, V
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationStart, Router, RouterModule, UrlSegment } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 // import { Rule } from '@rosoftlab/core';
-import { CommonModule } from '@angular/common';
+
 import { AddEvent, DataStateChangeEvent, KENDO_GRID, PageChangeEvent, RemoveEvent } from '@progress/kendo-angular-grid';
 import { KENDO_LABEL } from '@progress/kendo-angular-label';
 import { KENDO_TOOLBAR } from '@progress/kendo-angular-toolbar';
@@ -27,10 +27,7 @@ declare var $: any;
   styleUrls: ['./rdict-generic-table.component.scss'],
   encapsulation: ViewEncapsulation.None,
   imports: [
-    CommonModule,
     RouterModule,
-    // MatPaginatorModule,
-    // MatTableModule,
     TranslateModule,
     KENDO_GRID,
     KENDO_TOOLBAR,
@@ -38,7 +35,7 @@ declare var $: any;
     KENDO_BUTTONS,
     KENDO_DIALOG,
     RdictTableTitle
-  ],
+],
   providers: []
 })
 export class GenericRdictTableComponent implements OnInit {

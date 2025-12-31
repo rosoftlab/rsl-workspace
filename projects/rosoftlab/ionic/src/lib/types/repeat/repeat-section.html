@@ -8,13 +8,17 @@
 <ng-template #header>
   <ion-title class="ion-text-left">{{props.label}}</ion-title>
 
-  <ion-button slot="end" (click)="exportData()" fill="clear" [disabled]="props.disabled" *ngIf="exportDataProp">
-    <ion-icon name="cloud-download-outline"></ion-icon>
-  </ion-button>
+  @if (exportDataProp) {
+    <ion-button slot="end" (click)="exportData()" fill="clear" [disabled]="props.disabled">
+      <ion-icon name="cloud-download-outline"></ion-icon>
+    </ion-button>
+  }
 
-  <ion-button slot="end" (click)="importData()" fill="clear" [disabled]="props.disabled" *ngIf="importDataProp">
-    <ion-icon name="cloud-upload-outline"></ion-icon>
-  </ion-button>
+  @if (importDataProp) {
+    <ion-button slot="end" (click)="importData()" fill="clear" [disabled]="props.disabled">
+      <ion-icon name="cloud-upload-outline"></ion-icon>
+    </ion-button>
+  }
   <input #fileInput type="file" style="display: none" accept=".xlsx,.xls,.csv" (change)="handleImportFile($event)">
 
   <ion-button slot="end" (click)="add()" fill="clear" [disabled]="props.disabled">
@@ -24,17 +28,21 @@
 
 
 <ion-list lines="full">
-  <ion-item *ngFor="let field of field.fieldGroup; let i = index" class="row align-items-baseline">
-    <formly-field class="formly-ion-list-item" [field]="field"></formly-field>
-    <ion-button [disabled]="props.disabled" color="danger" slot="end" (click)='remove(i)'>
-      <ion-icon slot="icon-only" name="trash"></ion-icon>
-    </ion-button>
-  </ion-item>
+  @for (field of field.fieldGroup; track field; let i = $index) {
+    <ion-item class="row align-items-baseline">
+      <formly-field class="formly-ion-list-item" [field]="field"></formly-field>
+      <ion-button [disabled]="props.disabled" color="danger" slot="end" (click)='remove(i)'>
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-item>
+  }
 </ion-list>
 
 
 <ng-template #search>
-  <ion-toolbar *ngIf="showSerach">
-    <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)"></ion-searchbar>
-  </ion-toolbar>
+  @if (showSerach) {
+    <ion-toolbar>
+      <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)"></ion-searchbar>
+    </ion-toolbar>
+  }
 </ng-template>

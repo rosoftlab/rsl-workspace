@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -18,17 +18,15 @@ import { KendoToolbarSpanComponent } from './kendo-toolbar-span';
   templateUrl: './full.component.html',
   styleUrls: ['./full.component.scss'],
   imports: [
-    CommonModule,
     RouterModule,
     TranslateModule,
-    CommonModule,
     ButtonsModule,
     ToolBarModule,
     LayoutModule,
     KENDO_SVGICON,
     KENDO_TOOLBAR,
     KendoToolbarSpanComponent
-  ]
+]
 })
 export class FullComponent implements OnInit {
   public selected = 'Inbox';

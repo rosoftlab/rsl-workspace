@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FormlyModule } from '@ngx-formly/core';
@@ -10,11 +10,10 @@ import { CronControlComponent } from './cron-control.component';
   standalone: true,
   imports: [
     CronControlComponent,
-    CommonModule,
     ReactiveFormsModule,
     FormlyModule,
-    FormlyKendoModule,
-  ],
+    FormlyKendoModule
+],
   template: `<app-cron-control
     [formControl]="formControl"
     [formlyAttributes]="field"

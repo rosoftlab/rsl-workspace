@@ -1,13 +1,15 @@
-<ion-header *ngIf="showHeader">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ng-container [ngTemplateOutlet]="header"></ng-container>
-  </ion-toolbar>
-  <ng-container [ngTemplateOutlet]="search"></ng-container>
-</ion-header>
+@if (showHeader) {
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ng-container [ngTemplateOutlet]="header"></ng-container>
+    </ion-toolbar>
+    <ng-container [ngTemplateOutlet]="search"></ng-container>
+  </ion-header>
+}
 
 <ion-content [fullscreen]="true">
 
@@ -16,16 +18,18 @@
   </ion-refresher>
 
   <ion-list>
-    <ng-container *ngFor="let item of data">
+    @for (item of data; track item) {
       <ion-item-sliding>
         <ng-container [ngTemplateOutlet]="listItem" [ngTemplateOutletContext]="{item}"></ng-container>
-        <ion-item-options *ngIf="deleteEnabled(item)" side="end">
-          <ion-item-option color="danger">
-            <ion-icon slot="icon-only" name="trash" (click)='deleteModel(item)'></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
+        @if (deleteEnabled(item)) {
+          <ion-item-options side="end">
+            <ion-item-option color="danger">
+              <ion-icon slot="icon-only" name="trash" (click)='deleteModel(item)'></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        }
       </ion-item-sliding>
-    </ng-container>
+    }
   </ion-list>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
@@ -42,18 +46,24 @@
 </ng-template>
 
 <ng-template #search>
-  <ion-toolbar *ngIf="showSerach">
-    <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)"></ion-searchbar>
-  </ion-toolbar>
+  @if (showSerach) {
+    <ion-toolbar>
+      <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)"></ion-searchbar>
+    </ion-toolbar>
+  }
 </ng-template>
 
 <ng-template #listItem let-item='item'>
   <ion-item button (click)='editModel(item)'>
     <ion-label>
-      <ng-container *ngFor="let row of gridLayout">
-        <h2 *ngIf="row.primary"> {{getCelValue(item,row.key)}} </h2>
-        <h3 *ngIf="!row.primary">{{getCelValue(item,row.key)}} </h3>
-      </ng-container>
+      @for (row of gridLayout; track row) {
+        @if (row.primary) {
+          <h2> {{getCelValue(item,row.key)}} </h2>
+        }
+        @if (!row.primary) {
+          <h3>{{getCelValue(item,row.key)}} </h3>
+        }
+      }
     </ion-label>
   </ion-item>
 </ng-template>

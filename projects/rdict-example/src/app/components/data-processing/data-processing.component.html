@@ -8,7 +8,7 @@
 
     <kendo-breadcrumb [items]="selections"></kendo-breadcrumb>
     <div class="step-content">
-      <ng-container *ngIf="currentStep === 0">
+      @if (currentStep === 0) {
         <h3>Step 1: Data și unitate de productie</h3>
         <div class="row example-wrapper" [formGroup]="step0Form">
           <div class="col-12 example-col">
@@ -22,14 +22,14 @@
             <kendo-formfield showErrors="initial">
               <kendo-label [for]="ddloc" text="Unitatea de productie"></kendo-label>
               <kendo-dropdownlist #ddloc name="location" [data]="locations$ | async" textField="name"
-                valueField="db_id" formControlName="selectedLocation" required> </kendo-dropdownlist>
+              valueField="db_id" formControlName="selectedLocation" required> </kendo-dropdownlist>
               <kendo-formerror>Selectati unitatea de productie</kendo-formerror>
             </kendo-formfield>
           </div>
         </div>
-      </ng-container>
+      }
 
-      <ng-container *ngIf="currentStep === 1">
+      @if (currentStep === 1) {
         <h3>Step 2: Preluare date</h3>
         <kendo-grid [data]="imports$ | async" [pageSize]="10" [pageable]="false" [sortable]="false" [filterable]="false" [groupable]="false"
           [height]="420">
@@ -42,81 +42,81 @@
           </kendo-grid-messages>
         </kendo-grid>
         <!-- <ng-container *ngIf="importList$ | async as importList">
-          <kendo-listbox kendoListBoxDataBinding [data]="importList" [toolbar]="false">
-            <ng-template kendoListBoxItemTemplate let-dataItem>
-              <div class="listbox-item">
-                <span class="item-name">{{ dataItem.name }}</span>
-                <span class="item-status">
-                  <kendo-svgicon [icon]="getstatusIcon(dataItem.name)"
-                    [style.color]="getStatusColor(dataItem.name)"></kendo-svgicon>
-                </span>
-                <button kendoButton [svgIcon]="allIcons.moreVerticalIcon" class="item-menu-button"></button>
-              </div>
-            </ng-template>
-          </kendo-listbox>
-        </ng-container> -->
-
-        <!-- <div class="col-12 example-col">
-            <p>Exporturi</p>
-            <ng-container *ngIf="exportList$ | async as exportList">
-              <kendo-listbox kendoListBoxDataBinding [data]="exportList" [toolbar]="false">
-                <ng-template kendoListBoxItemTemplate let-dataItem>
-                  <div class="listbox-item">
-                    <span class="item-name">{{ dataItem.name }}</span>
-                    <span class="item-status">
-                      <kendo-svgicon [icon]="getstatusIcon(dataItem.name)"
-                        [style.color]="getStatusColor(dataItem.name)"></kendo-svgicon>
-                    </span>
-                    <button kendoButton [svgIcon]="allIcons.moreVerticalIcon" class="item-menu-button"></button>
-                  </div>
-                </ng-template>
-              </kendo-listbox>
-            </ng-container>
-          </div> -->
-
-      </ng-container>
-
-      <!-- <ng-container *ngIf="currentStep === 2">
-        <h3>Step 3: Selectie macheta</h3>
-        <div class="row">
-          <div class="col-12">
-            <kendo-dropdownlist #ddl name="dataProcessingLayouts" [data]="dataProcessingLayouts$ | async"
-              textField="name" valueField="db_id" [(ngModel)]="model.selectedDataPrecessingLayout" required
-              (valueChange)="machetaValueChange($event)">
-            </kendo-dropdownlist>
-            <div class="spreadsheet-container">
-              <div class="k-loading-panel" *ngIf="loading">
-                <div class="k-loading-panel-mask"></div>
-                <div class="k-loading-panel-wrapper">
-                  <kendo-loader type="infinite-spinner" themeColor="primary" size="large"></kendo-loader>
-                  <div class="k-loading-panel-text">Loading data ...</div>
-                </div>
-              </div>
-              <kendo-spreadsheet #spreadsheetMachetaRef [menuItems]="[]" style="height: 100%; width: 100%">
-              </kendo-spreadsheet>
+        <kendo-listbox kendoListBoxDataBinding [data]="importList" [toolbar]="false">
+          <ng-template kendoListBoxItemTemplate let-dataItem>
+            <div class="listbox-item">
+              <span class="item-name">{{ dataItem.name }}</span>
+              <span class="item-status">
+                <kendo-svgicon [icon]="getstatusIcon(dataItem.name)"
+                [style.color]="getStatusColor(dataItem.name)"></kendo-svgicon>
+              </span>
+              <button kendoButton [svgIcon]="allIcons.moreVerticalIcon" class="item-menu-button"></button>
             </div>
-          </div>
-        </div>
+          </ng-template>
+        </kendo-listbox>
       </ng-container> -->
-
-      <ng-container *ngIf="currentStep === 2">
-        <h3>Step 3: Prelucrare</h3>
-        <kendo-dropdownlist #ddl2 name="dataProcessingLayouts2" [data]="dataProcessingLayouts$ | async" textField="name"
-          valueField="db_id" [(ngModel)]="model.selectedDataPrecessingLayout" required
-          (valueChange)="machetaValueChange($event)">
-        </kendo-dropdownlist>
-        <div class="spreadsheet-container">
-          <div class="k-loading-panel" *ngIf="loading">
-            <div class="k-loading-panel-mask"></div>
-            <div class="k-loading-panel-wrapper">
-              <kendo-loader type="infinite-spinner" themeColor="primary" size="large"></kendo-loader>
-              <div class="k-loading-panel-text">Loading data ...</div>
+      <!-- <div class="col-12 example-col">
+      <p>Exporturi</p>
+      <ng-container *ngIf="exportList$ | async as exportList">
+        <kendo-listbox kendoListBoxDataBinding [data]="exportList" [toolbar]="false">
+          <ng-template kendoListBoxItemTemplate let-dataItem>
+            <div class="listbox-item">
+              <span class="item-name">{{ dataItem.name }}</span>
+              <span class="item-status">
+                <kendo-svgicon [icon]="getstatusIcon(dataItem.name)"
+                [style.color]="getStatusColor(dataItem.name)"></kendo-svgicon>
+              </span>
+              <button kendoButton [svgIcon]="allIcons.moreVerticalIcon" class="item-menu-button"></button>
             </div>
-          </div>
-          <kendo-spreadsheet #spreadsheetRef style="height: 100%; width: 100%"> </kendo-spreadsheet>
-        </div>
-        <div kendoDialogContainer></div>
+          </ng-template>
+        </kendo-listbox>
       </ng-container>
+    </div> -->
+  }
+
+  <!-- <ng-container *ngIf="currentStep === 2">
+  <h3>Step 3: Selectie macheta</h3>
+  <div class="row">
+    <div class="col-12">
+      <kendo-dropdownlist #ddl name="dataProcessingLayouts" [data]="dataProcessingLayouts$ | async"
+        textField="name" valueField="db_id" [(ngModel)]="model.selectedDataPrecessingLayout" required
+        (valueChange)="machetaValueChange($event)">
+      </kendo-dropdownlist>
+      <div class="spreadsheet-container">
+        <div class="k-loading-panel" *ngIf="loading">
+          <div class="k-loading-panel-mask"></div>
+          <div class="k-loading-panel-wrapper">
+            <kendo-loader type="infinite-spinner" themeColor="primary" size="large"></kendo-loader>
+            <div class="k-loading-panel-text">Loading data ...</div>
+          </div>
+        </div>
+        <kendo-spreadsheet #spreadsheetMachetaRef [menuItems]="[]" style="height: 100%; width: 100%">
+        </kendo-spreadsheet>
+      </div>
     </div>
-  </form>
+  </div>
+</ng-container> -->
+
+@if (currentStep === 2) {
+  <h3>Step 3: Prelucrare</h3>
+  <kendo-dropdownlist #ddl2 name="dataProcessingLayouts2" [data]="dataProcessingLayouts$ | async" textField="name"
+    valueField="db_id" [(ngModel)]="model.selectedDataPrecessingLayout" required
+    (valueChange)="machetaValueChange($event)">
+  </kendo-dropdownlist>
+  <div class="spreadsheet-container">
+    @if (loading) {
+      <div class="k-loading-panel">
+        <div class="k-loading-panel-mask"></div>
+        <div class="k-loading-panel-wrapper">
+          <kendo-loader type="infinite-spinner" themeColor="primary" size="large"></kendo-loader>
+          <div class="k-loading-panel-text">Loading data ...</div>
+        </div>
+      </div>
+    }
+    <kendo-spreadsheet #spreadsheetRef style="height: 100%; width: 100%"> </kendo-spreadsheet>
+  </div>
+  <div kendoDialogContainer></div>
+}
+</div>
+</form>
 </div>

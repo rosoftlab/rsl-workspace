@@ -9,17 +9,19 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ng-container *ngIf="!isLoading">
+  @if (!isLoading) {
     <form [formGroup]="baseForm" (ngSubmit)="onSubmit(model)">
       <formly-form [form]="baseForm" [fields]="fields" [model]="model" [options]="options"></formly-form>
     </form>
-  </ng-container>
+  }
 </ion-content>
 
 <ng-template #header>
   <ion-title  class="ion-text-center">{{title |translate}}</ion-title>
-  <ion-button *ngIf="!isLoading" slot="end" fill="clear" (click)="onSave()"
-    [disabled]="baseForm.invalid || !baseForm.dirty">
-    <ion-icon size="large" name="save"></ion-icon>
-  </ion-button>
+  @if (!isLoading) {
+    <ion-button slot="end" fill="clear" (click)="onSave()"
+      [disabled]="baseForm.invalid || !baseForm.dirty">
+      <ion-icon size="large" name="save"></ion-icon>
+    </ion-button>
+  }
 </ng-template>

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { CreateFormGroupArgs, EditMode, KENDO_SCHEDULER, SchedulerEvent } from '@progress/kendo-angular-scheduler';
@@ -7,10 +7,9 @@ import { CreateFormGroupArgs, EditMode, KENDO_SCHEDULER, SchedulerEvent } from '
     templateUrl: './data-scheduler.component.html',
     styleUrls: ['./data-scheduler.component.scss'],
     imports: [
-        CommonModule,
-        FormsModule,
-        KENDO_SCHEDULER
-    ]
+    FormsModule,
+    KENDO_SCHEDULER
+]
 })
 export class DataSchedulerComponent {
   public selectedDate: Date = new Date("2024-12-22T00:00:00");

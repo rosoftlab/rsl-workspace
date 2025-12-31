@@ -4,11 +4,15 @@
   </label>
   <input id="fileInput" type="file" (change)="onFileSelected($event)" hidden />
 
-  <div *ngIf="selectedFile" class="mt-3">
-    <strong>Selected file:</strong> {{ selectedFile.name }}
-    <p>Size: {{ selectedFile.size | number }} bytes</p>
-  </div>
-  <div *ngIf="ai_response" class="mt-3">
-    <p>Response: {{ ai_response | json }} </p>
-  </div>
+  @if (selectedFile) {
+    <div class="mt-3">
+      <strong>Selected file:</strong> {{ selectedFile.name }}
+      <p>Size: {{ selectedFile.size | number }} bytes</p>
+    </div>
+  }
+  @if (ai_response) {
+    <div class="mt-3">
+      <p>Response: {{ ai_response | json }} </p>
+    </div>
+  }
 </div>

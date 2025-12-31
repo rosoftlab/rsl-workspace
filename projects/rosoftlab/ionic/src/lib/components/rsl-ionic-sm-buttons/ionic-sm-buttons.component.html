@@ -6,10 +6,14 @@
     {{action.buttonTranslationKey |translate}}
   </ion-button>
 </ion-list> -->
-<ion-label *ngIf="currentState">{{ getCurrentState() }}</ion-label>
+@if (currentState) {
+  <ion-label>{{ getCurrentState() }}</ion-label>
+}
 <ion-list>
-  <ion-button *ngFor="let action of smActions$ | async " color="{{getColor(action)}}" (click)="executeAction(action)">
-    {{action.buttonTranslationKey |translate}}
-     <!-- - {{action.actionID}} -->
-  </ion-button>
+  @for (action of smActions$ | async ; track action) {
+    <ion-button color="{{getColor(action)}}" (click)="executeAction(action)">
+      {{action.buttonTranslationKey |translate}}
+      <!-- - {{action.actionID}} -->
+    </ion-button>
+  }
 </ion-list>

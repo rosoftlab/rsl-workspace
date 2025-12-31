@@ -27,14 +27,16 @@ export interface FormlySelectFieldConfig extends FormlyFieldConfig<SelectProps> 
       [textField]="'label'"
       [valueField]="'value'"
       [valuePrimitive]="props.primitive ?? true"
-      
+    
       (valueChange)="props.change && props.change(field, $event)"
       (selectionChange)="selectionChange($event)"
-    >
+      >
     </kendo-dropdownlist>
-
-    <formly-form *ngIf="dynamicFields.length" [fields]="dynamicFields" [model]="model.parameters" [form]="form.get('parameters')"> </formly-form>
-  `,
+    
+    @if (dynamicFields.length) {
+      <formly-form [fields]="dynamicFields" [model]="model.parameters" [form]="form.get('parameters')"> </formly-form>
+    }
+    `,
 })
 export class PluginSelectorTypeComponent extends FieldType<FieldTypeConfig<SelectProps>> {
   pluginSelectField!: FormlyFieldConfig;

@@ -2,19 +2,29 @@
   <label>{{label | translate}}</label>
   <mat-form-field appearance="outline" fxFlex>
     <input matInput [matAutocomplete]="auto" [formControl]="searchControl">
-    <button *ngIf="searchControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSelection()">
-      <mat-icon>close</mat-icon>
-    </button>
+    @if (searchControl.value) {
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSelection()">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected($event)"
       [displayWith]="displayWith.bind(this)">
-      <mat-option *ngIf="isLoading">Loading...</mat-option>
-      <mat-option *ngIf="!isLoading && filteredOptions.length == 0 && !showSerach" disabled>Not found</mat-option>
-      <mat-option *ngIf="showSerach" disabled>{{getSearchText()}}</mat-option>
-      <ng-container *ngIf="!isLoading && filteredOptions.length > 0">
-        <mat-option *ngFor="let option of filteredOptions" [value]="option">
-          <span><b>{{getConcatedFields(option)}}</b></span>
-        </mat-option>
-      </ng-container>
+      @if (isLoading) {
+        <mat-option>Loading...</mat-option>
+      }
+      @if (!isLoading && filteredOptions.length == 0 && !showSerach) {
+        <mat-option disabled>Not found</mat-option>
+      }
+      @if (showSerach) {
+        <mat-option disabled>{{getSearchText()}}</mat-option>
+      }
+      @if (!isLoading && filteredOptions.length > 0) {
+        @for (option of filteredOptions; track option) {
+          <mat-option [value]="option">
+            <span><b>{{getConcatedFields(option)}}</b></span>
+          </mat-option>
+        }
+      }
 
     </mat-autocomplete>
   </mat-form-field>

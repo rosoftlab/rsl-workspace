@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component, Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldTypeConfig, FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
@@ -16,7 +16,7 @@ export interface FormlyInputFieldConfig extends FormlyFieldConfig<InputProps> {
 
 @Component({
   selector: 'formly-field-kendo-password',
-  imports: [FormlyModule, ReactiveFormsModule, FormlyKendoModule, KENDO_TEXTBOX, FormlySelectModule, CommonModule],
+  imports: [FormlyModule, ReactiveFormsModule, FormlyKendoModule, KENDO_TEXTBOX, FormlySelectModule],
   template: `
     <kendo-textbox [type]="showPassword ? 'text' : 'password'" [formlyAttributes]="field" [formControl]="formControl">
       <ng-template kendoTextBoxSuffixTemplate>

@@ -1,4 +1,4 @@
-import { NgIf, NgFor, NgClass, JsonPipe, NgStyle } from '@angular/common';
+import { NgClass, JsonPipe, NgStyle } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { KENDO_BUTTON } from '@progress/kendo-angular-buttons';
 import { KENDO_STEPPER } from '@progress/kendo-angular-layout';
@@ -18,13 +18,11 @@ import { ReactiveDictionary } from '@rosoftlab/rdict';
     KENDO_BUTTON,
     KENDO_STEPPER,
     KENDO_INDICATORS,
-    NgIf,
-    NgFor,
     JsonPipe,
     KENDO_SPREADSHEET,
     FormsModule,
     NgStyle
-  ],
+],
 })
 export class ImportPluginEditorComponent {
   hasItBeenAnalyzed: boolean = false;

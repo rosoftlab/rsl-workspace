@@ -1,21 +1,29 @@
-<div class="containerX" *ngIf="hasSearch">
-  <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill>
-    <mat-form-field fxFlex>
-      <mat-label>Filter</mat-label>
-      <input matInput [ngModel]='filterValue' (ngModelChange)='filterChanged.next($event)' #filter>
-    </mat-form-field>
+@if (hasSearch) {
+  <div class="containerX">
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill>
+      <mat-form-field fxFlex>
+        <mat-label>Filter</mat-label>
+        <input matInput [ngModel]='filterValue' (ngModelChange)='filterChanged.next($event)' #filter>
+      </mat-form-field>
+    </div>
   </div>
-</div>
+}
 
 <div class="table-container">
   <div class="mat-elevation-z2">
     <!--  #applicationsContainer -->
-    <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
-      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-      <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
-        {{'General.LoadingData' | translate}}
+    @if (isLoadingResults || isRateLimitReached) {
+      <div class="example-loading-shade">
+        @if (isLoadingResults) {
+          <mat-spinner></mat-spinner>
+        }
+        @if (isRateLimitReached) {
+          <div class="example-rate-limit-reached">
+            {{'General.LoadingData' | translate}}
+          </div>
+        }
       </div>
-    </div>
+    }
 
 
     <mat-table fxFlex #table [dataSource]="dataSource" id="tempalte-forms-table" matSort matSortDisableClear
@@ -33,63 +41,71 @@
       </ng-container>
 
 
-      <ng-container *ngFor="let column of gridLayout" [matColumnDef]="column.propertyName"
-        [sticky]="isColumnSticky(column.propertyName)">
-        <mat-header-cell mat-sort-header disableClear [style.flex]="getFlexStyle(column)" *matHeaderCellDef>
-          {{column.translateKey | translate}}
-        </mat-header-cell>
-        <mat-cell matTooltip={{getCelValue(row,column.propertyName)}} [style.flex]="getFlexStyle(column)"
-          [style.text-align]="getCellTextAlign(column)" *matCellDef="let row"  (click)="cellClick(row,column.propertyName)">
-          <div [ngClass]="getCellClass(row,column.propertyName)" *ngIf="!showPictureCell(column)">
-            {{getCelValue(row,column.propertyName)}}
-          </div>
-          <img [ngClass]="getCellClass(row,column.propertyName)" *ngIf="showPictureCell(column)">
-        </mat-cell>
-      </ng-container>
+      @for (column of gridLayout; track column) {
+        <ng-container [matColumnDef]="column.propertyName"
+          [sticky]="isColumnSticky(column.propertyName)">
+          <mat-header-cell mat-sort-header disableClear [style.flex]="getFlexStyle(column)" *matHeaderCellDef>
+            {{column.translateKey | translate}}
+          </mat-header-cell>
+          <mat-cell matTooltip={{getCelValue(row,column.propertyName)}} [style.flex]="getFlexStyle(column)"
+            [style.text-align]="getCellTextAlign(column)" *matCellDef="let row"  (click)="cellClick(row,column.propertyName)">
+            @if (!showPictureCell(column)) {
+              <div [ngClass]="getCellClass(row,column.propertyName)">
+                {{getCelValue(row,column.propertyName)}}
+              </div>
+            }
+            @if (showPictureCell(column)) {
+              <img [ngClass]="getCellClass(row,column.propertyName)">
+            }
+          </mat-cell>
+        </ng-container>
+      }
 
 
-      <ng-container matColumnDef="delete" stickyEnd *ngIf="!editOnClick && !editOnDblClick">
-        <mat-header-cell *matHeaderCellDef disableClear="true">
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <button class="btn btn-green btn-fill btn-wd btn-just-icon" (click)="editObject(row)"
-            matTooltip="{{'General.Edit' | translate}}">
-            <!-- <mat-icon>edit</mat-icon> -->
-            <i class="material-icons">edit</i>
-            <div class="ripple-container"></div>
-          </button>
-          <button class="btn btn-red btn-fill btn-wd btn-just-icon" (click)="deleteObject(row)"
-            [disabled]="deleteDisabled(row)" matTooltip="{{'General.Delete' | translate}}">
-            <i class="material-icons">delete</i>
-            <div class="ripple-container"></div>
-          </button>
-        </mat-cell>
-      </ng-container>
+      @if (!editOnClick && !editOnDblClick) {
+        <ng-container matColumnDef="delete" stickyEnd>
+          <mat-header-cell *matHeaderCellDef disableClear="true">
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button class="btn btn-green btn-fill btn-wd btn-just-icon" (click)="editObject(row)"
+              matTooltip="{{'General.Edit' | translate}}">
+              <!-- <mat-icon>edit</mat-icon> -->
+              <i class="material-icons">edit</i>
+              <div class="ripple-container"></div>
+            </button>
+            <button class="btn btn-red btn-fill btn-wd btn-just-icon" (click)="deleteObject(row)"
+              [disabled]="deleteDisabled(row)" matTooltip="{{'General.Delete' | translate}}">
+              <i class="material-icons">delete</i>
+              <div class="ripple-container"></div>
+            </button>
+          </mat-cell>
+        </ng-container>
+      }
 
       <mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></mat-header-row>
 
-      <ng-container *ngIf="!editOnClick && !editOnDblClick">
+      @if (!editOnClick && !editOnDblClick) {
         <mat-row *matRowDef="let row;let index = dataIndex; columns: displayedColumns;" cdkDrag [cdkDragData]="row"
           [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (click)="highlight(row)"
           (mouseover)="row.hovered = true" (mouseout)="row.hovered = false">
         </mat-row>
-      </ng-container>
+      }
 
-      <ng-container *ngIf="editOnClick && !editOnDblClick">
+      @if (editOnClick && !editOnDblClick) {
         <mat-row *matRowDef="let row;let index = dataIndex; columns: displayedColumns;" cdkDrag [cdkDragData]="row"
           [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (click)="editObject(row)"
-          (mouseover)="row.hovered = true" (mouseout)="row.hovered = false" style="cursor: pointer;"></mat-row>
-      </ng-container>
+        (mouseover)="row.hovered = true" (mouseout)="row.hovered = false" style="cursor: pointer;"></mat-row>
+      }
 
-      <ng-container *ngIf="!editOnClick && editOnDblClick">
+      @if (!editOnClick && editOnDblClick) {
         <mat-row *matRowDef="let row;let index = dataIndex; columns: displayedColumns;" cdkDrag [cdkDragData]="row"
           [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (dblclick)="editObject(row)"
           (click)="highlight(row)" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"
-          style="cursor: pointer;"></mat-row>
-      </ng-container>
+        style="cursor: pointer;"></mat-row>
+      }
 
       <!-- [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}"
-        (click)="highlight(row)" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false" -->
+      (click)="highlight(row)" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false" -->
     </mat-table>
     <mat-paginator #paginator [hidden]="infiniteScroll" [length]="resultsLength" [pageSize]="15"
       [pageSizeOptions]="[15, 30,  100]" [showFirstLastButtons]="true">

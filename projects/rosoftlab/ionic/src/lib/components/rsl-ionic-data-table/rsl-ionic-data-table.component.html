@@ -1,13 +1,15 @@
-<ion-header *ngIf="showHeader">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ng-container [ngTemplateOutlet]="header"></ng-container>
-  </ion-toolbar>
-  <ng-container [ngTemplateOutlet]="search"></ng-container>
-</ion-header>
+@if (showHeader) {
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ng-container [ngTemplateOutlet]="header"></ng-container>
+    </ion-toolbar>
+    <ng-container [ngTemplateOutlet]="search"></ng-container>
+  </ion-header>
+}
 
 <ion-content [fullscreen]="true">
 
@@ -18,29 +20,37 @@
   <ngx-datatable class="material fullscreen rls-server-scrolling" style="top: 115px" [rows]="data" [columns]="columns"
     [columnMode]="ColumnMode.standard" [headerHeight]="headerHeight" [rowHeight]="rowHeight" [scrollbarV]="true"
     [loadingIndicator]="isLoading" [scrollbarH]="true" (scroll)="onScroll($event.offsetY)"
-   >
+    >
   </ngx-datatable>
-  
+
   <ng-template #actionsTmpl let-row="row" let-value="value">
-    <ion-button  fill="clear" *ngIf="canEdit" (click)='editModel(row)'>
-      <ion-icon slot="icon-only" name="create" (click)='editModel(row)'></ion-icon>
-    </ion-button>
-    <ion-button fill="clear" *ngIf="deleteEnabled(row)" (click)='deleteModel(row)'>
-      <ion-icon color="danger" slot="icon-only" name="trash" (click)='deleteModel(row)'></ion-icon>
-    </ion-button>
+    @if (canEdit) {
+      <ion-button  fill="clear" (click)='editModel(row)'>
+        <ion-icon slot="icon-only" name="create" (click)='editModel(row)'></ion-icon>
+      </ion-button>
+    }
+    @if (deleteEnabled(row)) {
+      <ion-button fill="clear" (click)='deleteModel(row)'>
+        <ion-icon color="danger" slot="icon-only" name="trash" (click)='deleteModel(row)'></ion-icon>
+      </ion-button>
+    }
   </ng-template>
 
 </ion-content>
 
 <ng-template #header>
   <ion-title class="ion-text-center">{{title}}</ion-title>
-  <ion-button slot="end" (click)="onAdd()" fill="clear" *ngIf="hasAdd">
-    <ion-icon size="large" name="add"></ion-icon>
-  </ion-button>
+  @if (hasAdd) {
+    <ion-button slot="end" (click)="onAdd()" fill="clear">
+      <ion-icon size="large" name="add"></ion-icon>
+    </ion-button>
+  }
 </ng-template>
 
 <ng-template #search>
-  <ion-toolbar *ngIf="showSerach">
-    <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)"></ion-searchbar>
-  </ion-toolbar>
+  @if (showSerach) {
+    <ion-toolbar>
+      <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)"></ion-searchbar>
+    </ion-toolbar>
+  }
 </ng-template>

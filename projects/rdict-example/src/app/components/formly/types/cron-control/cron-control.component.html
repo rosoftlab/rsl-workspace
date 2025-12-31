@@ -1,37 +1,45 @@
 <div class="cron-container">
-  <div class="description" *ngIf="description">
-    <em>Run at {{ description }}</em>
-  </div>
-  <div class="next" *ngIf="nextRun">next at {{ nextRun }}</div>
-  <div class="error" *ngIf="error">{{ error }}</div>
+  @if (description) {
+    <div class="description">
+      <em>Run at {{ description }}</em>
+    </div>
+  }
+  @if (nextRun) {
+    <div class="next">next at {{ nextRun }}</div>
+  }
+  @if (error) {
+    <div class="error">{{ error }}</div>
+  }
 
   <div class="cron-inputs">
-    <ng-container *ngFor="let part of cronParts; index as i">
+    @for (part of cronParts; track part; let i = $index) {
       <kendo-textbox
-       class="k-text-center"
+        class="k-text-center"
         #inputRef
         [ngModel]="part"
         (ngModelChange)="setPart(i, $event)"
         (focus)="onFocus(i)"
         [class.active]="activeIndex === i"
       ></kendo-textbox>
-    </ng-container>
+    }
   </div>
 
   <div class="field-labels">
-    <ng-container *ngFor="let label of fieldLabels; index as i">
+    @for (label of fieldLabels; track label; let i = $index) {
       <span [class.active]="activeIndex === i" (click)="focusInput(i)">
         {{ label }}
       </span>
-    </ng-container>
+    }
   </div>
 
   <div class="field-help">
     <table>
-      <tr *ngFor="let row of fieldHelpTables[activeIndex]">
-        <td><code>{{ row[0] }}</code></td>
-        <td>{{ row[1] }}</td>
-      </tr>
+      @for (row of fieldHelpTables[activeIndex]; track row) {
+        <tr>
+          <td><code>{{ row[0] }}</code></td>
+          <td>{{ row[1] }}</td>
+        </tr>
+      }
     </table>
   </div>
 </div>

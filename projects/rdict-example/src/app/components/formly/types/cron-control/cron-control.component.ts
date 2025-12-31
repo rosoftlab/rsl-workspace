@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   Component,
   ElementRef,
@@ -18,7 +18,7 @@ import cronstrue from 'cronstrue/i18n';
 @Component({
   selector: 'app-cron-control',
   standalone: true,
-  imports: [CommonModule, FormsModule, KENDO_TEXTBOX],
+  imports: [FormsModule, KENDO_TEXTBOX],
   templateUrl: './cron-control.component.html',
   styleUrls: ['./cron-control.component.scss'],
   providers: [
