@@ -7,14 +7,13 @@
         "src/*/src/private_api",
         "src/*/src/public_api",
         "src/ui/*/src/public_api"
-      ],      
+      ],
       "@rosoftlab/material": [
         "dist/rosoftlab/material"
       ],
       "@rosoftlab/rdict": [
         "./dist/rosoftlab/rdict"
       ],
-     
       "@rosoftlab/statemachine": [
         "dist/rosoftlab/statemachine"
       ]
@@ -29,7 +28,7 @@
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
@@ -40,7 +39,7 @@
       "dom"
     ],
     "useDefineForClassFields": false,
-    "skipLibCheck": true,
+    "skipLibCheck": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
