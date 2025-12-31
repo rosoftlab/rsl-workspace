@@ -1,0 +1,14 @@
+<kendo-treeview
+  [nodes]="nodes$ | async"
+  textField="name"
+   [children]="fetchChildren"
+  [hasChildren]="hasChildren"
+  [kendoTreeViewCheckable]="{
+    enabled: true,
+    checkChildren: true,
+    checkParents: true
+  }"
+  [isChecked]="isChecked"
+  (checkedKeysChange)="onCheckedKeysChange($event)"
+>
+</kendo-treeview>

@@ -97,7 +97,13 @@ export class SocketService {
       // (rdict.get('__guid'), data, this.socket.id)
       if (rdict.get('__guid') === data.did) {
         // ('Set the data')
-        rdict.asyncSet(data.key, data.value, false);
+        if (data.key === 'transactions') {
+          for (const [key, record] of Object.entries(data.value)) {
+            rdict.set_new_dict(key, record);
+          }
+        } else {
+          rdict.asyncSet(data.key, data.value, false);
+        }
       }
     });
   }
@@ -122,17 +128,28 @@ export class SocketService {
       });
     });
   }
-  // requestFilteredData(guid, key, request: FilterRequest): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     this.socket.emit('get_filtered_views', { did: guid, key: key, request: request }, (response: any) => {
-  //       if (response && response.error) {
-  //         reject(response.error); // Handle error if present
-  //       } else {
-  //         resolve(response); // Resolve with the response data
-  //       }
-  //     });
-  //   });
-  // }
+  notify_new_key(did: string, new_key: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.socket.emit('notify_new_key', { did, new_key }, (response: any) => {
+        if (response && response.error) {
+          reject(response.error); // Handle error if present
+        } else {
+          resolve(response); // Resolve with the response data
+        }
+      });
+    });
+  }
+  commit_transaction(did: string, values: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.socket.emit('commit_transaction', { did: did, value: values }, (response: any) => {
+        if (response && response.error) {
+          reject(response.error); // Handle error if present
+        } else {
+          resolve(response); // Resolve with the response data
+        }
+      });
+    });
+  }
 
   // Observable wrapper for requestFilteredData
   // This allows you to use it in an RxJS pipeline
@@ -309,7 +326,7 @@ export class SocketService {
           })
         );
       }),
-      timeout(waitMs),
+      timeout(waitMs)
       // takeUntil(this.disconnect$)
     );
   }

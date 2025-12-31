@@ -9,7 +9,8 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 // import { BaseDatastore, Configurations, DatastoreCore } from 'dist/@rosoftlab/core';
 // import { SOCKET_URL } from 'dist/@rosoftlab/rdict';
 
-import { BaseDatastore, Configurations, DatastoreCore } from 'dist/@rosoftlab/core';
+import { BaseDatastore, Configurations, DatastoreCore, provideAuth } from 'dist/@rosoftlab/core';
+import { UserManagerSettings, WebStorageStateStore } from 'oidc-client-ts';
 import { SOCKET_URL } from 'projects/rosoftlab/rdict/src/lib/core';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
@@ -22,8 +23,22 @@ import { authInterceptor } from './shared/auth.interceptor';
 import { TranslateloaderService } from './shared/services/translate-loader.service';
 import { registerTranslateExtension } from './translate.extension';
 
+const oid_settings: UserManagerSettings = {
+  userStore: new WebStorageStateStore({ store: window.sessionStorage }),
+  authority: environment.authUrl,
+  client_id: 'WebApp',
+  redirect_uri: location.origin + '/auth-callback',
+  post_logout_redirect_uri: location.origin,
+  response_type: 'code',
+  scope: 'openid profile common file repom',
+  filterProtocolClaims: true,
+  loadUserInfo: true,
+  automaticSilentRenew: false
+  //,    silent_redirect_uri: origin + '/silent-refresh.html'
+};
 export const appConfig: ApplicationConfig = {
   providers: [
+  
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     {
@@ -31,9 +46,10 @@ export const appConfig: ApplicationConfig = {
       useValue: {
         baseUrl: environment.baseUrl,
         authUrl: environment.authUrl,
-        apiVersion: 'api/v1',
-      },
+        apiVersion: 'api/v1'
+      }
     },
+    ...provideAuth(oid_settings),
     // {
     //   provide: ReactiveDictionary,
     //   useFactory: () => new ReactiveDictionary(inject(SocketService))
@@ -51,10 +67,10 @@ export const appConfig: ApplicationConfig = {
         loader: {
           provide: TranslateLoader,
           useClass: TranslateloaderService,
-          deps: [HttpClient],
+          deps: [HttpClient]
         },
         // missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler },
-        useDefaultLang: false,
+        useDefaultLang: false
       }),
       FormlyModule.forRoot({
         types: [
@@ -62,37 +78,37 @@ export const appConfig: ApplicationConfig = {
           {
             name: 'cron',
             component: FormlyCronTypeComponent,
-            wrappers: ['form-field'],
+            wrappers: ['form-field']
           },
           {
             name: 'plugin-selector',
             component: PluginSelectorTypeComponent,
-            wrappers: ['form-field'],
+            wrappers: ['form-field']
           },
           {
             name: 'password',
             component: PasswordFieldInput,
-            wrappers: ['form-field'],
+            wrappers: ['form-field']
           },
           {
             name: 'spreadsheet',
             component: FormlySpreadsheetComponent,
-            wrappers: ['form-field'],
+            wrappers: ['form-field']
           },
           {
             name: 'column-mapping',
             component: ColumnMappingComponent,
-            wrappers: ['form-field'],
-          },
-        ],
-      }),
+            wrappers: ['form-field']
+          }
+        ]
+      })
     ),
     provideHttpClient(withInterceptors([authInterceptor])),
     {
       provide: FORMLY_CONFIG,
       multi: true,
       useFactory: registerTranslateExtension,
-      deps: [TranslateService],
-    },
-  ],
+      deps: [TranslateService]
+    }
+  ]
 };

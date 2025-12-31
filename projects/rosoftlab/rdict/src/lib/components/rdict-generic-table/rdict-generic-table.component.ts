@@ -15,6 +15,7 @@ import { pencilIcon, plusIcon, SVGIcon, trashIcon } from '@progress/kendo-svg-ic
 import { LocalFileService } from '@rosoftlab/core';
 import { BehaviorSubject } from 'rxjs';
 import { ReactiveDictionary } from '../../reactive-dictionary';
+import { FileService } from '../../services/file.service';
 import { MaterialDialogService } from '../../services/material-dialog.service';
 import { kendoToFilterRequest } from './rdict-kendo';
 import { RdictTableTitle } from './rdict-table-title';
@@ -115,7 +116,8 @@ export class GenericRdictTableComponent implements OnInit {
     protected localFileService: LocalFileService,
     protected rdict: ReactiveDictionary,
     protected dialogService: MaterialDialogService,
-    private intl: IntlService
+    private intl: IntlService,
+    private fileService: FileService
   ) {}
   async ngOnInit() {
     this.setValueFromSnapshot(this, this.route.snapshot, 'model', null);
@@ -241,8 +243,8 @@ export class GenericRdictTableComponent implements OnInit {
             //get the object from rdict
             // this.tableRdict.get$(key).subscribe({
             //   next: (value) => {
-                // var dd = value.getPlainObject();
-                this.dataSource.push(value);
+            // var dd = value.getPlainObject();
+            this.dataSource.push(value);
             //   }
             // });
           }
@@ -329,6 +331,7 @@ export class GenericRdictTableComponent implements OnInit {
             next: (value) => {
               if (value) {
                 // console.log('Reference data:', value);
+                // value=value.map((o: any) => ({ ...o, oid: Number(o.oid) }))
                 this.referenceData.set(item.reference, this.arrayToMap(value, item.referenceKey));
               }
             },
@@ -362,8 +365,39 @@ export class GenericRdictTableComponent implements OnInit {
     // this.editDataItem = args.dataItem;
     // this.isNew = false;
   }
-  public edit(dataItem: any): void {
-    this.router.navigate([`${this.basePath}/edit/${dataItem.__idx}`]);
+  public edit(dataItem: any, column?: any): void {
+    if (column.type == 'file') {
+      const fileId = dataItem[column.file_id_property];
+      const file_name = dataItem[column.propertyName];
+      this.fileService.downloadFile(fileId).subscribe({
+        next: (evt) => {
+          if (evt.type === 'progress') {
+            // optional: show progress
+            // this.progress = evt.total ? Math.round(100 * evt.loaded / evt.total) : null;
+            return;
+          }
+
+          // evt.type === 'response'
+          const file = evt.file;
+
+          const url = URL.createObjectURL(file);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = file_name; // suggested filename
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+
+          a.remove();
+          URL.revokeObjectURL(url);
+        },
+        error: (err) => {
+          console.error('Download failed', err);
+        }
+      });
+    } else {
+      this.router.navigate([`${this.basePath}/edit/${dataItem.__idx}`]);
+    }
   }
   public removeHandler(args: RemoveEvent): void {
     this.dialogService.confirmDelete().subscribe({
@@ -384,8 +418,9 @@ export class GenericRdictTableComponent implements OnInit {
       return null; // or `undefined` or some fallback
     }
     if (column.type == 'reference') {
-      const value =
-        this.referenceData.get(column.reference)?.get(item[column.propertyName])?.[column.referenceProperty] ?? item[column.propertyName];
+      const getNestedValue = (obj: any, path: string) => path.split('.').reduce((acc, key) => acc?.[key], obj);
+      const propertyValue = getNestedValue(item, column.propertyName);
+      const value = this.referenceData.get(column.reference)?.get(String(propertyValue))?.[column.referenceProperty] ?? propertyValue;
       return this.formatValue(value, column.format);
       return value;
     } else {

@@ -1,6 +1,5 @@
-import { Attribute, BaseModel, BaseModelConfig } from '@rosoftlab/core';
-;
-
+import { Attribute, BaseModelConfig } from "../core";
+import { BaseModel } from "./base.model";
 @BaseModelConfig({
     type: 'user'
 })

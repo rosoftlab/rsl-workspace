@@ -27,6 +27,15 @@ export class ReactiveDictionary extends Map<string, any> {
     this._socketService.getDeleteEvent(this);
     await this.asyncInit();
   }
+  public set_new_dict(key: string, data: Record<string, any>) {
+    const dict = new ReactiveDictionary(this._socketService);
+    dict.initialize(this._authToken);
+    for (const [key, value] of Object.entries(data)) {
+      dict.set(key, value);
+    }
+    this.asyncSet(key, dict, false);
+    return dict;
+  }
   // Asynchronous method to get a value by key
   async asyncGet(key: string): Promise<any> {
     // console.log('Get key: ', key);
@@ -215,7 +224,7 @@ export class ReactiveDictionary extends Map<string, any> {
     return this.processTableData(data);
   }
 
-  private async processTableData(data: any): Promise<any[]> {
+  async processTableData(data: any): Promise<any[]> {
     if (data instanceof ReactiveDictionary) {
       const result =
         (await Promise.all(
@@ -274,14 +283,14 @@ export class ReactiveDictionary extends Map<string, any> {
   }
 
   async update(record: Record<string, any>, key: string = null): Promise<void> {
-    if (!key) key = this.getNextOid();
-    const dict = await this.asyncGet(key);
-    for (const key in record) {
-      if (record.hasOwnProperty(key)) {
-        const currentValue = await dict.asyncGet(key);
-        if (currentValue !== record[key]) await dict.asyncSet(key, record[key]);
-      }
-    }
+    if (!key) key = '-1'; //new rdict //this.getNextOid();
+    const value = { [key]: record };
+    const result = await this._socketService.commit_transaction(this.get('__guid'), value);
+    return result;   
+  }
+  async update_multiple(record: Record<string, any>): Promise<void> {
+    const result = await this._socketService.commit_transaction(this.get('__guid'), record);
+    return result;   
   }
   getFilteredView(key: string, request: FilterRequest): Observable<any> {
     const guid = this.get('__guid'); // however you’re retrieving it

@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
@@ -47,6 +48,7 @@ export class RdictCrudComponent implements OnInit {
   modelKey: string | null;
   modelRdict: ReactiveDictionary;
   hostClass = '';
+  editRoute: string;
   public saveIcon: SVGIcon = saveIcon;
   public backIcon: SVGIcon = arrowLeftIcon;
   constructor(
@@ -56,7 +58,8 @@ export class RdictCrudComponent implements OnInit {
     protected rdict: ReactiveDictionary,
     protected localFileService: LocalFileService,
     protected dialogService: MaterialDialogService,
-    private routeHistory: RouteHistoryService
+    private routeHistory: RouteHistoryService,
+    protected location: Location
   ) {}
 
   async ngOnInit() {
@@ -74,6 +77,8 @@ export class RdictCrudComponent implements OnInit {
     this.modelKey = id ?? null;
     this.getModelFields();
     this.getModel();
+    const addUrl = this.router.createUrlTree([]).toString();
+    this.editRoute = this.router.createUrlTree([addUrl.replace('add', 'edit')]).toString();
   }
   @HostBinding('class')
   get hostClasses(): string {
@@ -195,8 +200,28 @@ export class RdictCrudComponent implements OnInit {
   async saveModel(fg: FormGroup) {
     if (fg.valid) {
       var dict = await this.rdict.asyncGet(this.dictPath);
-      await dict.update(fg.value as Record<string, any>, this.modelKey);
-      this.dialogService.showSaveMessage();
+      var new_value = fg.value as Record<string, any>;
+      if ('db_id' in this.model) {
+        // property exists
+        new_value['db_id'] = this.model['db_id'];
+      }
+      var result = await dict.update(fg.value as Record<string, any>, this.modelKey);
+      if (result) {
+        this.modelKey = Object.keys(result)[0];
+        const data = result[this.modelKey];
+        // Update the form values
+        this.baseForm.patchValue(data);
+
+        // Mark the form as pristine and untouched
+        this.baseForm.markAsPristine();
+        this.baseForm.markAsUntouched();
+        this.baseForm.updateValueAndValidity();
+        if (this.editRoute) {
+          const url = this.router.createUrlTree([this.editRoute, this.modelKey]).toString();
+          this.location.replaceState(url);
+        }
+        this.dialogService.showSaveMessage();
+      }
       // console.log(fg.value);
     } else {
       this.validateAllFormFields(fg);

@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BaseQueryData, BaseService, DatastoreCore } from "@rosoftlab/core";
+
 import { Observable } from 'rxjs';
-import { Menu } from '../models/menu';
-import { Right } from '../models/right';
-import { User } from '../models/user';
+import { BaseQueryData, BaseService, DatastoreCore, Menu, Right, User } from '../core';
 
 @Injectable({
   providedIn: 'root'

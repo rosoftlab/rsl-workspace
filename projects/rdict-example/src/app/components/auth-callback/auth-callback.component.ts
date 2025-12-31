@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { UserService } from '@rosoftlab/rdict';
 import { ReactiveDictionary } from 'projects/rosoftlab/rdict/src/lib/reactive-dictionary';
-import { UserService } from 'projects/rosoftlab/rdict/src/lib/services/user.service';
-import { AuthService } from '../../shared/services/auth.service';
+// import { AuthService } from '../../shared/services/auth.service';
+import { AuthService, UserService } from 'dist/@rosoftlab/core';
 import { StorageService } from '../../shared/services/storage.service';
 
 @Component({

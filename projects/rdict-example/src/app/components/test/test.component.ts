@@ -27,7 +27,7 @@ export class TestComponent implements OnInit {
             // await dataP.update(response, null);
             //I have the excel updated so now i can create a new processed data
             this.rdict.get$('ai').subscribe((aiInstanceData) => {
-              aiInstanceData.executeFunction('get_column_maming', [response.fileId, 'Foaie1'], {}, 300_000).subscribe((processResponse) => {
+              aiInstanceData.executeFunction('get_column_maping', [response.fileId, null], {}, 300_000).subscribe((processResponse) => {
                 console.log('File processed successfully:', processResponse);
                 this.ai_response = processResponse;
               });

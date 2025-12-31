@@ -1,0 +1,144 @@
+<div class="steppyContainer">
+  <button [size]="'large'" class="prevStep" kendoButton (click)="prevStep()"
+    [disabled]="currentStep === 0">Back</button>
+  <kendo-stepper [(currentStep)]="currentStep" [steps]="steps"></kendo-stepper>
+  <button [size]="'large'" class="nextStep" kendoButton (click)="nextStep()" [disabled]="isNextDisabled"
+    themeColor="primary">{{nextText()}}</button>
+</div>
+
+<!-- 
+//Unu simplu in care data si ora sunt impreuna, pe verticala, si sunt 4 coloane cu valori
+{
+  "tz": "Europe/Bucharest",
+  "timestamp": { "start": "C3", "direction": "down", "format": "%d.%m.%Y %H:%M:%S" },
+  "field_names": { "start": "D2", "end": "G2"}, 
+}
+//Data este una singura, orele sunt pe orizontala.
+{
+  "tz": "Europe/Bucharest",
+  "time": { "start": "B4", "direction": "right", "format": "%H:%M:%S" },
+  "date": { "start": "A2", "direction": "single", "format": "%d.%m.%Y" },
+  "field_names": { "start": "A5", "end": "A6" },  
+}
+//Date pe randuri, ore pe coloana
+{
+  "tz": "Europe/Bucharest",
+  "time": { "start": "B3", "direction": "right", "format": "%H:%M:%S" },
+  "date": { "start": "A4", "direction": "down", "format": "%d.%m.%Y" },
+  "field_names": { "fixed": "Productie (MWh)" },
+}
+ -->
+
+<section class="step one" *ngIf="currentStep === 0">
+  <h4>Incarcati un fisier Excel. Dupa incarcare selectati foaia dorita. Daca foaia dorita este deja selectata puteti
+    merge la pasul urmator. </h4>
+  <input (change)="onFileSelected($event)" type="file">
+  <br>
+  <h5 [ngStyle]="{opacity: spreadsheetVisibility}">
+    Foaia activa este: {{spreadsheetRef.activeSheet}}
+  </h5>
+</section>
+<section class="step two" *ngIf="currentStep === 1">
+  <h4>Corectati maparea campurilor din fisierul cu campurile din aplicatie.</h4>
+  <kendo-loader *ngIf="!hasItBeenAnalyzed" type="infinite-spinner" size="large"></kendo-loader>
+  <div *ngIf="hasItBeenAnalyzed" class="edit data">
+    <div *ngIf="ai_response.tz" class="filter">
+      <h4>Fus orar</h4>
+      <div class="group">
+        <label for="tz">Fus orar</label>
+        <select (change)="rangeModif()" class="full" name="tmezone" id="tz">
+          <option value="Europe/Bucharest">Europe/Bucharest</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="ai_response.timestamp" class="filter">
+      <h4>Marcaj temporal</h4>
+      <div class="group">
+        <label for="timestamp_start">start</label>
+        <input (input)="rangeModif()" [(ngModel)]="ai_response.timestamp.start" class="half" type="text">
+      </div>
+      <div class="group">
+        <label for="timestamp_direction">Directie</label>
+        <select (change)="rangeModif()" class="full" name="timestamp_direction" id="timestamp_direction">
+          <option value="jos">jos</option>
+          <option value="sus">dreapta</option>
+        </select>
+      </div>
+      <div class="group" *ngIf="ai_response.timestamp.format">
+        <label for="Timestamp_format">format</label>
+        <input (input)="rangeModif()" type="text" class="full" id="Timestamp_format"
+          [(ngModel)]="ai_response.timestamp.format">
+      </div>
+    </div>
+
+    <div *ngIf="ai_response.time" class="filter">
+      <h4>Ora</h4>
+      <div *ngIf="ai_response.time.start" class="group">
+        <label for="time_start">start</label>
+        <input (input)="rangeModif()" [(ngModel)]="ai_response.time.start" class="half" type="text">
+      </div>
+      <div *ngIf="ai_response.time.direction" class="group">
+        <label for="time_direction">Directie</label>
+        <select (change)="rangeModif()" class="full" name="time_direction" id="time_direction">
+          <option value="jos">jos</option>
+          <option value="dreapta">dreapta</option>
+        </select>
+      </div>
+      <div class="group" *ngIf="ai_response.time.format">
+        <label for="Timestamp_format">format</label>
+        <input (input)="rangeModif()" type="text" class="full" id="Timestamp_format"
+          [(ngModel)]="ai_response.time.format">
+      </div>
+    </div>
+
+    <div *ngIf="ai_response.date" class="filter">
+      <h4>Data</h4>
+      <div class="group">
+        <label for="timestamp_start">start</label>
+        <input (input)="rangeModif()" [(ngModel)]="ai_response.date.start" class="half" type="text">
+      </div>
+      <div *ngIf="ai_response.date.direction" class="group">
+        <label for="timestamp_direction">Directie</label>
+        <select (change)="rangeModif()" class="full" name="timestamp_direction" id="timestamp_direction">
+          <option value="jos">jos</option>
+          <option value="sus">dreapta</option>
+        </select>
+      </div>
+      <div class="group" *ngIf="ai_response.date.format">
+        <label for="Timestamp_format">format</label>
+        <input (input)="rangeModif()" type="text" class="full" id="Timestamp_format"
+          [(ngModel)]="ai_response.date.format">
+      </div>
+    </div>
+
+    <div *ngIf="ai_response.field_names" class="filter">
+      <h4>Nume campuri</h4>
+      <div class="group" *ngIf="ai_response.field_names.start">
+        <label for="field_names_start">start</label>
+        <input (input)="rangeModif()" [(ngModel)]="ai_response.field_names.start" class="half" type="text">
+      </div>
+      <div class="group" *ngIf="ai_response.field_names.end">
+        <label class="field_names_start">sfarsit</label>
+        <input (input)="rangeModif()" [(ngModel)]="ai_response.field_names.end" class="half" type="text">
+      </div>
+      <!-- <div class="group">
+        <label for="field_names_direction">directie</label>
+        <select (change)="rangeModif()" class="full" name="field_names_direction" id="value_shape">
+          <option value="infer">infer</option>
+        </select>
+      </div> -->
+    </div>
+  </div>
+
+</section>
+
+<section class="step three" *ngIf="currentStep === 2">
+  {{typesOfData | json}}
+  <ng-template *ngFor="dt of typesOfData">{{dt}}</ng-template>
+  <h4>Salvați setarile de import.</h4>
+  <button>Salvați</button>
+</section>
+
+<kendo-spreadsheet #spreadsheetRef [ngStyle]="{opacity: spreadsheetVisibility}"
+  (activeSheetChange)="sheetChange($event)" (change)="onChange($event, 'change')"> </kendo-spreadsheet>

@@ -27,7 +27,7 @@
     <!-- Use ng-template to customize the column content -->
     <ng-template *ngIf="column.isEditLink; else defaultTemplate" kendoGridCellTemplate let-dataItem>
       <!-- Create a link that calls editHandler(dataItem) -->
-      <a href="javascript:void(0)" (click)="edit(dataItem)" class="edit-link">
+      <a href="javascript:void(0)" (click)="edit(dataItem,column)" class="edit-link">
         {{ getCellValue(dataItem,column) }}
       </a>
     </ng-template>

@@ -1,6 +1,6 @@
 {
   "name": "@rosoftlab/core",
-  "version": "1.0.4-alpha-1",
+  "version": "1.0.4-alpha-11",
   "scripts": {
     "ng": "ng",
     "build": "ts-node --dir build build.ts",
@@ -88,7 +88,7 @@
     "ngx-clipboard": "^16.0.0",
     "ngx-filesaver": "^19.0.0",
     "ngx-mat-select-search": "^8.0.0",
-    "oidc-client-ts": "^3.2.0",
+    "oidc-client-ts": "^3.4.1",
     "query-string": "^9.1.1",
     "rxjs": "~7.8.1",
     "socket.io-client": "^4.8.1",

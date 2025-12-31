@@ -19,13 +19,13 @@ import { BreadCrumbItem, KENDO_BREADCRUMB } from '@progress/kendo-angular-naviga
 import { KENDO_SPREADSHEET, SpreadsheetComponent } from '@progress/kendo-angular-spreadsheet';
 import { KENDO_TREEVIEW } from '@progress/kendo-angular-treeview';
 import * as svgIcons from '@progress/kendo-svg-icons';
-import { ReactiveDictionary } from 'projects/rosoftlab/rdict/src/lib/reactive-dictionary';
-import { MaterialDialogService } from 'projects/rosoftlab/rdict/src/lib/services/material-dialog.service';
-import { SocketService } from 'projects/rosoftlab/rdict/src/lib/services/socket.service';
+import { format } from 'date-fns';
+import { MaterialDialogService, ReactiveDictionary, SocketService } from 'projects/rosoftlab/rdict/src/public-api';
 import { Observable, of } from 'rxjs';
 import { DataService } from '../../services/data.service';
 import { FileService } from '../../services/file.service';
 import { SpreadsheetService } from '../../services/spreadsheet.service';
+;
 @Component({
   selector: 'app-data-processing',
   templateUrl: './data-processing.component.html',
@@ -49,8 +49,8 @@ import { SpreadsheetService } from '../../services/spreadsheet.service';
     KENDO_LOADER,
     KENDO_DIALOG,
     KENDO_FORMFIELD,
-    KENDO_GRID
-  ]
+    KENDO_GRID,
+  ],
   // ,
   // providers: [
   //   { provide: SOCKET_URL, useValue: 'http://localhost:5100' },
@@ -64,12 +64,12 @@ export class DataProcessingComponent implements OnInit {
     selectedLocationId: '',
     selectedDataPrecessingLayoutId: '',
     selectedLocation: null,
-    selectedDataPrecessingLayout: null
+    selectedDataPrecessingLayout: null,
   };
 
   loading = false;
   public locations$: Observable<any> = of([]); // Never emits null
-  public plugins: ReactiveDictionary;
+  public plugins: ReactiveDictionary | null = null;
   public exportList$: Observable<any> = of([]); // Never emits null
   public dataProcessingLayouts$: Observable<any> = of([]); // Never emits null
   public imports$: Observable<any> = of([]);
@@ -82,17 +82,17 @@ export class DataProcessingComponent implements OnInit {
 
   steps = [
     {
-      label: 'Data și locație'
+      label: 'Data și locație',
     },
     {
-      label: 'Preluare date'
+      label: 'Preluare date',
     },
     // {
     //   label: 'Selectie coloane',
     // },
     {
-      label: 'Prelucrare'
-    }
+      label: 'Prelucrare',
+    },
   ];
   private machetaId: any = null;
   private machetaFileOrBlob: File | Blob | null = null;
@@ -117,7 +117,7 @@ export class DataProcessingComponent implements OnInit {
   async ngOnInit() {
     this.step0Form = this.fb.group({
       date: [new Date(), Validators.required],
-      selectedLocation: [null, Validators.required]
+      selectedLocation: [null, Validators.required],
     });
     this.loadDropdowns();
   }
@@ -170,12 +170,12 @@ export class DataProcessingComponent implements OnInit {
   }
   getStep1Data() {
     return {
-      text: this.model?.selectedLocation?.name + ' ' + this.model.date.toDateString()
+      text: this.model?.selectedLocation?.name + ' ' + this.model.date.toDateString(),
     };
   }
   getStep2Data() {
     return {
-      text: this.model?.selectedDataPrecessingLayout?.name
+      text: this.model?.selectedDataPrecessingLayout?.name,
     };
   }
   getStatusColor(status: string): string {
@@ -211,7 +211,7 @@ export class DataProcessingComponent implements OnInit {
   public async machetaValueChange(value: any): Promise<void> {
     this.loading = true;
     if (value !== null && value.template !== undefined) {
-      this.machetaId = value.mongo_id;
+      this.machetaId = value.db_id;
       const template = this.parseTemplate(value.template);
       this.macheta_mapping = template.mapping;
       if (template.fileId) {
@@ -236,7 +236,7 @@ export class DataProcessingComponent implements OnInit {
               }
               this.loading = false;
             }
-          }
+          },
         });
       }
     }
@@ -367,22 +367,37 @@ export class DataProcessingComponent implements OnInit {
     }
   }
   private loadImports() {
-    const request = {
-        filters: `import_date==${this.model.date.toISOString().split('T')[0]},location_id==${this.model.selectedLocation?.oid}`,
+    if (this.plugins) {
+      const request = {
+        filters: `import_date=${this.model.date.toISOString().split('T')[0]},location_id=${this.model.selectedLocation?.oid}`,
         sorts: { file_name: 'asc' },
         page_size: 100,
       };
 
-    this.imports$ = this.plugins.getFilteredView('runs', request);
+      this.imports$ = this.plugins.getFilteredView('runs', request);
+    }
     //  .subscribe((data: any) => {
     //     console.log('received filtered view 2:', data);
     //   });
   }
   //Get the data from server and save to local data
-  private loadData() {
+  private async loadData() {
     this.loading = true;
     this.loadImports();
-    this.dataService.getData$(this.model.date, this.model.date, this.model.selectedLocation.oid).subscribe(async (data) => {
+    let filters = '';
+    const newStartDate = format(this.model.date, 'yyyy-MM-dd') + 'T00:00:00';
+    const newEndDate = format(this.model.date, 'yyyy-MM-dd') + 'T23:59:59';
+
+    if (this.model.date) {
+      filters += `timeBETWEEN${newStartDate}..${newEndDate}`;
+    }
+    if (this.model.selectedLocation.oid) {
+      filters += `,entity_id=${this.model.selectedLocation.oid}`;
+    }
+    const request = {
+      filters: filters,
+    };
+    this.rdict.getFilteredView('data', request).subscribe(async (data) => {
       if (data.length === 0) {
         // alert('No data found');
         // this.dialogService.confirm(
@@ -392,8 +407,9 @@ export class DataProcessingComponent implements OnInit {
         this.loading = false;
         return;
       }
+      // const xx = await this.rdict.processTableData(data);
       this.data = data;
-      // console.log(data);
+      console.log(data);
 
       // const start = performance.now();
       // this.fillProcessingSpreadshhet(data);
@@ -414,7 +430,7 @@ export class DataProcessingComponent implements OnInit {
       console.log(dataP);
       const records: Record<string, any> = {};
       records['date'] = this.model.date;
-      records['location_id'] = this.model.selectedLocation.mongo_id;
+      records['location_id'] = this.model.selectedLocation.db_id;
       //Save the sheet file
       const file = await this.spreadsheetRef.spreadsheetWidget.saveAsExcel({ Workbook });
       if (file instanceof Blob) {
@@ -431,7 +447,7 @@ export class DataProcessingComponent implements OnInit {
           },
           error: (error) => {
             console.error('File upload failed:', error);
-          }
+          },
         });
       }
       console.log(file);

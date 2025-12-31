@@ -1,3 +1,4 @@
+export * from './auth';
 export * from './base-components';
 export * from './decorators/attribute.decorator';
 export * from './decorators/base-datastore-config.decorator';

@@ -22,7 +22,7 @@
             <kendo-formfield showErrors="initial">
               <kendo-label [for]="ddloc" text="Unitatea de productie"></kendo-label>
               <kendo-dropdownlist #ddloc name="location" [data]="locations$ | async" textField="name"
-                valueField="mongo_id" formControlName="selectedLocation" required> </kendo-dropdownlist>
+                valueField="db_id" formControlName="selectedLocation" required> </kendo-dropdownlist>
               <kendo-formerror>Selectati unitatea de productie</kendo-formerror>
             </kendo-formfield>
           </div>
@@ -33,8 +33,10 @@
         <h3>Step 2: Preluare date</h3>
         <kendo-grid [data]="imports$ | async" [pageSize]="10" [pageable]="false" [sortable]="false" [filterable]="false" [groupable]="false"
           [height]="420">
-          <kendo-grid-column field="plugin_name" title="Plugin" [width]="140"></kendo-grid-column>
-          <kendo-grid-column field="file_name" title="Fisier" [width]="120"></kendo-grid-column>
+          <kendo-grid-column field="plugin_name" title="Plugin" [width]="80"></kendo-grid-column>
+          <kendo-grid-column field="file_name" title="Fisier" [width]="140"></kendo-grid-column>
+          <kendo-grid-column field="status" title="Status" [width]="80"></kendo-grid-column>
+          <kendo-grid-column field="num_records" title="Records" [width]="80"></kendo-grid-column>
           <kendo-grid-column field="errors" title="Erori" [width]="100"></kendo-grid-column>
           <kendo-grid-messages noRecords="Nu exista importuri pentru data si locatia selectata">
           </kendo-grid-messages>
@@ -79,7 +81,7 @@
         <div class="row">
           <div class="col-12">
             <kendo-dropdownlist #ddl name="dataProcessingLayouts" [data]="dataProcessingLayouts$ | async"
-              textField="name" valueField="mongo_id" [(ngModel)]="model.selectedDataPrecessingLayout" required
+              textField="name" valueField="db_id" [(ngModel)]="model.selectedDataPrecessingLayout" required
               (valueChange)="machetaValueChange($event)">
             </kendo-dropdownlist>
             <div class="spreadsheet-container">
@@ -100,7 +102,7 @@
       <ng-container *ngIf="currentStep === 2">
         <h3>Step 3: Prelucrare</h3>
         <kendo-dropdownlist #ddl2 name="dataProcessingLayouts2" [data]="dataProcessingLayouts$ | async" textField="name"
-          valueField="mongo_id" [(ngModel)]="model.selectedDataPrecessingLayout" required
+          valueField="db_id" [(ngModel)]="model.selectedDataPrecessingLayout" required
           (valueChange)="machetaValueChange($event)">
         </kendo-dropdownlist>
         <div class="spreadsheet-container">
