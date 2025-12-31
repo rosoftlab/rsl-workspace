@@ -2,8 +2,8 @@
   "name": "@rosoftlab/material",
   "version": "0.0.0-ROSOFTLAB-VERSION",
   "peerDependencies": {
-    "@angular/common": "^20.3.15",
-    "@angular/core": "^20.3.15",
+    "@angular/common": "^21.0.6",
+    "@angular/core": "^21.0.6",
     "@rosoftlab/core": "0.0.0-ROSOFTLAB-VERSION",
     "@sweetalert2/theme-material-ui": "^5.0.27",
     "@angular/material": "^20.2.14",

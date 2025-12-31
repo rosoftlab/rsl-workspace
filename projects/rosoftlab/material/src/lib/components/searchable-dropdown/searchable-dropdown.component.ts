@@ -10,10 +10,7 @@ import { debounceTime, filter, finalize, switchMap, takeUntil, tap } from 'rxjs/
     selector: 'rsl-searchable-dropdown',
     templateUrl: './searchable-dropdown.component.html',
     host: {
-        '[class.example-floating]': 'shouldLabelFloat',
-        '[id]': 'id',
-        '[attr.aria-describedby]': 'describedBy',
-    },
+        '[id]': 'id',    },
     standalone: false
 })
 export class SearchableDropdownComponent<T extends BaseModel> implements OnInit, OnDestroy, ControlValueAccessor {
