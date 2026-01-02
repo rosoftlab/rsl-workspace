@@ -1,5 +1,6 @@
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
-import { BaseModel, BaseService } from '../core';
+import { BaseModel } from '../models/base.model';
+import { BaseService } from '../services';
 
 export function DynamicallyServiceResolver<T extends BaseModel, U extends BaseService<T>>(serviceImport: any, serviceName: string): ResolveFn<U> {
   return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {

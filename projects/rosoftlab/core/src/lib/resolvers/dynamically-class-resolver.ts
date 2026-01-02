@@ -1,5 +1,5 @@
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
-import { BaseModel } from '../core';
+import { BaseModel } from '../models/base.model';
 
 export function DynamicallyModelResolver<T extends BaseModel>(modelsImport: any, className: string | undefined = undefined): ResolveFn<T> {
     return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {

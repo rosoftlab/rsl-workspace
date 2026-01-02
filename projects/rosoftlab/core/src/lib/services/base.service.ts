@@ -2,9 +2,10 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { ModelType } from '../interfaces/datastore.interface';
 import { BaseQueryData } from '../models/base-query-data';
 import { BaseModel } from '../models/base.model';
-import { BaseDatastore, ModelType } from './base-datastore.service';
+import { BaseDatastore } from './base-datastore.service';
 
 
 @Injectable({

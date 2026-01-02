@@ -2,8 +2,8 @@ import { HttpHeaders } from '@angular/common/http';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AttributeMetadata } from '../constants/symbols';
+import { IDatastore, ModelType } from '../interfaces/datastore.interface';
 import { ModelConfig } from '../interfaces/model-config.interface';
-import { BaseDatastore, ModelType } from '../services/base-datastore.service';
 import { MetadataStorage } from './metadata-storage';
 export class BaseModel {
   public highlighted: boolean;
@@ -11,7 +11,7 @@ export class BaseModel {
   [key: string]: any;
 
   // tslint:disable-next-line:variable-name
-  constructor(protected _datastore: BaseDatastore, data?: any) {
+  constructor(protected _datastore: IDatastore, data?: any) {
     if (data) {
       if (data.id) {
         this.id = data.id;
@@ -20,30 +20,17 @@ export class BaseModel {
     }
   }
 
-  save(
-    params?: any,
-    headers?: HttpHeaders,
-    customUrl?: string,
-    customBody?: any): Observable<this> {
+  save(params?: any, headers?: HttpHeaders, customUrl?: string, customBody?: any): Observable<this> {
     const attributesMetadata: any = this[AttributeMetadata];
     return this._datastore.saveRecord(attributesMetadata, this, params, headers, customUrl, customBody);
   }
 
-  patch(
-    origModel: this,
-    params?: any,
-    headers?: HttpHeaders,
-    customUrl?: string
-  ): Observable<this> {
+  patch(origModel: this, params?: any, headers?: HttpHeaders, customUrl?: string): Observable<this> {
     const attributesMetadata: any = this[AttributeMetadata];
     return this._datastore.patchRecord(attributesMetadata, this, origModel, params, headers, customUrl);
   }
 
-  replace(
-    params?: any,
-    headers?: HttpHeaders,
-    customUrl?: string,
-    customBody?: any): Observable<this> {
+  replace(params?: any, headers?: HttpHeaders, customUrl?: string, customBody?: any): Observable<this> {
     const attributesMetadata: any = this[AttributeMetadata];
     return this._datastore.replaceRecord(attributesMetadata, this, params, headers, customUrl, customBody);
   }
@@ -94,12 +81,10 @@ export class BaseModel {
     return MetadataStorage.getMetadata('BaseModelConfig', this.constructor);
   }
 
-
   protected deserializeModel<T extends BaseModel>(modelType: ModelType<T>, data: any) {
     data = this.transformSerializedNamesToPropertyNames(modelType, data);
     return new modelType(this._datastore, data);
   }
-
 
   protected transformSerializedNamesToPropertyNames<T extends BaseModel>(modelType: ModelType<T>, attributes: any) {
     const serializedNameToPropertyName = this.getModelPropertyNames(modelType.prototype);
@@ -136,28 +121,23 @@ export class BaseModel {
     const controlsConfig: any = {};
     const that = this;
     if (props) {
-      props.forEach(property => {
+      props.forEach((property) => {
         const value = that[property] !== undefined ? that[property] : defaultValues[property];
         const formSubGroup = formSubGroupsValues[property] ?? null;
         if (requiredProps[property]) {
           if (formSubGroup)
             this.getSubFromGroup(fb, controlsConfig, formSubGroup).addControl(property, fb.control(value, Validators.required));
-          else
-            controlsConfig[property] = [value, Validators.required];
+          else controlsConfig[property] = [value, Validators.required];
         } else {
-          if (formSubGroup)
-            this.getSubFromGroup(fb, controlsConfig, formSubGroup).addControl(property, fb.control(value));
-          else
-            controlsConfig[property] = value;
+          if (formSubGroup) this.getSubFromGroup(fb, controlsConfig, formSubGroup).addControl(property, fb.control(value));
+          else controlsConfig[property] = value;
         }
       });
-
     }
     return fb.group(controlsConfig);
   }
   private getSubFromGroup(fb: UntypedFormBuilder, controlsConfig: any, subGroup: string): UntypedFormGroup {
-    if (!controlsConfig[subGroup])
-      controlsConfig[subGroup] = fb.group({});
+    if (!controlsConfig[subGroup]) controlsConfig[subGroup] = fb.group({});
     return controlsConfig[subGroup];
   }
 
@@ -170,12 +150,10 @@ export class BaseModel {
     }
     const that = this;
     if (props) {
-      props.forEach(property => {
+      props.forEach((property) => {
         const formSubGroup = formSubGroupsValues[property] ?? null;
-        if (!formSubGroup)
-          data[property] = formGroup.controls[property].value ?? null;
-        else
-          data[property] = (formGroup.controls[formSubGroup] as UntypedFormGroup).controls[property].value ?? null;
+        if (!formSubGroup) data[property] = formGroup.controls[property].value ?? null;
+        else data[property] = (formGroup.controls[formSubGroup] as UntypedFormGroup).controls[property].value ?? null;
       });
     }
     if (data) {
@@ -185,8 +163,6 @@ export class BaseModel {
       Object.assign(this, data);
     }
   }
-
-
 
   public getSerializedModel() {
     const attributesMetadata: any = this[AttributeMetadata];

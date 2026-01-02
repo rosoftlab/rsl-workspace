@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { DatastoreCore } from '../core';
-import { Employee } from '../models';
+import { Employee } from '../models/employee';
 import { BaseService } from './base.service';
+import { DatastoreCore } from './datastore.service';
 
 @Injectable({
   providedIn: 'root'

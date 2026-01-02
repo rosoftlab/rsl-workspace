@@ -1,37 +1,37 @@
-import { Location } from '@angular/common';
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
-import { FormlyKendoModule } from '@ngx-formly/kendo';
+import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { KENDO_BUTTONS } from '@progress/kendo-angular-buttons';
 import { KENDO_DIALOG } from '@progress/kendo-angular-dialog';
 import { KENDO_GRID } from '@progress/kendo-angular-grid';
 import { KENDO_LABEL } from '@progress/kendo-angular-label';
 import { KENDO_TOOLBAR } from '@progress/kendo-angular-toolbar';
-import { SVGIcon, arrowLeftIcon, saveIcon } from '@progress/kendo-svg-icons';
+import { arrowLeftIcon, saveIcon, SVGIcon } from '@progress/kendo-svg-icons';
 import { LocalFileService, RouteHistoryService } from '@rosoftlab/core';
 import { Observable } from 'rxjs';
 import { ReactiveDictionary } from '../../reactive-dictionary';
 import { MaterialDialogService } from '../../services/material-dialog.service';
-import { CrudFormlyTransaltionModule } from './rsl-reactive-dictionary.module';
+import { RdictFormlyWrapperModule } from './rdict-formly-wrapper.module';
 @Component({
   selector: 'app-rdict-crud',
   templateUrl: './rdict-crud.component.html',
   styleUrls: ['./rdict-crud.component.scss'],
   imports: [
-    FormlyModule,
+    CommonModule,
     ReactiveFormsModule,
-    FormlyKendoModule,
+    RdictFormlyWrapperModule,
     TranslateModule,
-    CrudFormlyTransaltionModule,
+    // forwardRef(() => CrudFormlyTransaltionModule ), // Delays evaluation
     KENDO_GRID,
     KENDO_TOOLBAR,
     KENDO_LABEL,
     KENDO_BUTTONS,
     KENDO_DIALOG
-  ]
+  ],
+  // providers: [{ provide: FORMLY_CONFIG, multi: true, useFactory: registerTranslateExtension, deps: [TranslateService] }]
 })
 export class RdictCrudComponent implements OnInit {
   title: string;
@@ -55,35 +55,38 @@ export class RdictCrudComponent implements OnInit {
     protected router: Router,
     protected route: ActivatedRoute,
     protected translate: TranslateService,
-    protected rdict: ReactiveDictionary,
+
+    public rdict: ReactiveDictionary,
     protected localFileService: LocalFileService,
     protected dialogService: MaterialDialogService,
     private routeHistory: RouteHistoryService,
     protected location: Location
-  ) {}
+  ) {
+    console.log('RdictCrudComponent constructor');
+  }
 
   async ngOnInit() {
-    this.setValueFromSnapshot(this, this.route.snapshot, 'fileLayout', '');
+    // this.setValueFromSnapshot(this, this.route.snapshot, 'fileLayout', '');
 
-    const currentUrlSegments: string[] = this.router.url.split('/').filter((segment) => segment !== '' && isNaN(Number(segment)));
-    if (['add', 'edit'].includes(currentUrlSegments[currentUrlSegments.length - 1])) {
-      currentUrlSegments.pop();
-    }
+    // const currentUrlSegments: string[] = this.router.url.split('/').filter((segment) => segment !== '' && isNaN(Number(segment)));
+    // if (['add', 'edit'].includes(currentUrlSegments[currentUrlSegments.length - 1])) {
+    //   currentUrlSegments.pop();
+    // }
 
-    this.dictPath = currentUrlSegments.join('.');
-    this.hostClass = currentUrlSegments.join(' ') + ' crud';
-    this.rdictModel = currentUrlSegments.length > 0 ? currentUrlSegments[currentUrlSegments.length - 1] : '';
-    const id = this.route.snapshot.paramMap.get('id');
-    this.modelKey = id ?? null;
-    this.getModelFields();
-    this.getModel();
-    const addUrl = this.router.createUrlTree([]).toString();
-    this.editRoute = this.router.createUrlTree([addUrl.replace('add', 'edit')]).toString();
+    // this.dictPath = currentUrlSegments.join('.');
+    // this.hostClass = currentUrlSegments.join(' ') + ' crud';
+    // this.rdictModel = currentUrlSegments.length > 0 ? currentUrlSegments[currentUrlSegments.length - 1] : '';
+    // const id = this.route.snapshot.paramMap.get('id');
+    // this.modelKey = id ?? null;
+    // this.getModelFields();
+    // this.getModel();
+    // const addUrl = this.router.createUrlTree([]).toString();
+    // this.editRoute = this.router.createUrlTree([addUrl.replace('add', 'edit')]).toString();
   }
-  @HostBinding('class')
-  get hostClasses(): string {
-    return this.hostClass;
-  }
+  // @HostBinding('class')
+  // get hostClasses(): string {
+  //   return this.hostClass;
+  // }
   setValueFromSnapshot<T>(component: any, snapshot: ActivatedRouteSnapshot, key: string, defaultValue: T): void {
     if (component[key] === undefined) {
       let dataFromSnapshot = snapshot.data[key];
@@ -150,21 +153,6 @@ export class RdictCrudComponent implements OnInit {
     this.fields = this.transformFields(fieldsTmp);
     //  this.transformJsonToFormlyFields()
   }
-
-  // transformJsonToFormlyFields(json: any[]): FormlyFieldConfig[] {
-
-  //   // return json.map(field => {
-  //   //   if (field.type === 'select' && field.props.options) {
-  //   //     field.props.options = this.getSelectData(field.props.options);
-  //   //   }
-  //   //   return {
-  //   //     key: field.key,
-  //   //     type: field.type,
-  //   //     props: field.props,
-  //   //     fieldGroup: field?.fieldGroup
-  //   //   };
-  //   // });
-  // }
   transformFields(fields: FormlyFieldConfig[]): FormlyFieldConfig[] {
     return fields.map((field) => this.transformField(field));
   }

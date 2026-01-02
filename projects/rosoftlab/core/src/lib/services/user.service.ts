@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { BaseQueryData, BaseService, DatastoreCore, Menu, Right, User } from '../core';
+import { BaseQueryData } from '../models/base-query-data';
+import { Menu } from '../models/menu';
+import { Right } from '../models/right';
+import { User } from '../models/user';
+import { BaseService } from './base.service';
+import { DatastoreCore } from './datastore.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends BaseService<User> {
-  userRights!: Right[];  
+  userRights!: Right[];
   constructor(datastore: DatastoreCore) {
     super(datastore);
     this.setModelType(User);
@@ -17,9 +22,8 @@ export class UserService extends BaseService<User> {
     return response;
   }
   hasRightForLink(link: string): boolean {
-
     if (this.userRights && link) {
-      const right = this.userRights.find(f => link.indexOf(f.pagePath) >= 0);
+      const right = this.userRights.find((f) => link.indexOf(f.pagePath) >= 0);
       return true;
     }
     return false;
@@ -27,5 +31,5 @@ export class UserService extends BaseService<User> {
   getMenus(): Observable<BaseQueryData<Menu>> {
     const response = this.datastore.findAll(Menu);
     return response;
-  }  
+  }
 }

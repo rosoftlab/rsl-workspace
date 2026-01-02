@@ -5,28 +5,28 @@ import queryString from 'query-string';
 import { Observable, Observer, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { DatastoreConfig } from '../interfaces/datastore-config.interface';
+import { IDatastore, ModelType } from '../interfaces/datastore.interface';
 import { ModelConfig } from '../interfaces/model-config.interface';
 import { BaseQueryData } from '../models/base-query-data';
 import { BaseModel } from '../models/base.model';
 import { MetadataStorage } from '../models/metadata-storage';
 import { CacheService } from './cache.service';
-export type ModelType<T extends BaseModel> = new (datastore: BaseDatastore, data: any) => T;
 
 @Injectable()
-export class BaseDatastore {
+export class BaseDatastore implements IDatastore {
   protected config!: DatastoreConfig;
   // tslint:disable-next-line:variable-name
   private _store: { [type: string]: { [id: string]: BaseModel } } = {};
   // tslint:enable:max-line-length
   // tslint:disable-next-line:ban-types
-  private toQueryString: Function = this.datastoreConfig.overrides
-    && this.datastoreConfig.overrides.toQueryString ?
-    this.datastoreConfig.overrides.toQueryString : this._toQueryString;
+  private toQueryString: Function =
+    this.datastoreConfig.overrides && this.datastoreConfig.overrides.toQueryString
+      ? this.datastoreConfig.overrides.toQueryString
+      : this._toQueryString;
   // tslint:enable:max-line-length
 
   private get getDirtyAttributes() {
-    if (this.datastoreConfig.overrides
-      && this.datastoreConfig.overrides.getDirtyAttributes) {
+    if (this.datastoreConfig.overrides && this.datastoreConfig.overrides.getDirtyAttributes) {
       return this.datastoreConfig.overrides.getDirtyAttributes;
     } else {
       return BaseDatastore.getDirtyAttributes;
@@ -34,8 +34,7 @@ export class BaseDatastore {
   }
 
   public get getAllAttributes() {
-    if (this.datastoreConfig.overrides
-      && this.datastoreConfig.overrides.getAllAttributes) {
+    if (this.datastoreConfig.overrides && this.datastoreConfig.overrides.getAllAttributes) {
       return this.datastoreConfig.overrides.getAllAttributes;
     } else {
       return BaseDatastore.getAllAttributes;
@@ -73,11 +72,7 @@ export class BaseDatastore {
     return dirtyData;
   }
 
-  constructor(
-    protected httpClient: HttpClient,
-    protected cacheService: CacheService
-  ) {
-  }
+  constructor(protected httpClient: HttpClient, protected cacheService: CacheService) {}
 
   findAll<T extends BaseModel>(
     modelType: ModelType<T>,
@@ -89,14 +84,11 @@ export class BaseDatastore {
     const htmlParams = this.buildParams(modelType, params);
     const url: string = this.buildUrl(modelType, customUrl);
 
-    const response = this.httpClient.get(url,
-      { headers: customHeadhers, params: htmlParams, withCredentials: true })
-      .pipe(
-        map(res => this.extractQueryData(res, modelType)),
-        catchError(this.handleError)
-      );
+    const response = this.httpClient.get(url, { headers: customHeadhers, params: htmlParams, withCredentials: true }).pipe(
+      map((res) => this.extractQueryData(res, modelType)),
+      catchError(this.handleError)
+    );
     return response;
-
   }
 
   findRecord<T extends BaseModel>(
@@ -113,42 +105,51 @@ export class BaseDatastore {
     }
 
     const htmlParams = this.buildParams(modelType, params);
-    const response = this.httpClient.get(url, { headers: customHeadhers, params: htmlParams, withCredentials: true })
-      .pipe(map(res => this.entityToModel(res, modelType, undefined)),
-        catchError(this.handleError)
-      );
+    const response = this.httpClient.get(url, { headers: customHeadhers, params: htmlParams, withCredentials: true }).pipe(
+      map((res) => this.entityToModel(res, modelType, undefined)),
+      catchError(this.handleError)
+    );
     return response;
-
   }
-  getCustom<U, T extends BaseModel>(modelType: ModelType<T>,
+  getCustom<U, T extends BaseModel>(
+    modelType: ModelType<T>,
     params?: any,
     headers?: HttpHeaders,
     customUrl?: string,
-    customResponseType?: any): Observable<U> {
+    customResponseType?: any
+  ): Observable<U> {
     const customHeadhers: HttpHeaders = this.buildHeaders(headers);
     const url: string = this.buildUrl(modelType, customUrl);
     const htmlParams = this.buildParams(modelType, params);
-    if (!customResponseType)
-      customResponseType = 'json';
-    return this.httpClient.get<U>(url, { headers: customHeadhers, params: htmlParams, withCredentials: true, responseType: customResponseType });
+    if (!customResponseType) customResponseType = 'json';
+    return this.httpClient.get<U>(url, {
+      headers: customHeadhers,
+      params: htmlParams,
+      withCredentials: true,
+      responseType: customResponseType
+    });
   }
 
-  postCustom<U, T extends BaseModel>(modelType: ModelType<T>,
+  postCustom<U, T extends BaseModel>(
+    modelType: ModelType<T>,
     body: any,
     params?: any,
     headers?: HttpHeaders,
-    customUrl?: string): Observable<U> {
+    customUrl?: string
+  ): Observable<U> {
     const customHeadhers: HttpHeaders = this.buildHeaders(headers);
     const url: string = this.buildUrl(modelType, customUrl);
     const htmlParams = this.buildParams(modelType, params);
     return this.httpClient.post<U>(url, body, { headers: customHeadhers, params: htmlParams, reportProgress: true, withCredentials: true });
   }
 
-  patchCustom<U, T extends BaseModel>(modelType: ModelType<T>,
+  patchCustom<U, T extends BaseModel>(
+    modelType: ModelType<T>,
     body: any,
     params?: any,
     headers?: HttpHeaders,
-    customUrl?: string): Observable<U> {
+    customUrl?: string
+  ): Observable<U> {
     const customHeadhers: HttpHeaders = this.buildHeaders(headers);
     const url: string = this.buildUrl(modelType, customUrl);
     const htmlParams = this.buildParams(modelType, params);
@@ -159,7 +160,8 @@ export class BaseDatastore {
   }
 
   saveRecord<T extends BaseModel>(
-    attributesMetadata: any, model: T,
+    attributesMetadata: any,
+    model: T,
     params?: any,
     headers?: HttpHeaders,
     customUrl?: string,
@@ -182,19 +184,19 @@ export class BaseDatastore {
       httpCall = this.httpClient.post(url, body, { headers: customHeadhers, params: htmlParams, withCredentials: true });
     }
 
-    return httpCall
-      .pipe(
-        map(res => {
-          this.cacheService.clearCacheContainingKeyword(url);
-          const data = this.resetMetadataAttributes(res, attributesMetadata, modelType);
-          return this.entityToModel(data, modelType);
-        }),
-        catchError(this.handleError)
-      );
+    return httpCall.pipe(
+      map((res) => {
+        this.cacheService.clearCacheContainingKeyword(url);
+        const data = this.resetMetadataAttributes(res, attributesMetadata, modelType);
+        return this.entityToModel(data, modelType);
+      }),
+      catchError(this.handleError)
+    );
   }
 
   patchRecord<T extends BaseModel>(
-    attributesMetadata: any, model: T,
+    attributesMetadata: any,
+    model: T,
     origModel: T,
     params?: any,
     headers?: HttpHeaders,
@@ -208,23 +210,21 @@ export class BaseDatastore {
 
     let httpCall: Observable<any>;
     let origData = { id: '' };
-    if (origModel)
-      origData = this.modelToEntity(origModel, origModel.attributeMetadata, true);
+    if (origModel) origData = this.modelToEntity(origModel, origModel.attributeMetadata, true);
     const newData = this.modelToEntity(model, attributesMetadata, true);
     newData.id = origData.id;
     const patch = compare(origData, newData);
     if (patch.length > 0) {
       httpCall = this.httpClient.patch(url + '/' + model.id, patch, { headers: customHeadhers, params: htmlParams, withCredentials: true });
 
-      return httpCall
-        .pipe(
-          map(res => {
-            this.cacheService.clearCacheContainingKeyword(url);
-            const data = this.resetMetadataAttributes(res, attributesMetadata, modelType);
-            return this.entityToModel(data, modelType);
-          }),
-          catchError(this.handleError)
-        );
+      return httpCall.pipe(
+        map((res) => {
+          this.cacheService.clearCacheContainingKeyword(url);
+          const data = this.resetMetadataAttributes(res, attributesMetadata, modelType);
+          return this.entityToModel(data, modelType);
+        }),
+        catchError(this.handleError)
+      );
     } else {
       return new Observable((observer: Observer<T>) => {
         observer.next(model);
@@ -238,7 +238,8 @@ export class BaseDatastore {
 
   // }
   replaceRecord<T extends BaseModel>(
-    attributesMetadata: any, model: T,
+    attributesMetadata: any,
+    model: T,
     params?: any,
     headers?: HttpHeaders,
     customUrl?: string,
@@ -260,46 +261,33 @@ export class BaseDatastore {
       httpCall = this.httpClient.post(url, body, { headers: customHeadhers, params: htmlParams, withCredentials: true });
     }
 
-    return httpCall
-      .pipe(
-        map(res => {
-          this.cacheService.clearCacheContainingKeyword(url);
-          const data = this.resetMetadataAttributes(res, attributesMetadata, modelType);
-          return this.entityToModel(data, modelType);
-        }),
-        catchError(this.handleError)
-      );
+    return httpCall.pipe(
+      map((res) => {
+        this.cacheService.clearCacheContainingKeyword(url);
+        const data = this.resetMetadataAttributes(res, attributesMetadata, modelType);
+        return this.entityToModel(data, modelType);
+      }),
+      catchError(this.handleError)
+    );
   }
 
-
-  deleteRecord<T extends BaseModel>(
-    modelType: ModelType<T>,
-    id: string,
-    headers?: HttpHeaders,
-    customUrl?: string
-  ): Observable<{}> {
+  deleteRecord<T extends BaseModel>(modelType: ModelType<T>, id: string, headers?: HttpHeaders, customUrl?: string): Observable<{}> {
     const customHeadhers: HttpHeaders = this.buildHeaders(headers);
     let url: string = this.buildUrl(modelType, customUrl);
     if (!url.includes('share')) {
       url = url + '/' + id;
     }
     // const idParam = new HttpParams().set('id', id);
-    return this.httpClient.delete(url, { headers: customHeadhers, withCredentials: true })
-      .pipe(
-        map(res => {
-          this.cacheService.clearCacheContainingKeyword(url);
-          return res;
-        }
-        ),
-        catchError(this.handleError)
-      );
+    return this.httpClient.delete(url, { headers: customHeadhers, withCredentials: true }).pipe(
+      map((res) => {
+        this.cacheService.clearCacheContainingKeyword(url);
+        return res;
+      }),
+      catchError(this.handleError)
+    );
   }
 
-  public buildUrl<T extends BaseModel>(
-    modelType: ModelType<T>,
-    customUrl?: string
-  ): string {
-
+  public buildUrl<T extends BaseModel>(modelType: ModelType<T>, customUrl?: string): string {
     if (customUrl) {
       return customUrl;
     }
@@ -315,10 +303,7 @@ export class BaseDatastore {
     return url;
   }
 
-  protected extractQueryData<T extends BaseModel>(
-    res: any,
-    modelType: ModelType<T>
-  ): BaseQueryData<T> {
+  protected extractQueryData<T extends BaseModel>(res: any, modelType: ModelType<T>): BaseQueryData<T> {
     let result;
     const body: any = res;
     const models: T[] = [];
@@ -406,25 +391,26 @@ export class BaseDatastore {
     };
     if (customHeaders && customHeaders.keys().length) {
       // tslint:disable-next-line:variable-name
-      Object.assign({}, headers, customHeaders.keys().map(header_name => {
-        headers['' + header_name] = customHeaders.get(header_name);
-      }));
+      Object.assign(
+        {},
+        headers,
+        customHeaders.keys().map((header_name) => {
+          headers['' + header_name] = customHeaders.get(header_name);
+        })
+      );
     }
     return new HttpHeaders(headers);
   }
 
-  public buildParams<T extends BaseModel>(modelType: ModelType<T>,
-    params: any): HttpParams {
+  public buildParams<T extends BaseModel>(modelType: ModelType<T>, params: any): HttpParams {
     let httpParams = new HttpParams();
     if (params) {
       Object.keys(params)
-        .filter(key => {
+        .filter((key) => {
           const v = params[key];
-          return (Array.isArray(v) || typeof v === 'string') ?
-            (v.length > 0) :
-            (v !== null && v !== undefined);
+          return Array.isArray(v) || typeof v === 'string' ? v.length > 0 : v !== null && v !== undefined;
         })
-        .forEach(key => {
+        .forEach((key) => {
           httpParams = httpParams.set(key, params[key]);
         });
     }
@@ -433,21 +419,11 @@ export class BaseDatastore {
     return httpParams;
   }
 
-
-  protected entityToModel<T extends BaseModel>(
-    res: any,
-    modelType: ModelType<T>,
-    model?: T
-  ) {
+  protected entityToModel<T extends BaseModel>(res: any, modelType: ModelType<T>, model?: T) {
     return this.extractRecordDataJson(res, modelType, model);
   }
 
-
-  private extractRecordDataJson<T extends BaseModel>(
-    res: Response,
-    modelType: ModelType<T>,
-    model?: T
-  ): T {
+  private extractRecordDataJson<T extends BaseModel>(res: Response, modelType: ModelType<T>, model?: T): T {
     const body: any = res;
     if (!body) {
       throw new Error('no body in response');
@@ -459,11 +435,7 @@ export class BaseDatastore {
     return deserializedModel;
   }
 
-  public modelToEntity<T extends BaseModel>(
-    model: T,
-    attributesMetadata: any,
-    allAttributes: boolean = false
-  ): any {
+  public modelToEntity<T extends BaseModel>(model: T, attributesMetadata: any, allAttributes: boolean = false): any {
     let attributes;
     if (allAttributes) {
       attributes = this.getAllAttributes(attributesMetadata, model);
@@ -476,6 +448,4 @@ export class BaseDatastore {
   private _toQueryString(params: any): string {
     return queryString.stringify(params, { arrayFormat: 'bracket' });
   }
-
-
 }

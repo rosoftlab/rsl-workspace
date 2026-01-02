@@ -20,7 +20,6 @@ export * from './pipes/input-error.pipe';
 export * from './pipes/Nl2brPipe.pipe';
 export * from './providers';
 export * from './resolvers';
-export * from './rsl-base-module';
 export * from './services/base.service';
 export * from './services/local-file.service';
 export * from './validators/pattern-validator';

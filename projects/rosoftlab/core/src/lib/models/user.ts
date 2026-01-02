@@ -1,4 +1,6 @@
-import { Attribute, BaseModelConfig } from "../core";
+
+import { Attribute } from "../decorators/attribute.decorator";
+import { BaseModelConfig } from "../decorators/base-model-config.decorator";
 import { BaseModel } from "./base.model";
 @BaseModelConfig({
     type: 'user'
