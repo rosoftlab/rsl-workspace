@@ -11,7 +11,7 @@ export const PACKAGES = [
 
   // UI
   // 'bootstrap',
-  'ionic', 
+  // 'ionic', 
   'material'
   
   // 'primeng',

@@ -1,8 +1,9 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
+import { FormlyKendoModule } from '@ngx-formly/kendo';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { KENDO_BUTTONS } from '@progress/kendo-angular-buttons';
 import { KENDO_DIALOG } from '@progress/kendo-angular-dialog';
@@ -14,16 +15,18 @@ import { LocalFileService, RouteHistoryService } from '@rosoftlab/core';
 import { Observable } from 'rxjs';
 import { ReactiveDictionary } from '../../reactive-dictionary';
 import { MaterialDialogService } from '../../services/material-dialog.service';
-import { RdictFormlyWrapperModule } from './rdict-formly-wrapper.module';
+import { CrudFormlyTransaltionModule } from './rsl-reactive-dictionary.module';
 @Component({
   selector: 'app-rdict-crud',
   templateUrl: './rdict-crud.component.html',
   styleUrls: ['./rdict-crud.component.scss'],
   imports: [
+    FormlyModule,
     CommonModule,
-    ReactiveFormsModule,
-    RdictFormlyWrapperModule,
+    ReactiveFormsModule,    
+    FormlyKendoModule,
     TranslateModule,
+    CrudFormlyTransaltionModule,
     // forwardRef(() => CrudFormlyTransaltionModule ), // Delays evaluation
     KENDO_GRID,
     KENDO_TOOLBAR,
@@ -66,27 +69,27 @@ export class RdictCrudComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this.setValueFromSnapshot(this, this.route.snapshot, 'fileLayout', '');
+    this.setValueFromSnapshot(this, this.route.snapshot, 'fileLayout', '');
 
-    // const currentUrlSegments: string[] = this.router.url.split('/').filter((segment) => segment !== '' && isNaN(Number(segment)));
-    // if (['add', 'edit'].includes(currentUrlSegments[currentUrlSegments.length - 1])) {
-    //   currentUrlSegments.pop();
-    // }
+    const currentUrlSegments: string[] = this.router.url.split('/').filter((segment) => segment !== '' && isNaN(Number(segment)));
+    if (['add', 'edit'].includes(currentUrlSegments[currentUrlSegments.length - 1])) {
+      currentUrlSegments.pop();
+    }
 
-    // this.dictPath = currentUrlSegments.join('.');
-    // this.hostClass = currentUrlSegments.join(' ') + ' crud';
-    // this.rdictModel = currentUrlSegments.length > 0 ? currentUrlSegments[currentUrlSegments.length - 1] : '';
-    // const id = this.route.snapshot.paramMap.get('id');
-    // this.modelKey = id ?? null;
-    // this.getModelFields();
-    // this.getModel();
-    // const addUrl = this.router.createUrlTree([]).toString();
-    // this.editRoute = this.router.createUrlTree([addUrl.replace('add', 'edit')]).toString();
+    this.dictPath = currentUrlSegments.join('.');
+    this.hostClass = currentUrlSegments.join(' ') + ' crud';
+    this.rdictModel = currentUrlSegments.length > 0 ? currentUrlSegments[currentUrlSegments.length - 1] : '';
+    const id = this.route.snapshot.paramMap.get('id');
+    this.modelKey = id ?? null;
+    this.getModelFields();
+    this.getModel();
+    const addUrl = this.router.createUrlTree([]).toString();
+    this.editRoute = this.router.createUrlTree([addUrl.replace('add', 'edit')]).toString();
   }
-  // @HostBinding('class')
-  // get hostClasses(): string {
-  //   return this.hostClass;
-  // }
+  @HostBinding('class')
+  get hostClasses(): string {
+    return this.hostClass;
+  }
   setValueFromSnapshot<T>(component: any, snapshot: ActivatedRouteSnapshot, key: string, defaultValue: T): void {
     if (component[key] === undefined) {
       let dataFromSnapshot = snapshot.data[key];
