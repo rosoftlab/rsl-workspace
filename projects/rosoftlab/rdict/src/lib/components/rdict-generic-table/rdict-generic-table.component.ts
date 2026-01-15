@@ -45,7 +45,7 @@ export class GenericRdictTableComponent implements OnInit {
   dataSource: unknown[]; //MatTableDataSource<any> = new MatTableDataSource();
   public title: string;
   model: string;
-  @Input() showSerach: boolean;
+  @Input() showSearch: boolean;
   @Input() searchFields: string;
   @Input() customInclude: string;
   @Input() defaultSort: any;
@@ -123,7 +123,7 @@ export class GenericRdictTableComponent implements OnInit {
     this.setValueFromSnapshot(this, this.route.snapshot, 'model', null);
     this.setValueFromSnapshot(this, this.route.snapshot, 'dictPath', null);
 
-    this.setValueFromSnapshot(this, this.route.snapshot, 'showSerach', false);
+    this.setValueFromSnapshot(this, this.route.snapshot, 'showSearch', false);
     this.setValueFromSnapshot(this, this.route.snapshot, 'searchFields', null);
     this.setValueFromSnapshot(this, this.route.snapshot, 'customInclude', null);
     this.setValueFromSnapshot(this, this.route.snapshot, 'defaultSort', null);

@@ -20,7 +20,7 @@ export declare type SortDirection = 'asc' | 'desc' | '';
 export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends BaseService<T>> implements OnInit {
   @ViewChild('actionsTmpl', { static: true }) actionsTmpl: TemplateRef<any>;
   public title: string;
-  @Input() showSerach: boolean;
+  @Input() showSearch: boolean;
   @Input() searchFields: string;
   @Input() customInclude: string;
   @Input() defaultSort: string;
@@ -64,7 +64,7 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
 
   }
   ngOnInit() {
-    this.setValueFromSnapshot(this, this.route.snapshot, 'showSerach', false);
+    this.setValueFromSnapshot(this, this.route.snapshot, 'showSearch', false);
     this.setValueFromSnapshot(this, this.route.snapshot, 'searchFields', null);
     this.setValueFromSnapshot(this, this.route.snapshot, 'customInclude', null);
     this.setValueFromSnapshot(this, this.route.snapshot, 'defaultSort', null);
@@ -153,7 +153,7 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
         sorts = this.defaultSort;
       }
     }
-    if (this.showSerach) {
+    if (this.showSearch) {
       if (this.filterValue) {
         const y = '(' + this.searchFields.replace(',', '|') + ')';
         filters.push(y + '@=*' + this.filterValue);

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 // import { UserService } from '@rosoftlab/rdict';
 import { ReactiveDictionary } from 'projects/rosoftlab/rdict/src/lib/reactive-dictionary';
 // import { AuthService } from '../../shared/services/auth.service';
-import { AuthService, UserService } from 'dist/@rosoftlab/core';
+import { AuthService, UserService } from '@rosoftlab/core';
 import { StorageService } from '../../shared/services/storage.service';
 
 @Component({

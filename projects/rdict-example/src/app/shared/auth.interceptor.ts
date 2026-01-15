@@ -1,6 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from 'dist/@rosoftlab/core';
+import { AuthService } from '@rosoftlab/core';
 import { StorageService } from './services/storage.service';
 
 

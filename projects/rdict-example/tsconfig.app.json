@@ -14,17 +14,26 @@
     ],
     "paths": {
       "@rosoftlab/core": [
-        "dist/@rosoftlab/core"
+        "projects/rosoftlab/core/src/public-api.ts"
       ],
       "@rosoftlab/core/*": [
-        "dist/@rosoftlab/core/*"
+        "projects/rosoftlab/core/src/*"
       ],
       "@rosoftlab/rdict": [
-        "dist/@rosoftlab/rdict"
+        "projects/rosoftlab/rdict/src/public-api.ts"
       ],
       "@rosoftlab/rdict/*": [
-        "dist/@rosoftlab/rdict/*"
+        "projects/rosoftlab/rdict/src/*"
       ],
+      "@rosoftlab/shared-ui": [
+        "projects/rosoftlab/shared-ui/src/public-api.ts"
+      ],
+      "@rosoftlab/kendo": [
+        "projects/rosoftlab/kendo/src/public-api.ts"
+      ],
+      "@rosoftlab/kendo/*": [
+        "projects/rosoftlab/kendo/src/*"
+      ]
     }
   },
   "files": [

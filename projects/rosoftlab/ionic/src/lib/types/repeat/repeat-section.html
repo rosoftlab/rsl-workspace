@@ -34,7 +34,7 @@
 
 
 <ng-template #search>
-  <ion-toolbar *ngIf="showSerach">
+  <ion-toolbar *ngIf="showSearch">
     <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)"></ion-searchbar>
   </ion-toolbar>
 </ng-template>

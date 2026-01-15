@@ -20,30 +20,17 @@ export class BaseModel {
     }
   }
 
-  save(
-    params?: any,
-    headers?: HttpHeaders,
-    customUrl?: string,
-    customBody?: any): Observable<this> {
+  save(params?: any, headers?: HttpHeaders, customUrl?: string, customBody?: any): Observable<this> {
     const attributesMetadata: any = this[AttributeMetadata];
     return this._datastore.saveRecord(attributesMetadata, this, params, headers, customUrl, customBody);
   }
 
-  patch(
-    origModel: this,
-    params?: any,
-    headers?: HttpHeaders,
-    customUrl?: string
-  ): Observable<this> {
+  patch(origModel: this, params?: any, headers?: HttpHeaders, customUrl?: string): Observable<this> {
     const attributesMetadata: any = this[AttributeMetadata];
     return this._datastore.patchRecord(attributesMetadata, this, origModel, params, headers, customUrl);
   }
 
-  replace(
-    params?: any,
-    headers?: HttpHeaders,
-    customUrl?: string,
-    customBody?: any): Observable<this> {
+  replace(params?: any, headers?: HttpHeaders, customUrl?: string, customBody?: any): Observable<this> {
     const attributesMetadata: any = this[AttributeMetadata];
     return this._datastore.replaceRecord(attributesMetadata, this, params, headers, customUrl, customBody);
   }
@@ -94,12 +81,10 @@ export class BaseModel {
     return MetadataStorage.getMetadata('BaseModelConfig', this.constructor);
   }
 
-
   protected deserializeModel<T extends BaseModel>(modelType: ModelType<T>, data: any) {
     data = this.transformSerializedNamesToPropertyNames(modelType, data);
     return new modelType(this._datastore, data);
   }
-
 
   protected transformSerializedNamesToPropertyNames<T extends BaseModel>(modelType: ModelType<T>, attributes: any) {
     const serializedNameToPropertyName = this.getModelPropertyNames(modelType.prototype);
@@ -136,57 +121,52 @@ export class BaseModel {
     const controlsConfig: any = {};
     const that = this;
     if (props) {
-      props.forEach(property => {
+      props.forEach((property) => {
         const value = that[property] !== undefined ? that[property] : defaultValues[property];
         const formSubGroup = formSubGroupsValues[property] ?? null;
         if (requiredProps[property]) {
           if (formSubGroup)
             this.getSubFromGroup(fb, controlsConfig, formSubGroup).addControl(property, fb.control(value, Validators.required));
-          else
-            controlsConfig[property] = [value, Validators.required];
+          else controlsConfig[property] = [value, Validators.required];
         } else {
-          if (formSubGroup)
-            this.getSubFromGroup(fb, controlsConfig, formSubGroup).addControl(property, fb.control(value));
-          else
-            controlsConfig[property] = value;
+          if (formSubGroup) this.getSubFromGroup(fb, controlsConfig, formSubGroup).addControl(property, fb.control(value));
+          else controlsConfig[property] = value;
         }
       });
-
     }
     return fb.group(controlsConfig);
   }
   private getSubFromGroup(fb: UntypedFormBuilder, controlsConfig: any, subGroup: string): UntypedFormGroup {
-    if (!controlsConfig[subGroup])
-      controlsConfig[subGroup] = fb.group({});
+    if (!controlsConfig[subGroup]) controlsConfig[subGroup] = fb.group({});
     return controlsConfig[subGroup];
   }
 
   public getModelFromFormGroup(formGroup: UntypedFormGroup, id?: any) {
-    const props = Object.keys(this.getModelPropertyNames(this));
-    const formSubGroupsValues = this.getModelSubGroupPropertyNames(this);
-    const data: any = {};
-    if (id) {
-      data.id = id;
-    }
-    const that = this;
-    if (props) {
-      props.forEach(property => {
-        const formSubGroup = formSubGroupsValues[property] ?? null;
-        if (!formSubGroup)
-          data[property] = formGroup.controls[property].value ?? null;
-        else
-          data[property] = (formGroup.controls[formSubGroup] as UntypedFormGroup).controls[property].value ?? null;
-      });
-    }
-    if (data) {
+    try {
+      const props = Object.keys(this.getModelPropertyNames(this));
+      const formSubGroupsValues = this.getModelSubGroupPropertyNames(this);
+      const data: any = {};
       if (id) {
-        this.id = id;
+        data.id = id;
       }
-      Object.assign(this, data);
+      const that = this;
+      if (props) {
+        props.forEach((property) => {
+          const formSubGroup = formSubGroupsValues[property] ?? null;
+          if (!formSubGroup) data[property] = formGroup.controls[property].value ?? null;
+          else data[property] = (formGroup.controls[formSubGroup] as UntypedFormGroup).controls[property].value ?? null;
+        });
+      }
+      if (data) {
+        if (id) {
+          this.id = id;
+        }
+        Object.assign(this, data);
+      }
+    } catch (error) {
+      Object.assign(this, formGroup.value);
     }
   }
-
-
 
   public getSerializedModel() {
     const attributesMetadata: any = this[AttributeMetadata];

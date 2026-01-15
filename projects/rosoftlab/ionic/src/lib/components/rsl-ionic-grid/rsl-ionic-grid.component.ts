@@ -17,7 +17,7 @@ export declare type SortDirection = 'asc' | 'desc' | '';
 })
 export class RslIonicGridComponent<T extends BaseModelFormly, U extends BaseService<T>> implements OnInit {
   public title: string;
-  @Input() showSerach: boolean;
+  @Input() showSearch: boolean;
   @Input() searchFields: string;
   @Input() customInclude: string;
   @Input() defaultSort: string;
@@ -50,7 +50,7 @@ export class RslIonicGridComponent<T extends BaseModelFormly, U extends BaseServ
   }
 
   ngOnInit() {
-    this.setValueFromSnapshot(this, this.route.snapshot, 'showSerach', false);
+    this.setValueFromSnapshot(this, this.route.snapshot, 'showSearch', false);
     this.setValueFromSnapshot(this, this.route.snapshot, 'searchFields', null);
     this.setValueFromSnapshot(this, this.route.snapshot, 'customInclude', null);
     this.setValueFromSnapshot(this, this.route.snapshot, 'defaultSort', null);
@@ -60,7 +60,7 @@ export class RslIonicGridComponent<T extends BaseModelFormly, U extends BaseServ
     this.setValueFromSnapshot(this, this.route.snapshot, 'showHeader', true);
     this.setValueFromSnapshot(this, this.route.snapshot, 'deleteDisableRule', null);
 
-    // this.showSerach = route.snapshot.data['showSerach'] || false;
+    // this.showSearch = route.snapshot.data['showSearch'] || false;
     // this.searchFields = this.route.snapshot.data['searchFields'] || null;
 
     // this.customInclude = this.route.snapshot.data['customInclude'] || null;
@@ -128,7 +128,7 @@ export class RslIonicGridComponent<T extends BaseModelFormly, U extends BaseServ
         sorts = this.defaultSort;
       }
     }
-    if (this.showSerach) {
+    if (this.showSearch) {
       if (filterValue) {
         const y = '(' + this.searchFields.replace(',', '|') + ')';
         filters.push(y + '@=*' + filterValue);

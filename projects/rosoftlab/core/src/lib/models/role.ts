@@ -10,4 +10,7 @@ export class Role extends BaseModel {
 
   @Attribute({ serializedName: 'name' })
   name: string;
+
+  @Attribute({ serializedName: 'roleDetail' })
+  roleDetail: any;
 }

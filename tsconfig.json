@@ -7,16 +7,24 @@
         "src/*/src/private_api",
         "src/*/src/public_api",
         "src/ui/*/src/public_api"
-      ],      
-      "@rosoftlab/material": [
-        "dist/rosoftlab/material"
+      ],
+      "@rosoftlab/core": [
+        "projects/rosoftlab/core/src/public-api.ts"
       ],
       "@rosoftlab/rdict": [
-        "./dist/rosoftlab/rdict"
+        "projects/rosoftlab/rdict/src/public-api.ts"
       ],
-     
+      "@rosoftlab/shared-ui": [
+        "projects/rosoftlab/shared-ui/src/public-api.ts"
+      ],
+      "@rosoftlab/kendo": [
+        "projects/rosoftlab/kendo/src/public-api.ts"
+      ],
+      "@rosoftlab/material": [
+        "projects/rosoftlab/material/src/public-api.ts"
+      ],
       "@rosoftlab/statemachine": [
-        "dist/rosoftlab/statemachine"
+        "projects/rosoftlab/statemachine/src/public-api.ts"
       ]
     },
     "baseUrl": "./",

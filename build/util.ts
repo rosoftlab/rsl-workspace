@@ -5,6 +5,8 @@ import { join } from 'path';
 export const PACKAGES = [
   'core',
   'rdict',
+  'shared-ui',
+  'kendo',
   'formly',
   'statemachine',
   // 'schematics',

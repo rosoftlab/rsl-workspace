@@ -59,9 +59,9 @@
             {
               "key": "fileId"
             },
-             {
+            {
               "key": "sheet_name",
-               "type": "input"
+              "type": "input"
             },
             {
               "key": "mapping",
@@ -424,7 +424,7 @@
             "required": true,
             "valueProp": "name",
             "labelProp": "name",
-            "for":"export"
+            "for": "export"
           }
         },
         {
@@ -733,6 +733,287 @@
             "label": "General.Name",
             "translate": true,
             "required": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "locations",
+    "tableLayout": {
+      "title": "Location.Layout.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Import.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        },
+        {
+          "key": "lat",
+          "type": "input",
+          "props": {
+            "label": "Location.Lat",
+            "translate": true
+          }
+        },
+        {
+          "key": "lng",
+          "type": "input",
+          "props": {
+            "label": "Location.Lng",
+            "translate": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "data_sources",
+    "tableLayout": {
+      "title": "Data.Source.List.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Data.Source.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "data_types",
+    "tableLayout": {
+      "title": "Data.Type.List.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "alternative_name",
+          "header": "Alternative Name",
+          "translateKey": "DataType.AlternativeName",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "um",
+          "header": "Measure unit",
+          "translateKey": "General.UM",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Data.Type.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        },
+        {
+          "key": "alternative_name",
+          "type": "input",
+          "props": {
+            "label": "DataType.AlternativeName",
+            "translate": true
+          }
+        },
+        {
+          "key": "um",
+          "type": "select",
+          "props": {
+            "label": "UM",
+            "options": [
+              {
+                "value": "KWh",
+                "label": "KWh"
+              },
+              {
+                "value": "MWh",
+                "label": "MWh"
+              },
+              {
+                "value": "KW",
+                "label": "KW"
+              },
+              {
+                "value": "MW",
+                "label": "MW"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+   {
+    "model": "user",
+    "tableLayout": {
+      "title": "Administration.Security.User.List.Title",
+      "columns": [
+        {
+          "propertyName": "firstName",
+          "header": "FirstName",
+          "translateKey": "User.FirstName",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+         {
+          "propertyName": "lastName",
+          "header": "LastName",
+          "translateKey": "User.LastName",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Administration.Security.User.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "className": "name",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        },
+        {
+          "key": "roleDetail",
+          "type": "kendo-treeview",
+          "props": {
+            "label": "Administration.Security.Role.Rights",
+            "translate": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "role",
+    "tableLayout": {
+      "title": "Administration.Security.Role.List.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Administration.Security.Role.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "className": "name",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        },
+        {
+          "key": "roleDetail",
+          "type": "kendo-treeview",
+          "props": {
+            "label": "Administration.Security.Role.Rights",
+            "translate": true
           }
         }
       ]

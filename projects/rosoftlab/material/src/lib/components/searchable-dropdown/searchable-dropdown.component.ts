@@ -94,7 +94,7 @@ export class SearchableDropdownComponent<T extends BaseModel> implements OnInit,
   // Search form control
   searchControl: AbstractControl;
 
-  showSerach = true;
+  showSearch = true;
   isLoading = false;
   options = [];
   filteredOptions = [];
@@ -131,7 +131,7 @@ export class SearchableDropdownComponent<T extends BaseModel> implements OnInit,
     if (this.preloadElementsCount) {
       this.serviceRef.getAll(1, this.preloadElementsCount).subscribe({
         next: (data: BaseQueryData<T>) => {
-          this.showSerach = false;
+          this.showSearch = false;
           this.options = data.getModels();
           this.filteredOptions = this.options;
         }
@@ -146,7 +146,7 @@ export class SearchableDropdownComponent<T extends BaseModel> implements OnInit,
             this.options = [];
             this.filteredOptions = [];
           }
-          this.showSerach = !result;
+          this.showSearch = !result;
           return result;
         }),
         debounceTime(300),

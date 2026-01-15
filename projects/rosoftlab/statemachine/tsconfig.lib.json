@@ -8,8 +8,8 @@
     "inlineSources": true,
     "types": [],
     "paths": {
-      "@rosoftlab/core": ["dist/@rosoftlab/core"],
-      "@rosoftlab/core/*": ["dist/@rosoftlab/core/*"],
+      "@rosoftlab/core": ["@rosoftlab/core"],
+      "@rosoftlab/core/*": ["@rosoftlab/core/*"],
     }
   },
   "exclude": [

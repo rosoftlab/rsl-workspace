@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService, UserService } from 'dist/@rosoftlab/core';
+import { AuthService, UserService } from '@rosoftlab/core';
 import { StorageService } from './services/storage.service';
 
 export const authGuard: CanActivateFn = async (route, state) => {

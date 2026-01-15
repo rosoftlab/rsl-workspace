@@ -3,7 +3,7 @@ import { BaseModel } from "./base.model";
 
 @BaseModelConfig({
     type: 'right',
-    modelEndpointUrl: 'user/rights'
+    modelEndpointUrl: 'right'
 })
 export class Right extends BaseModel {
 

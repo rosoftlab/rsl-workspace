@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FORMLY_CONFIG } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
-import { registerTranslateExtension } from '../../translate.extension';
+import { registerTranslateExtension } from '../../../../../kendo/src/lib/translate.extension';
 
 @NgModule({
   imports: [

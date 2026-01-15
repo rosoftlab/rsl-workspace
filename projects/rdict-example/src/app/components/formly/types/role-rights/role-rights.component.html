@@ -1,0 +1,5 @@
+<!-- <div class="example-config">Checked keys: {{ checkedKeys.join(",") }}</div> -->
+<kendo-treeview *ngIf="nodes && nodes.length > 0" [nodes]="nodes" textField="translated_name" [children]="fetchChildren"
+  [hasChildren]="hasChildren" [kendoTreeViewCheckable]="checkableSettings" [(checkedKeys)]="checkedKeys"
+  (checkedKeysChange)="handleTreeChange($event)">
+</kendo-treeview>

@@ -19,8 +19,8 @@ import { BreadCrumbItem, KENDO_BREADCRUMB } from '@progress/kendo-angular-naviga
 import { KENDO_SPREADSHEET, SpreadsheetComponent } from '@progress/kendo-angular-spreadsheet';
 import { KENDO_TREEVIEW } from '@progress/kendo-angular-treeview';
 import * as svgIcons from '@progress/kendo-svg-icons';
+import { MaterialDialogService, ReactiveDictionary, SocketService } from '@rosoftlab/rdict';
 import { format } from 'date-fns';
-import { MaterialDialogService, ReactiveDictionary, SocketService } from 'projects/rosoftlab/rdict/src/public-api';
 import { Observable, of } from 'rxjs';
 import { DataService } from '../../services/data.service';
 import { FileService } from '../../services/file.service';

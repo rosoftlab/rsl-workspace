@@ -1,6 +1,6 @@
 {
   "name": "@rosoftlab/core",
-  "version": "1.0.4-alpha-11",
+  "version": "1.0.4-alpha-14",
   "scripts": {
     "ng": "ng",
     "build": "ts-node --dir build build.ts",
@@ -15,7 +15,7 @@
     "demo-docker": "npm run start-docker",
     "build-rdict": "ng build @rosoftlab/rdict --configuration development",
     "build-demo-rdict": "ng build rdict-example",
-    "demo-rdict": "ng serve rdict-example  --port 33080 --configuration development"
+    "demo-rdict": "ng serve rdict-example  --port 33080 --configuration development --hmr=false"
   },
   "private": false,
   "dependencies": {

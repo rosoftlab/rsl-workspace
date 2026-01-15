@@ -8,8 +8,8 @@
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected($event)"
       [displayWith]="displayWith.bind(this)">
       <mat-option *ngIf="isLoading">Loading...</mat-option>
-      <mat-option *ngIf="!isLoading && filteredOptions.length == 0 && !showSerach" disabled>Not found</mat-option>
-      <mat-option *ngIf="showSerach" disabled>{{getSearchText()}}</mat-option>
+      <mat-option *ngIf="!isLoading && filteredOptions.length == 0 && !showSearch" disabled>Not found</mat-option>
+      <mat-option *ngIf="showSearch" disabled>{{getSearchText()}}</mat-option>
       <ng-container *ngIf="!isLoading && filteredOptions.length > 0">
         <mat-option *ngFor="let option of filteredOptions" [value]="option">
           <span><b>{{getConcatedFields(option)}}</b></span>

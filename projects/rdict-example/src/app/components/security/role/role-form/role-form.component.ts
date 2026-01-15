@@ -1,9 +1,19 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
+import { FormlyKendoModule } from '@ngx-formly/kendo';
+import { TranslateService } from '@ngx-translate/core';
+import { KENDO_BUTTONS } from '@progress/kendo-angular-buttons';
+import { KENDO_DIALOG } from '@progress/kendo-angular-dialog';
+import { KENDO_INPUTS } from '@progress/kendo-angular-inputs';
+import { KENDO_LABEL, KENDO_LABELS } from '@progress/kendo-angular-label';
+import { KENDO_TOOLBAR } from '@progress/kendo-angular-toolbar';
 import { KENDO_TREEVIEW } from '@progress/kendo-angular-treeview';
-import { Right, UserService } from 'dist/@rosoftlab/core';
-import { Observable, map, of, shareReplay } from 'rxjs';
+import { SVGIcon, arrowLeftIcon, saveIcon } from '@progress/kendo-svg-icons';
+import { Right, Role, RoleService } from '@rosoftlab/core';
+import { Observable } from 'rxjs';
 export interface MenuItemDto {
   id: string;
   parentId?: string | null;
@@ -24,128 +34,224 @@ export type RightTreeNode = Right & { items?: RightTreeNode[] };
  * Build hierarchical tree from a flat list using parentId.
  * Sorts siblings by `order` (and name as a stable fallback).
  */
-export function buildRightsTree(flat: Right[]): RightTreeNode[] {
-  const nodes = (flat ?? []) as RightTreeNode[];
 
-  // Ensure a clean items[] every time (avoid duplicates if rebuild)
-  for (const n of nodes) {
-    n.items = [];
-  }
-
-  const byId = new Map<string, RightTreeNode>();
-  for (const n of nodes) {
-    // IMPORTANT: use the accessor/property, not _id
-    byId.set(String(n.id), n);
-  }
-
-  const roots: RightTreeNode[] = [];
-
-  for (const n of nodes) {
-    const parentId = n.parentId;
-
-    const hasParent = parentId !== undefined && parentId !== null && parentId !== '' && byId.has(String(parentId));
-
-    if (hasParent) {
-      byId.get(String(parentId))!.items!.push(n);
-    } else {
-      roots.push(n);
-    }
-  }
-
-  const sortRecursive = (arr: RightTreeNode[]) => {
-    arr.sort((a, b) => {
-      const ao = a.order ?? 0;
-      const bo = b.order ?? 0;
-      if (ao !== bo) return ao - bo;
-      return String(a.name ?? '').localeCompare(String(b.name ?? ''));
-    });
-
-    for (const n of arr) {
-      if (n.items?.length) sortRecursive(n.items);
-    }
-  };
-
-  sortRecursive(roots);
-  return roots;
-}
 @Component({
   selector: 'app-role-form',
   templateUrl: './role-form.component.html',
   styleUrls: ['./role-form.component.scss'],
-  imports: [CommonModule, FormsModule, KENDO_TREEVIEW],
+  imports: [
+    CommonModule,
+    FormsModule,
+    FormlyModule,
+    ReactiveFormsModule,
+    FormlyKendoModule,
+    KENDO_TREEVIEW,
+    KENDO_TOOLBAR,
+    KENDO_LABEL,
+    KENDO_BUTTONS,
+    KENDO_DIALOG,
+    KENDO_INPUTS,
+    KENDO_LABELS
+  ]
 })
 export class RoleFormComponent implements OnInit {
-  public checkedKeys: string[] = [];
-  public nodes$!: Observable<RightTreeNode[]>;
-  private selectedKeys$!: Observable<string[]>;
-  public vm$!: Observable<RightTreeNode[]>;
-  constructor(private userService: UserService) {}
+  public fields: FormlyFieldConfig[] = [
+    {
+      key: 'id', // The role ID field (hidden or visible)
+      type: 'input',
+      templateOptions: { type: 'hidden' }
+    },
+    {
+      key: 'name',
+      type: 'input',
+      className: 'name',
+      props: {
+        label: 'General.Name',
+        translate: true,
+        required: true
+      }
+    },
+    {
+      key: 'roleDetail', // The TreeView will bind to this key
+      type: 'kendo-treeview',
+      props: {
+        label: 'Drepturi',
+        translate: true,
+      }
+    }
+  ];
+  options: FormlyFormOptions = {};
+  baseForm: FormGroup = new FormGroup({});
+  modelId: string;
+  model: Role;
+  original_model: Role;
+  isEdit: boolean;
+  isLoading = true;
+  cancelRoute: string;
+  editRoute: string;
+  public changeUrlRoute: boolean = true;
+
+  public saveIcon: SVGIcon = saveIcon;
+  public backIcon: SVGIcon = arrowLeftIcon;
+
+  constructor(
+    protected fb: FormBuilder,
+    protected router: Router,
+    protected route: ActivatedRoute,
+    protected modelService: RoleService,
+
+    protected translate: TranslateService,
+    protected location: Location
+  ) {}
   ngOnInit() {
-    this.nodes$ = this.userService.getRights().pipe(
-      map((r) => buildRightsTree(r.getModels())),
-      shareReplay(1)
-    );
+    this.initForm();
+  }
+  initForm(customInclude: string = '', newModelId: string = null, model: Role = null) {
+    if (model === null) {
+      this.modelId =this.route.snapshot.paramMap.get('id') ?? newModelId;
+      // this.modelId = '8a4f1e95-9efc-4622-9103-cb790c5db734';
+      ////Employee
+      // this.modelId = '954904d8-8e0a-490c-ad0d-ccc038f5bd03'; //
 
-    // this.selectedKeys$ = this.http.get<MenuItemDto[]>('/api/role-rights-selected').pipe(
-    //   map((selected) => selected.map((x) => x.id)),
-    //   shareReplay(1)
-    // );
-
-    // this.vm$ = combineLatest([this.nodes$, this.selectedKeys$]).pipe(
-    //   tap(([, keys]) => (this.checkedKeys = keys)),
-    //   map(([nodes]) => nodes),
-    //   shareReplay(1)
-    // );
+      this.isEdit = false;
+      if (this.modelId) {
+        this.modelService.get(this.modelId, 'RoleDetail').subscribe((value: Role) => {
+          this.isEdit = true;
+          this.original_model =this.modelService.newModel(JSON.parse(JSON.stringify(value)));
+          this.generateForm(value);
+        });
+      } else {
+        if (this.changeUrlRoute) {
+          const addUrl = this.router.createUrlTree([]).toString();
+          this.editRoute = this.router.createUrlTree([addUrl.replace('add', 'edit')]).toString();
+        }
+        // }
+        this.generateForm(this.modelService.newModel());
+      }
+    } else {
+      this.modelId = model.id;
+      this.isEdit = true;
+      this.generateForm(model);
+    }
   }
 
-  public onCheckedKeysChange(keys: string[]): void {
-    this.checkedKeys = keys;
+  generateForm(model?: Role) {
+    this.isLoading = false;
+    this.modelId = model.id;
+    this.model = model;
+    // this.baseForm = this.modelService.toFormGroup(this.fb, model);
+    this.afterFormGenerated();
+  }
+  public afterFormGenerated() {}
 
-    // Persist as ids (recommended, stable):
-    // this.http.post('/api/role-rights', { ids: keys }).subscribe();
+  onSubmit(model) {
+    // this.saveModel(this.baseForm)
   }
 
-  // Kendo calls this for each node to determine checkbox state
-  public isChecked = (_: any, item: RightTreeNode) => this.getNodeCheckState(item);
-
-  private getNodeCheckState(item: RightTreeNode): 'checked' | 'indeterminate' | 'none' {
-    const checked = new Set(this.checkedKeys);
-
-    const children = item.items ?? [];
-    const selfChecked = checked.has(item.id);
-
-    if (children.length === 0) {
-      return selfChecked ? 'checked' : 'none';
+  saveModel(formGroup: FormGroup | string = null) {
+    const fg = this.getFromGroup(formGroup);
+    const that = this;
+    if (fg) {
+      if (fg.valid) {
+        this.beforeSave(this.model).subscribe((_) => {
+          this.modelService.save(this.model, this.modelId, this.original_model).subscribe({
+            next: (newModel: Role) => {
+              this.model = newModel;
+              this.modelId = newModel.id;
+              if (this.editRoute) {
+                this.isEdit = true;
+                // if (this.changeUrlRoute) {
+                //   const url = this.router.createUrlTree([this.editRoute, this.modelId]).toString();
+                //   this.location.replaceState(url);
+                // }
+              }
+              // this.afterSave(newModel).subscribe((val: T) => {
+              //   this.dialogService.showSaveMessage('Your changes were saved successfully.').subscribe((d) => {
+              //     fg.markAsPristine();
+              //   });
+              // });
+            },
+            error: (err) => {
+              this.serverErrors(err);
+            }
+          });
+        });
+      } else {
+        this.validateAllFormFields(formGroup);
+      }
     }
-
-    // When checkParents/checkChildren are enabled, the UI should show indeterminate
-    // if some descendants are checked but not all.
-    let checkedCount = 0;
-    let indeterminateFound = false;
-
-    for (const c of children) {
-      const state = this.getNodeCheckState(c);
-      if (state === 'indeterminate') indeterminateFound = true;
-      if (state === 'checked') checkedCount++;
-    }
-
-    if (checkedCount === children.length && !indeterminateFound) {
-      // all descendants fully checked -> checked
-      return 'checked';
-    }
-
-    if (checkedCount > 0 || indeterminateFound || selfChecked) {
-      // some descendants checked OR node itself checked -> indeterminate
-      // (keeps UI consistent even if backend returns parent ids)
-      return 'indeterminate';
-    }
-
-    return 'none';
   }
-  public hasChildren = (item: RightTreeNode): boolean => {
-    return Array.isArray(item.items) && item.items.length > 0;
-  };
-  public fetchChildren = (node: RightTreeNode): Observable<RightTreeNode[]> => {
-    return of(node.items ?? []);
-  };
+  serverErrors(err: any) {
+    if (err.error) {
+      if (err.error.errors) {
+        const validationErrors = err.error.errors;
+        if (Array.isArray(validationErrors)) {
+          validationErrors.forEach((prop) => {
+            const formControl = this.baseForm.get(prop);
+            if (formControl) {
+              // activate the error message
+              formControl.setErrors({
+                serverError: validationErrors[prop].join('\n')
+              });
+            }
+          });
+        } else {
+          const keys = Object.keys(validationErrors);
+          keys.forEach((prop) => {
+            const formControl = this.baseForm.get(prop);
+            if (formControl) {
+              // activate the error message
+              formControl.setErrors({
+                serverError: validationErrors[prop].join('\n')
+              });
+            }
+          });
+        }
+      }
+    }
+  }
+  validateAllFormFields(formGroup: FormGroup | string = null) {
+    const fg = this.getFromGroup(formGroup);
+    Object.keys(fg.controls).forEach((field) => {
+      // console.log(field);
+      const control = fg.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    });
+  }
+  isFieldValid(field: string, formGroup: FormGroup | string = null) {
+    const fg = this.getFromGroup(formGroup);
+    const filedControl = fg.get(field);
+    return !filedControl.valid && filedControl.touched;
+  }
+
+  isFieldValidFromArray(arrayIndex: number, field: string, arrayName: string = 'formArray') {
+    const fieldControl = this.baseForm.get(arrayName).get([arrayIndex]).get(field);
+    return !fieldControl.valid && fieldControl.touched;
+  }
+  public afterSave(model: Role): Observable<Role> {
+    return new Observable((observer) => {
+      observer.next(model);
+      observer.complete();
+    });
+  }
+
+  public beforeSave(model: Role): Observable<Role> {
+    return new Observable((observer) => {
+      observer.next(model);
+      observer.complete();
+    });
+  }
+  private getFromGroup(formGroup: FormGroup | string = null): FormGroup {
+    if (!formGroup) return this.baseForm;
+    if (formGroup instanceof FormGroup) return formGroup;
+    return this.baseForm.controls[formGroup] as FormGroup;
+  }
+  public onSave() {
+    this.saveModel(this.baseForm);
+  }
+  onBack() {}
 }

@@ -1,0 +1,23 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../../out-tsc/lib",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "types": [],
+    "paths": {
+      "@rosoftlab/core": [
+        "projects/rosoftlab/core/src/public-api.ts"
+      ],
+      "@rosoftlab/rdict": [
+        "projects/rosoftlab/rdict/src/public-api.ts"
+      ],
+    }
+  },
+  "exclude": [
+    "**/*.spec.ts"
+  ]
+}

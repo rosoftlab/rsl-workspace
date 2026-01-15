@@ -9,7 +9,7 @@ import { IonicDialogService } from '../../ionic-dialog.service';
 import { WrappersModule } from '../../wrappers/wrappers.module';
 
 interface SearchProp {
-  showSerach: boolean
+  showSearch: boolean
   searchProp: string
 }
 interface ExportDataProp {
@@ -36,7 +36,7 @@ export class RepeatTypeComponent extends FieldArrayType {
   @ViewChild('fileInput') fileInput: ElementRef;
   data: FormlyFieldConfig[] = null;
   serach: SearchProp = null;
-  showSerach: boolean = false;
+  showSearch: boolean = false;
   deleteMessage: string
   deleteButton: string
   cancelButton: string
@@ -77,12 +77,12 @@ export class RepeatTypeComponent extends FieldArrayType {
     this.exportDataProp = this.props['export'] || null
     this.importDataProp = this.props['import'] || null
     if (this.serach) {
-      this.showSerach = this.serach.showSerach
+      this.showSearch = this.serach.showSearch
     }
 
   }
   postPopulate(field: any) {
-    if (this.showSerach) {
+    if (this.showSearch) {
       this.data = field.fieldGroup
       if (this.filterValue) {
         this.field.fieldGroup = this.data.filter(f => f.formControl.value[this.serach.searchProp].toLowerCase().includes(this.filterValue))
@@ -90,7 +90,7 @@ export class RepeatTypeComponent extends FieldArrayType {
     }
   }
   handleChange(event) {
-    if (this.showSerach) {
+    if (this.showSearch) {
       if (this.data == null && this.field.fieldGroup !== null) {
         this.data = this.field.fieldGroup
       }
