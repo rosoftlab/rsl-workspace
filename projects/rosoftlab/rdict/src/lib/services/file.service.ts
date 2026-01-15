@@ -11,7 +11,7 @@ import {
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { SOCKET_URL } from '../core';
+import { SOCKET_URL } from '../socket-config.token';
 export interface UploadProgress {
   type: 'progress' | 'response';
   loaded: number;

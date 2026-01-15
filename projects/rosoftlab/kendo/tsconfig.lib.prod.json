@@ -3,7 +3,15 @@
 {
   "extends": "./tsconfig.lib.json",
   "compilerOptions": {
-    "declarationMap": false
+    "declarationMap": false,
+    "paths": {
+      "@rosoftlab/core": [
+        "dist/@rosoftlab/core"
+      ],
+      "@rosoftlab/rdict": [
+        "dist/@rosoftlab/rdict"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "compilationMode": "partial"

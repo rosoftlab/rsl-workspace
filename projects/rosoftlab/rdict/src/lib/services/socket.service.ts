@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { FilterRequest } from '@rosoftlab/core';
 import { defer, filter, first, fromEvent, map, mergeMap, Observable, race, Subject, timeout } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
-import { SOCKET_URL } from '../core';
+import { SOCKET_URL } from '../socket-config.token';
 type Kwargs = Record<string, any>;
 interface ExecPayload {
   did: string;

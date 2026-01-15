@@ -10,10 +10,11 @@ import { KENDO_LABEL } from '@progress/kendo-angular-label';
 import { KENDO_TOOLBAR } from '@progress/kendo-angular-toolbar';
 import { pencilIcon, plusIcon, SVGIcon, trashIcon } from '@progress/kendo-svg-icons';
 import { BaseService, BaseTableImplementation, DIALOG_SERVICE_TOKEN, LocalFileService } from '@rosoftlab/core';
-import { FileService, MaterialDialogService, ReactiveDictionary } from '@rosoftlab/rdict';
+import { FileService, ReactiveDictionary } from '@rosoftlab/rdict';
 import 'reflect-metadata';
 import { BehaviorSubject } from 'rxjs';
 import { KendoTableTitle } from '../shared/kendo-table-title';
+import { MaterialDialogService } from '../shared/material-dialog.service';
 import { kendoToFilterRequest } from '../shared/rdict-kendo';
 @Component({
   selector: 'rsl-kendo-generic-table',

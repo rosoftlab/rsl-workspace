@@ -1,6 +1,6 @@
 {
   "name": "@rosoftlab/core",
-  "version": "1.0.4-alpha-14",
+  "version": "1.0.5-alpha-4",
   "scripts": {
     "ng": "ng",
     "build": "ts-node --dir build build.ts",

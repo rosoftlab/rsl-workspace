@@ -31,7 +31,6 @@
     "@progress/kendo-svg-icons": "^4.1.0",
     "@progress/kendo-angular-progressbar": "^18.5.2",
     "@progress/kendo-theme-default": "^10.5.0",
-    
     "@rosoftlab/core": "0.0.0-ROSOFTLAB-VERSION",
     "@rosoftlab/rdict": "0.0.0-ROSOFTLAB-VERSION"
   },

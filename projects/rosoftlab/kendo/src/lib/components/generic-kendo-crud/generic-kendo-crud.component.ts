@@ -9,16 +9,11 @@ import { KENDO_GRID } from '@progress/kendo-angular-grid';
 import { KENDO_LABEL } from '@progress/kendo-angular-label';
 import { KENDO_TOOLBAR } from '@progress/kendo-angular-toolbar';
 import { arrowLeftIcon, saveIcon, SVGIcon } from '@progress/kendo-svg-icons';
-import {
-  BaseCrudImplementation,
-  BaseService,
-  DIALOG_SERVICE_TOKEN,
-  LocalFileService,
-  RouteHistoryService
-} from '@rosoftlab/core';
-import { MaterialDialogService, ReactiveDictionary } from '@rosoftlab/rdict';
+import { BaseCrudImplementation, BaseService, DIALOG_SERVICE_TOKEN, LocalFileService, RouteHistoryService } from '@rosoftlab/core';
+import { ReactiveDictionary } from '@rosoftlab/rdict';
 import { catchError, concatMap, EMPTY, map, Observable, Subject, take, tap } from 'rxjs';
 import { registerTranslateExtension } from '../../translate.extension';
+import { MaterialDialogService } from '../shared/material-dialog.service';
 
 @Component({
   selector: 'app-generic-kendo-crud',

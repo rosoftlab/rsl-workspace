@@ -10,6 +10,7 @@ import {
 @Component({
   selector: 'rsl-generic-crud',
   imports: [NgComponentOutlet], // [3] Add it here
+  standalone: true,
   template: `
       <ng-container 
         *ngComponentOutlet="selectedComponent; 
