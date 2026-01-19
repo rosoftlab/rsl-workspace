@@ -7,6 +7,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { FORMLY_CONFIG, FormlyModule } from '@ngx-formly/core';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
+import { FormlyKendoModule } from '@ngx-formly/kendo';
 import { BaseDatastore, Configurations, DatastoreCore, provideAuth, RSL_FORM_IMPLEMENTATIONS_TOKEN } from '@rosoftlab/core';
 import { GenericKendoCrudComponent, GenericKendoTableComponent } from '@rosoftlab/kendo';
 import { SOCKET_URL } from '@rosoftlab/rdict';
@@ -104,7 +105,8 @@ export const appConfig: ApplicationConfig = {
           },
           { name: 'kendo-treeview', component: RoleRightsComponent, wrappers: ['form-field'] }
         ]
-      })
+      }),
+      FormlyKendoModule
     ),
     provideHttpClient(withInterceptors([authInterceptor])),
     {

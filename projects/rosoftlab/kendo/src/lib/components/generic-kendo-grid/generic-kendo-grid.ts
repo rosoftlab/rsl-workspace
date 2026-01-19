@@ -1,10 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { NavigationStart, RouterModule, UrlSegment } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { KENDO_BUTTONS } from '@progress/kendo-angular-buttons';
 import { KENDO_DIALOG } from '@progress/kendo-angular-dialog';
-import { AddEvent, DataStateChangeEvent, KENDO_GRID, PageChangeEvent, RemoveEvent } from '@progress/kendo-angular-grid';
+import {
+  AddEvent,
+  DataLayoutModeSettings,
+  DataStateChangeEvent,
+  KENDO_GRID,
+  PageChangeEvent,
+  RemoveEvent
+} from '@progress/kendo-angular-grid';
 import { IntlService } from '@progress/kendo-angular-intl';
 import { KENDO_LABEL } from '@progress/kendo-angular-label';
 import { KENDO_TOOLBAR } from '@progress/kendo-angular-toolbar';
@@ -58,8 +65,13 @@ export class GenericKendoTableComponent extends BaseTableImplementation<any, Add
   private stateChange = new BehaviorSubject<any>(this.state);
   private isRdict: Boolean = false;
   private rdict: ReactiveDictionary;
-  constructor(private intl: IntlService, private fileService: FileService) {
+  public gridDataLayout: DataLayoutModeSettings;
+  constructor(
+    private intl: IntlService,
+    private fileService: FileService
+  ) {
     super(); // Required to initialize the base class services
+    this.setGridDataLayout(window.innerWidth);
   }
 
   override async ngOnInit() {
@@ -77,7 +89,21 @@ export class GenericKendoTableComponent extends BaseTableImplementation<any, Add
     this.getListLayout();
     this.loadData();
   }
-
+  @HostListener('window:resize', ['$event'])
+  onResize(event: UIEvent): void {
+    const width = (event.target as Window).innerWidth;
+    // this.setShowText(width);
+    this.setGridDataLayout(width);
+  }
+  private setGridDataLayout(width: number): void {
+    if (width <= 500) {
+      this.gridDataLayout = { mode: 'stacked', stackedCols: 1 };
+    } else if (width <= 768) {
+      this.gridDataLayout = { mode: 'stacked', stackedCols: 3 };
+    } else {
+      this.gridDataLayout = { mode: 'columns' };
+    }
+  }
   // --- BaseTableImplementation Contract ---
 
   override loadData(): void {

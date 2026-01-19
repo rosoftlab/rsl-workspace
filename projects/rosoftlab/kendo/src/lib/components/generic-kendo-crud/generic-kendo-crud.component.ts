@@ -39,7 +39,7 @@ export class GenericKendoCrudComponent extends BaseCrudImplementation<any> imple
   protected localFileService = inject(LocalFileService);
   isRdict: boolean = true;
   rdictModel: string;
-
+  id: string; // Add this line
   options: FormlyFormOptions = {};
   fields: FormlyFieldConfig[] = [];
   fileLayout: string;

@@ -11,6 +11,18 @@ rdict-full {
   flex-direction: column;
 }
 
+kendo-toolbar {
+  /* Prevent the toolbar from growing or shrinking */
+  flex: 0 0 auto;
+
+  /* Set your fixed height here */
+  height: 50px;
+
+  /* Ensure content centers vertically */
+  display: flex;
+  align-items: center;
+}
+
 kendo-drawer-container {
   flex: 1 1 auto;
   overflow-y: auto;
@@ -28,6 +40,7 @@ kendo-drawer-container {
   border-bottom-width: 1px;
   // padding: 3px 8px;
   color: #656565;
+
   button {
     margin: 3px 0 3px 8px
   }

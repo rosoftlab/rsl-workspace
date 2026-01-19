@@ -1,16 +1,12 @@
-<!-- <div class="custom-toolbar">
-  <button kendoButton [svgIcon]="menuSvg" fillMode="flat" (click)="drawer.toggle()"></button>
-  <span class="app-title">{{apptitle}}</span>
-</div> -->
 <kendo-toolbar>
-  <kendo-toolbar-span text="{{apptitle}}" cssClass="app-title"></kendo-toolbar-span>
   <kendo-toolbar-button [svgIcon]="menuSvg" fillMode="flat" (click)="drawer.toggle()"></kendo-toolbar-button>
+  <kendo-toolbar-span text="{{apptitle}}" cssClass="app-title"></kendo-toolbar-span>  
   <kendo-toolbar-spacer></kendo-toolbar-spacer>
   <kendo-toolbar-dropdownbutton text="{{auth_service?.name}}" [svgIcon]="userSvg" [data]="user_menu"></kendo-toolbar-dropdownbutton>
 </kendo-toolbar>
 <kendo-drawer-container>
-  <kendo-drawer #drawer [items]="items" mode="push" [mini]="true" [expanded]="true" (select)="onSelect($event)"
-    [autoCollapse]="false" [isItemExpanded]="isItemExpanded">
+  <kendo-drawer #drawer [items]="items" mode="push" [mini]="false" [expanded]="true" (select)="onSelect($event)"
+    [autoCollapse]="false" [isItemExpanded]="isItemExpanded" [(expanded)]="isExpanded">
   </kendo-drawer>
 
   <kendo-drawer-content>
