@@ -6,15 +6,14 @@ import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FORMLY_CONFIG, FormlyModule } from '@ngx-formly/core';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-// import { BaseDatastore, Configurations, DatastoreCore } from '@rosoftlab/core';
-// import { SOCKET_URL } from 'dist/@rosoftlab/rdict';
 
-import { BaseDatastore, Configurations, CRUD_IMPLEMENTATIONS_TOKEN, DatastoreCore, provideAuth, TABLE_IMPLEMENTATIONS_TOKEN } from '@rosoftlab/core';
+import { BaseDatastore, Configurations, DatastoreCore, provideAuth, RSL_FORM_IMPLEMENTATIONS_TOKEN } from '@rosoftlab/core';
 import { GenericKendoCrudComponent, GenericKendoTableComponent } from '@rosoftlab/kendo';
 import { SOCKET_URL } from '@rosoftlab/rdict';
 import { UserManagerSettings, WebStorageStateStore } from 'oidc-client-ts';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
+import { FormlyCronTypeComponent } from './components/formly/types/cron-control/cron-type.component';
 import { RoleRightsComponent } from './components/formly/types/role-rights/role-rights.component';
 import { ColumnMappingComponent } from './components/formly/types/types/column-mapping/column-mapping.component';
 import { FormlySpreadsheetComponent } from './components/formly/types/types/formly-spreadsheet/formly-spreadsheet.component';
@@ -50,26 +49,13 @@ export const appConfig: ApplicationConfig = {
       }
     },
     ...provideAuth(oid_settings),
-    // {
-    //   provide: ReactiveDictionary,
-    //   useFactory: () => new ReactiveDictionary(inject(SocketService))
-    // },
-    // { provide: SOCKET_URL, useValue: 'http://localhost:5200' },
     { provide: SOCKET_URL, useValue: environment.rdictApi },
     {
-      provide: TABLE_IMPLEMENTATIONS_TOKEN,
+      provide: RSL_FORM_IMPLEMENTATIONS_TOKEN,
       useValue: {
         // Values are the string keys used in Route Data mapped to the Component Classes
-        'KENDO': GenericKendoTableComponent,
-
-      }
-    },
-        {
-      provide: CRUD_IMPLEMENTATIONS_TOKEN,
-      useValue: {
-        // Values are the string keys used in Route Data mapped to the Component Classes
-        'KENDO': GenericKendoCrudComponent,
-        
+        'KENDO-GRID': GenericKendoTableComponent,
+        'KENDO-CRUD': GenericKendoCrudComponent
       }
     },
     provideAnimations(),
@@ -91,11 +77,11 @@ export const appConfig: ApplicationConfig = {
       FormlyModule.forRoot({
         types: [
           // { name: 'fieldMaping', component: FieldMapingComponent },
-          // {
-          //   name: 'cron',
-          //   component: FormlyCronTypeComponent,
-          //   wrappers: ['form-field']
-          // },
+          {
+            name: 'cron',
+            component: FormlyCronTypeComponent,
+            wrappers: ['form-field']
+          },
           {
             name: 'plugin-selector',
             component: PluginSelectorTypeComponent,

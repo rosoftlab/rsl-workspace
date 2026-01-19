@@ -12,6 +12,6 @@ export * from './models/metadata-storage';
 export * from './providers';
 export * from './rsl-base-module';
 export { RightService } from './services/right.service';
-export * from './tokens/table-tokens';
+export * from './tokens/dynamic-form-tokens';
 export * from './utils';
 

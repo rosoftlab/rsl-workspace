@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { DIALOG_SERVICE_TOKEN } from '../interfaces/dialog.interface';
-import { MODEL_SERVICE, MODEL_TOKEN } from '../tokens/table-tokens';
+import { MODEL_SERVICE, MODEL_TOKEN } from '../tokens/dynamic-form-tokens';
 
 @Directive()
 export abstract class BaseCrudImplementation<T = any> {

@@ -1,0 +1,10 @@
+/* src/theme/variables.css */
+:root {
+  /** primary **/
+  --ion-color-primary: #f44336; /* Your red selection color */
+  --ion-color-primary-rgb: 244, 67, 54;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #d73b30;
+  --ion-color-primary-tint: #f5564a;
+}

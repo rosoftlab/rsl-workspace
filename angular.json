@@ -59,7 +59,10 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/rosoftlab/ionic/tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"]
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
           }
         }
       }
@@ -89,12 +92,14 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/rosoftlab/formly/tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"]
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
           }
         }
       }
     },
-
     "@rosoftlab/material": {
       "projectType": "library",
       "root": "projects/rosoftlab/material",
@@ -120,7 +125,10 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/rosoftlab/material/tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"]
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
           }
         }
       }
@@ -150,7 +158,10 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/rosoftlab/statemachine/tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"]
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
           }
         }
       }
@@ -180,7 +191,10 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/rosoftlab/rdict/tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "styles": [
               {
                 "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
@@ -207,7 +221,10 @@
             "outputPath": "dist/rdict-example",
             "index": "projects/rdict-example/src/index.html",
             "browser": "projects/rdict-example/src/main.ts",
-            "polyfills": ["zone.js", "@angular/localize/init"],
+            "polyfills": [
+              "zone.js",
+              "@angular/localize/init"
+            ],
             "tsConfig": "projects/rdict-example/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -217,7 +234,9 @@
                 "input": "projects/rdict-example/public"
               }
             ],
-            "styles": ["projects/rdict-example/src/styles.scss"],
+            "styles": [
+              "projects/rdict-example/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -290,7 +309,9 @@
                 "input": "projects/rdict-example/public"
               }
             ],
-            "styles": ["projects/rdict-example/src/styles.scss"],
+            "styles": [
+              "projects/rdict-example/src/styles.scss"
+            ],
             "scripts": []
           }
         }
@@ -358,6 +379,129 @@
               "zone.js",
               "zone.js/testing"
             ]
+          }
+        }
+      }
+    },
+    "ionic-example-app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/ionic-example-app",
+      "sourceRoot": "projects/ionic-example-app/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/ionic-example-app",
+            "index": "projects/ionic-example-app/src/index.html",
+            "browser": "projects/ionic-example-app/src/main.ts",
+            "polyfills": [
+              "zone.js",
+              "@angular/localize/init"
+            ],
+            "tsConfig": "projects/ionic-example-app/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/ionic-example-app/src/assets",
+              {
+                "glob": "**/*",
+                "input": "projects/ionic-example-app/public"
+              }
+            ],
+            "styles": [
+              "projects/ionic-example-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "docker": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "projects/rdict-example/src/environments/environment.ts",
+                  "with": "projects/rdict-example/src/environments/environment.docker.ts"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "docker"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "ionic-example-app:build:production"
+            },
+            "development": {
+              "buildTarget": "ionic-example-app:build:development"
+            },
+            "docker": {
+              "buildTarget": "rdict-example:build:docker"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/ionic-example-app/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/ionic-example-app/public"
+              }
+            ],
+            "styles": [
+              "projects/ionic-example-app/src/theme/variables.css",              
+              "node_modules/@ionic/angular/css/core.css",
+              "node_modules/@ionic/angular/css/normalize.css",
+              "node_modules/@ionic/angular/css/structure.css",
+              "node_modules/@ionic/angular/css/typography.css",
+              "node_modules/@ionic/angular/css/display.css",
+              "node_modules/@ionic/angular/css/padding.css",
+              "node_modules/@ionic/angular/css/float-elements.css",
+              "node_modules/@ionic/angular/css/text-alignment.css",
+              "node_modules/@ionic/angular/css/text-transformation.css",
+              "node_modules/@ionic/angular/css/flex-utils.css",
+              "projects/ionic-example-app/src/styles.scss"
+            ],
+            "scripts": []
           }
         }
       }

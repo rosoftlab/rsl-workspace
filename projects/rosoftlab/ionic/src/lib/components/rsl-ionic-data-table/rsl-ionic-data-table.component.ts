@@ -6,16 +6,21 @@ import { TranslateService } from '@ngx-translate/core';
 import { BaseQueryData, BaseService, MetadataStorage, Rule } from '@rosoftlab/core';
 import { BaseModelFormly } from '@rosoftlab/formly';
 import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
+import { addIcons } from 'ionicons';
+import { add } from 'ionicons/icons';
 import * as jsonLogic from 'json-logic-js/logic.js';
 import { IonicDataTableLayoutConfig } from '../../decorators/ionic-datatable-layout';
 import { IonicDialogService } from '../../ionic-dialog.service';
 import { RslIonicModuleModule } from '../../rsl-ionic-module.module';
+
 export declare type SortDirection = 'asc' | 'desc' | '';
 @Component({
-    selector: 'app-rsl-ionic-data-table',
-    templateUrl: './rsl-ionic-data-table.component.html',
-    styleUrls: ['./rsl-ionic-data-table.component.scss'],
-    imports: [RslIonicModuleModule]
+  
+  selector: 'app-rsl-ionic-data-table',
+  templateUrl: './rsl-ionic-data-table.component.html',
+  styleUrls: ['./rsl-ionic-data-table.component.scss'],
+  standalone: true,
+  imports: [RslIonicModuleModule]
 })
 export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends BaseService<T>> implements OnInit {
   @ViewChild('actionsTmpl', { static: true }) actionsTmpl: TemplateRef<any>;
@@ -34,11 +39,11 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
   @Input() canEdit: boolean;
 
   @Input() model: T;
-  @Input() modelService: U
+  @Input() modelService: U;
 
   data: any[] = [];
   pageIndex: number = 1;
-  pageSize: number = 30
+  pageSize: number = 30;
 
   basePath: string;
 
@@ -60,8 +65,9 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
     private injector: Injector,
     private navCtrl: NavController,
     public dialogService: IonicDialogService,
-    private el: ElementRef) {
-
+    private el: ElementRef
+  ) {
+    addIcons({ add });
   }
   ngOnInit() {
     this.setValueFromSnapshot(this, this.route.snapshot, 'showSearch', false);
@@ -80,17 +86,17 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
       const SERVICE_TOKEN = this.route.snapshot.data['requiredService'];
       this.modelService = this.injector.get<U>(<any>SERVICE_TOKEN);
     }
-    this.model = this.modelService.newModel()
-    this.title = this.model.modelConfig.formTitle
-    this.getListLayout()
+    this.model = this.modelService.newModel();
+    this.title = this.model.modelConfig.formTitle;
+    this.getListLayout();
 
-    const currentUrlSegments: UrlSegment[] = this.router.url.split('/').map(segment => new UrlSegment(segment, {}));
-    this.basePath = currentUrlSegments.map(segment => segment.path).join('/');
-    this.router.events.subscribe(event => {
+    const currentUrlSegments: UrlSegment[] = this.router.url.split('/').map((segment) => new UrlSegment(segment, {}));
+    this.basePath = currentUrlSegments.map((segment) => segment.path).join('/');
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         // Navigation to another page is about to occur
         this.data = [];
-        this.pageIndex = 1
+        this.pageIndex = 1;
         // Perform actions or update component as needed
       }
     });
@@ -125,7 +131,7 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
             limit = Math.max(pageSize, this.pageSize);
           }
           // this.pageIndex
-          this.pageSize = limit
+          this.pageSize = limit;
           this.loadData();
           // this.loadPage(limit);
         }
@@ -139,7 +145,7 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
   async handleChange(event) {
     this.filterValue = event.target.value.toLowerCase();
     this.data = [];
-    this.pageIndex = 1
+    this.pageIndex = 1;
     this.loadData();
   }
   loadData(event = null) {
@@ -160,14 +166,15 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
       }
     }
     if (this.defaultFilter) {
-      filters.push(this.defaultFilter)
+      filters.push(this.defaultFilter);
     }
     setTimeout(() => {
       const filtersValue = filters.join(', ');
-      this.modelService.getAll(this.pageIndex, this.pageSize, sorts, filtersValue, this.customInclude).subscribe(
-        (response: BaseQueryData<T>) => {
+      this.modelService
+        .getAll(this.pageIndex, this.pageSize, sorts, filtersValue, this.customInclude)
+        .subscribe((response: BaseQueryData<T>) => {
           if (this.pageIndex !== response.getMeta().meta.count) {
-            this.pageIndex++
+            this.pageIndex++;
           } else {
             if (event) event.target.disabled = true;
           }
@@ -180,35 +187,34 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
 
           if (event) event.target.complete();
           this.isLoading = false;
-        })
+        });
     }, 700);
   }
   async handleRefresh(event) {
-    this.pageIndex = 1
+    this.pageIndex = 1;
     this.data = [];
     this.loadData();
     event.target.complete();
   }
   onAdd() {
-    console.log(this.basePath)
-    this.router.navigate([this.basePath + '/add'])
+    console.log(this.basePath);
+    this.router.navigate([this.basePath + '/add']);
     // this.navCtrl.navigateForward(this.basePath + '/add');
   }
   editModel(model: BaseModelFormly) {
-    if (this.canEdit)
-      this.router.navigate([this.basePath + '/edit/', model.id]);
+    if (this.canEdit) this.router.navigate([this.basePath + '/edit/', model.id]);
     // this.navCtrl.navigateForward(this.basePath + '/edit/' + model.id);
   }
   getListLayout() {
     if (!this.model) {
-      this.model = this.modelService.newModel();    
+      this.model = this.modelService.newModel();
     }
-    this.allColumns=[];
-    this.columns=[];
+    this.allColumns = [];
+    this.columns = [];
     this.allColumns = MetadataStorage.getMetadata('IonicDataTableLayout', this.model).map((item: IonicDataTableLayoutConfig) => {
       if (!item.isTranslated) {
         item.name = this.translate.instant(item.name);
-        item.isTranslated = true
+        item.isTranslated = true;
       }
       return item;
     });
@@ -226,30 +232,27 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
         // width: 100,
         // maxWidth: 100,
         // minWidth: 100
-      })
+      });
     }
     this.columns = this.allColumns.filter((item: IonicDataTableLayoutConfig) => item.visible);
     // Sort the columns array by the order property
-
   }
   deleteModel(model) {
     const msg = 'Do you want to delete ' + model[this.deletePropertyName] + '?';
-    this.dialogService.confirm(msg).then(
-      (value: any) => {
-        if (value.data) {
-          this.modelService.delete(model.id).subscribe(() => {
-            const tempData = [];
-            // this.selectedObject.emit(null);
-            this.data.map((item) => {
-              if (item.id !== model.id) {
-                tempData.push(item);
-              }
-            });
-            this.data = tempData;
+    this.dialogService.confirm(msg).then((value: any) => {
+      if (value.data) {
+        this.modelService.delete(model.id).subscribe(() => {
+          const tempData = [];
+          // this.selectedObject.emit(null);
+          this.data.map((item) => {
+            if (item.id !== model.id) {
+              tempData.push(item);
+            }
           });
-        }
+          this.data = tempData;
+        });
       }
-    )
+    });
   }
 
   deleteEnabled(model: T) {
@@ -265,7 +268,7 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
   }
   private evaluateRule(rules: Rule[], model: T): boolean {
     let result = true;
-    rules.forEach(rule => {
+    rules.forEach((rule) => {
       let jsonRule: any;
       if (typeof rule.rule === 'string') {
         jsonRule = JSON.parse(rule.rule);
@@ -273,9 +276,14 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
         jsonRule = rule.rule;
       }
       if (rule.parameters) {
-        const data = '{' + rule.parameters.map((item: string) => {
-          return '"' + item + '":"' + model[item] + '"';
-        }).join(',') + '}';
+        const data =
+          '{' +
+          rule.parameters
+            .map((item: string) => {
+              return '"' + item + '":"' + model[item] + '"';
+            })
+            .join(',') +
+          '}';
         result = jsonLogic.apply(jsonRule, JSON.parse(data));
       } else {
         result = jsonLogic.apply(jsonRule);
@@ -283,6 +291,4 @@ export class RslIonicDataTableComponent<T extends BaseModelFormly, U extends Bas
     });
     return result;
   }
-
-
 }

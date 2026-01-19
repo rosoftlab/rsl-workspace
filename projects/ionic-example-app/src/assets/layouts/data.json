@@ -1,0 +1,1022 @@
+[
+  {
+    "model": "export_layout",
+    "tableLayout": {
+      "title": "Export.Layout.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Export.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "className": "name",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        },
+        {
+          "key": "period",
+          "fieldGroup": [
+            {
+              "key": "type",
+              "type": "data-export-period-type",
+              "props": {
+                "label": "Perioada exportata",
+                "translate": true,
+                "required": true
+              }
+            },
+            {
+              "key": "add",
+              "type": "input",
+              "hide": "true",
+              "defaultValue": 1
+            }
+          ]
+        },
+        {
+          "key": "template",
+          "type": "spreadsheet",
+          "fieldGroup": [
+            {
+              "key": "fileId"
+            },
+            {
+              "key": "sheet_name",
+              "type": "input"
+            },
+            {
+              "key": "mapping",
+              "type": "column-mapping-data-export",
+              "fieldArray": {
+                "fieldGroup": [
+                  {
+                    "key": "sheet_column"
+                  },
+                  {
+                    "key": "sheet_column_name"
+                  },
+                  {
+                    "key": "field"
+                  },
+                  {
+                    "key": "format"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "model": "import_layout",
+    "tableLayout": {
+      "title": "Import.Layout.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Import.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "scheduled_imports",
+    "tableLayout": {
+      "title": "Importuri programate",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Nume",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+        {
+          "type": "reference",
+          "reference": "administration.locations",
+          "referenceKey": "oid",
+          "referenceProperty": "name",
+          "propertyName": "productionUnitId",
+          "header": "ProductionUnit",
+          "translateKey": "ProductionUnit",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 1,
+          "textAlign": "left"
+        },
+        {
+          "type": "reference",
+          "reference": "administration.data_sources",
+          "referenceKey": "oid",
+          "referenceProperty": "name",
+          "propertyName": "dataSourceId",
+          "header": "DataSource",
+          "translateKey": "Data.Source.Layout.Title",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 2,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "pluginId",
+          "header": "Sursa date",
+          "translateKey": "Sursa date",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 3,
+          "textAlign": "left"
+        },
+        {
+          "type": "reference",
+          "reference": "administration.import.import_layout",
+          "referenceKey": "oid",
+          "referenceProperty": "name",
+          "propertyName": "parameters.import_layout",
+          "header": "Macheta import",
+          "translateKey": "Macheta import",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 4,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "cron_expr",
+          "header": "Run At",
+          "translateKey": "Plugin.Scheduled.Cron",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 5,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Import.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        },
+        {
+          "key": "productionUnitId",
+          "type": "reference-select",
+          "props": {
+            "label": "ProductionUnit",
+            "options": "administration.locations",
+            "translate": true,
+            "required": true,
+            "valueProp": "oid",
+            "labelProp": "name"
+          }
+        },
+        {
+          "key": "dataSourceId",
+          "type": "reference-select",
+          "props": {
+            "label": "Data.Source.Layout.Title",
+            "options": "administration.data_sources",
+            "translate": true,
+            "required": true,
+            "valueProp": "oid",
+            "labelProp": "name"
+          }
+        },
+        {
+          "key": "pluginId",
+          "type": "plugin-selector",
+          "props": {
+            "label": "Sursa date",
+            "options": "administration.plugins.available.import",
+            "translate": true,
+            "required": true,
+            "valueProp": "name",
+            "labelProp": "name"
+          }
+        },
+        {
+          "key": "cron_expr",
+          "type": "cron"
+        }
+      ]
+    }
+  },
+  {
+    "model": "locations",
+    "tableLayout": {
+      "title": "Location.Layout.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Import.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "scheduled_exports",
+    "tableLayout": {
+      "title": "Exporturi programate",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Nume",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+        {
+          "type": "reference",
+          "reference": "administration.locations",
+          "referenceKey": "oid",
+          "referenceProperty": "name",
+          "propertyName": "productionUnitId",
+          "header": "ProductionUnit",
+          "translateKey": "ProductionUnit",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 1,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "pluginId",
+          "header": "Destinatie date",
+          "translateKey": "Destinatie date",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 3,
+          "textAlign": "left"
+        },
+        {
+          "type": "reference",
+          "reference": "administration.import.export_layout",
+          "referenceKey": "oid",
+          "referenceProperty": "name",
+          "propertyName": "parameters.export_layout",
+          "header": "Macheta export",
+          "translateKey": "Macheta export",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 4,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "cron_expr",
+          "header": "Run At",
+          "translateKey": "Plugin.Scheduled.Cron",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 5,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Import.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        },
+        {
+          "key": "productionUnitId",
+          "type": "reference-select",
+          "props": {
+            "label": "ProductionUnit",
+            "options": "administration.locations",
+            "translate": true,
+            "required": true,
+            "valueProp": "oid",
+            "labelProp": "name"
+          }
+        },
+        {
+          "key": "pluginId",
+          "type": "plugin-selector",
+          "props": {
+            "label": "Destinatie date",
+            "options": "administration.plugins.available.export",
+            "translate": true,
+            "required": true,
+            "valueProp": "name",
+            "labelProp": "name",
+            "for": "export"
+          }
+        },
+        {
+          "key": "cron_expr",
+          "type": "cron"
+        }
+      ]
+    }
+  },
+  {
+    "model": "data_processing_layout",
+    "tableLayout": {
+      "title": "Data.Processing.Layout.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Import.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "className": "name",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        },
+        {
+          "key": "template",
+          "type": "spreadsheet",
+          "fieldGroup": [
+            {
+              "key": "fileId"
+            },
+            {
+              "key": "mapping",
+              "type": "column-mapping-data-processing",
+              "fieldArray": {
+                "fieldGroup": [
+                  {
+                    "key": "sheet_column"
+                  },
+                  {
+                    "key": "sheet_column_name"
+                  },
+                  {
+                    "key": "field"
+                  },
+                  {
+                    "key": "isExport"
+                  },
+                  {
+                    "key": "formula"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "model": "import_runs",
+    "tableLayout": {
+      "title": "Istoric importuri",
+      "columns": [
+        {
+          "type": "reference",
+          "reference": "administration.import.scheduled_imports",
+          "referenceKey": "oid",
+          "referenceProperty": "name",
+          "propertyName": "scheduled_plugin_oid",
+          "header": "Nume",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "plugin_name",
+          "header": "Plugin",
+          "translateKey": "General.Plugin",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "file_name",
+          "header": "File Name",
+          "translateKey": "General.FileName",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "location_name",
+          "header": "Location",
+          "translateKey": "Location.Layout.Title",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "center"
+        },
+        {
+          "propertyName": "import_date",
+          "header": "Import Date",
+          "translateKey": "Data import",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": "{0:dd/MM/yyyy}",
+          "order": 0,
+          "textAlign": "center"
+        },
+        {
+          "propertyName": "status",
+          "header": "Status",
+          "translateKey": "Status",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "center"
+        },
+        {
+          "propertyName": "message",
+          "header": "Mesaj",
+          "translateKey": "Mesaj",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "center"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Import.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "export_runs",
+    "tableLayout": {
+      "title": "Istoric exporturi",
+      "columns": [
+        {
+          "type": "reference",
+          "reference": "administration.export.scheduled_exports",
+          "referenceKey": "oid",
+          "referenceProperty": "name",
+          "propertyName": "scheduled_plugin_oid",
+          "header": "Nume",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "plugin_name",
+          "header": "Plugin",
+          "translateKey": "General.Plugin",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+        {
+          "type": "file",
+          "file_id_property": "file_id",
+          "propertyName": "file_name",
+          "header": "File Name",
+          "translateKey": "General.FileName",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "location_name",
+          "header": "Location",
+          "translateKey": "Location.Layout.Title",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "center"
+        },
+        {
+          "propertyName": "export_date",
+          "header": "Export Date",
+          "translateKey": "Data export ",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": "{0:dd.MM.yyyy HH:mm:ss}",
+          "order": 0,
+          "textAlign": "center"
+        },
+        {
+          "propertyName": "status",
+          "header": "Status",
+          "translateKey": "Status",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "center"
+        },
+        {
+          "propertyName": "message",
+          "header": "Mesaj",
+          "translateKey": "Mesaj",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "center"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Import.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "locations",
+    "tableLayout": {
+      "title": "Location.Layout.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Import.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        },
+        {
+          "key": "lat",
+          "type": "input",
+          "props": {
+            "label": "Location.Lat",
+            "translate": true
+          }
+        },
+        {
+          "key": "lng",
+          "type": "input",
+          "props": {
+            "label": "Location.Lng",
+            "translate": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "data_sources",
+    "tableLayout": {
+      "title": "Data.Source.List.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Data.Source.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "data_types",
+    "tableLayout": {
+      "title": "Data.Type.List.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "alternative_name",
+          "header": "Alternative Name",
+          "translateKey": "DataType.AlternativeName",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+        {
+          "propertyName": "um",
+          "header": "Measure unit",
+          "translateKey": "General.UM",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Data.Type.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        },
+        {
+          "key": "alternative_name",
+          "type": "input",
+          "props": {
+            "label": "DataType.AlternativeName",
+            "translate": true
+          }
+        },
+        {
+          "key": "um",
+          "type": "select",
+          "props": {
+            "label": "UM",
+            "options": [
+              {
+                "value": "KWh",
+                "label": "KWh"
+              },
+              {
+                "value": "MWh",
+                "label": "MWh"
+              },
+              {
+                "value": "KW",
+                "label": "KW"
+              },
+              {
+                "value": "MW",
+                "label": "MW"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+   {
+    "model": "user",
+    "tableLayout": {
+      "title": "Administration.Security.User.List.Title",
+      "columns": [
+        {
+          "propertyName": "firstName",
+          "header": "FirstName",
+          "translateKey": "User.FirstName",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        },
+         {
+          "propertyName": "lastName",
+          "header": "LastName",
+          "translateKey": "User.LastName",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Administration.Security.User.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "className": "name",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        },
+        {
+          "key": "roleDetail",
+          "type": "kendo-treeview",
+          "props": {
+            "label": "Administration.Security.Role.Rights",
+            "translate": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "model": "role",
+    "tableLayout": {
+      "title": "Administration.Security.Role.List.Title",
+      "columns": [
+        {
+          "propertyName": "name",
+          "header": "Name",
+          "translateKey": "General.Name",
+          "width": null,
+          "grow": 0,
+          "shrink": 0,
+          "subProperty": null,
+          "formating": null,
+          "format": null,
+          "order": 0,
+          "textAlign": "left"
+        }
+      ]
+    },
+    "formLayout": {
+      "title": "Administration.Security.Role.Layout.Title",
+      "fields": [
+        {
+          "key": "name",
+          "type": "input",
+          "className": "name",
+          "props": {
+            "label": "General.Name",
+            "translate": true,
+            "required": true
+          }
+        },
+        {
+          "key": "roleDetail",
+          "type": "kendo-treeview",
+          "props": {
+            "label": "Administration.Security.Role.Rights",
+            "translate": true
+          }
+        }
+      ]
+    }
+  }
+]

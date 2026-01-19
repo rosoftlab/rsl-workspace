@@ -1,0 +1,63 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "es2019",
+    "lib": [
+      "es2019",
+      "dom"
+    ],
+    "outDir": "../../out-tsc/app",
+    "types": [
+      "@angular/localize"
+    ],
+    "paths": {
+      "@rosoftlab/core": [
+        "projects/rosoftlab/core/src/public-api.ts"
+      ],
+      "@rosoftlab/core/*": [
+        "projects/rosoftlab/core/src/*"
+      ],
+      "@rosoftlab/rdict": [
+        "projects/rosoftlab/rdict/src/public-api.ts"
+      ],
+      "@rosoftlab/rdict/*": [
+        "projects/rosoftlab/rdict/src/*"
+      ],
+      "@rosoftlab/shared-ui": [
+        "projects/rosoftlab/shared-ui/src/public-api.ts"
+      ],
+      "@rosoftlab/kendo": [
+        "projects/rosoftlab/kendo/src/public-api.ts"
+      ],
+      "@rosoftlab/kendo/*": [
+        "projects/rosoftlab/kendo/src/*"
+      ],
+      "@rosoftlab/ionic": [
+        "projects/rosoftlab/ionic/src/public-api.ts"
+      ],
+      "@rosoftlab/ionic/*": [
+        "projects/rosoftlab/ionic/src/*"
+      ],
+       "@rosoftlab/statemachine": [
+        "projects/rosoftlab/statemachine/src/public-api.ts"
+      ],
+      "@rosoftlab/statemachine/*": [
+        "projects/rosoftlab/statemachine/src/*"
+      ],
+       "@rosoftlab/formly": [
+        "projects/rosoftlab/formly/src/public-api.ts"
+      ],
+      "@rosoftlab/formly/*": [
+        "projects/rosoftlab/formly/src/*"
+      ]
+    }
+  },
+  "files": [
+    "src/main.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ]
+}

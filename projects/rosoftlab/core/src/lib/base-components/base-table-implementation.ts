@@ -3,7 +3,7 @@ import { Router, UrlSegment } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { DIALOG_SERVICE_TOKEN } from '../interfaces/dialog.interface';
 import { Rule } from '../models/rule';
-import { MODEL_SERVICE, MODEL_TOKEN } from '../tokens/table-tokens';
+import { MODEL_SERVICE, MODEL_TOKEN } from '../tokens/dynamic-form-tokens';
 
 @Directive()
 export abstract class BaseTableImplementation<T = any, TEditArgs = any, TRemoveArgs = any> implements OnInit {

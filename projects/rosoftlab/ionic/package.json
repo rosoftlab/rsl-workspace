@@ -4,8 +4,8 @@
   "peerDependencies": {
     "@angular/common": "^19.2.8",
     "@angular/core": "^19.2.8",
-    "@ngx-formly/core": "^6.3.12",
-    "@ionic/angular": "8.5.5",
+    "@ngx-formly/core": "^7.0.1",
+    "@ionic/angular": "~8.7.17",
     "@swimlane/ngx-datatable": "^20.1.0",
     "@rosoftlab/core": "0.0.0-ROSOFTLAB-VERSION",
     "@rosoftlab/formly": "0.0.0-ROSOFTLAB-VERSION",
