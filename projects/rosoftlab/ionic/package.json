@@ -8,6 +8,7 @@
     "@ionic/angular": "~8.7.17",
     "@swimlane/ngx-datatable": "^20.1.0",
     "@rosoftlab/core": "0.0.0-ROSOFTLAB-VERSION",
+    "@rosoftlab/rdict": "0.0.0-ROSOFTLAB-VERSION",
     "@rosoftlab/formly": "0.0.0-ROSOFTLAB-VERSION",
     "@rosoftlab/statemachine": "0.0.0-ROSOFTLAB-VERSION"
   },

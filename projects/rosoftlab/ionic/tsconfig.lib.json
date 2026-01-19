@@ -10,6 +10,8 @@
     "paths": {
       "@rosoftlab/core": ["dist/@rosoftlab/core"],
       "@rosoftlab/core/*": ["dist/@rosoftlab/core/*"],
+      "@rosoftlab/rdict": ["dist/@rosoftlab/rdict"],
+      "@rosoftlab/rdict/*": ["dist/@rosoftlab/rdict/*"],
       "@rosoftlab/formly": ["dist/@rosoftlab/formly"],
       "@rosoftlab/formly/*": ["dist/@rosoftlab/formly/*"],
       "@rosoftlab/statemachine": ["dist/@rosoftlab/statemachine"],

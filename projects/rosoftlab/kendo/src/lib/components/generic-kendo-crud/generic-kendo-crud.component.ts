@@ -1,18 +1,16 @@
 import { Component, HostBinding, inject, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FORMLY_CONFIG, FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { FormlyKendoModule } from '@ngx-formly/kendo';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { KENDO_BUTTONS } from '@progress/kendo-angular-buttons';
 import { KENDO_DIALOG } from '@progress/kendo-angular-dialog';
-import { KENDO_GRID } from '@progress/kendo-angular-grid';
 import { KENDO_LABEL } from '@progress/kendo-angular-label';
 import { KENDO_TOOLBAR } from '@progress/kendo-angular-toolbar';
 import { arrowLeftIcon, saveIcon, SVGIcon } from '@progress/kendo-svg-icons';
 import { BaseCrudImplementation, BaseService, DIALOG_SERVICE_TOKEN, LocalFileService, RouteHistoryService } from '@rosoftlab/core';
 import { ReactiveDictionary } from '@rosoftlab/rdict';
 import { catchError, concatMap, EMPTY, map, Observable, Subject, take, tap } from 'rxjs';
-import { registerTranslateExtension } from '../../translate.extension';
 import { MaterialDialogService } from '../shared/material-dialog.service';
 
 @Component({
@@ -24,14 +22,13 @@ import { MaterialDialogService } from '../shared/material-dialog.service';
     ReactiveFormsModule,
     FormlyKendoModule,
     TranslateModule,
-    KENDO_GRID,
     KENDO_TOOLBAR,
     KENDO_LABEL,
     KENDO_BUTTONS,
     KENDO_DIALOG
   ],
   providers: [
-    { provide: FORMLY_CONFIG, multi: true, useFactory: registerTranslateExtension, deps: [TranslateService] },
+    // { provide: FORMLY_CONFIG, multi: true, useFactory: registerTranslateExtension, deps: [TranslateService] },
     { provide: DIALOG_SERVICE_TOKEN, useClass: MaterialDialogService }
   ]
 })
