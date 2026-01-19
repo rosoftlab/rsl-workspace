@@ -11,9 +11,8 @@ describe('DataProcessingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataProcessingComponent ]
-    })
-    .compileComponents();
+      declarations: [DataProcessingComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

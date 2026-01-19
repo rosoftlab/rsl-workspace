@@ -17,16 +17,7 @@ import { MaterialDialogService } from '../shared/material-dialog.service';
   selector: 'app-generic-kendo-crud',
   templateUrl: './generic-kendo-crud.component.html',
   styleUrls: ['./generic-kendo-crud.component.scss'],
-  imports: [
-    FormlyModule,
-    ReactiveFormsModule,
-    FormlyKendoModule,
-    TranslateModule,
-    KENDO_TOOLBAR,
-    KENDO_LABEL,
-    KENDO_BUTTONS,
-    KENDO_DIALOG
-  ],
+  imports: [FormlyModule, ReactiveFormsModule, FormlyKendoModule, TranslateModule, KENDO_TOOLBAR, KENDO_LABEL, KENDO_BUTTONS, KENDO_DIALOG],
   providers: [
     // { provide: FORMLY_CONFIG, multi: true, useFactory: registerTranslateExtension, deps: [TranslateService] },
     { provide: DIALOG_SERVICE_TOKEN, useClass: MaterialDialogService }
@@ -36,11 +27,12 @@ export class GenericKendoCrudComponent extends BaseCrudImplementation<any> imple
   protected localFileService = inject(LocalFileService);
   isRdict: boolean = true;
   rdictModel: string;
-
+  private id: string; // Add this line
   options: FormlyFormOptions = {};
   fields: FormlyFieldConfig[] = [];
   fileLayout: string;
-
+  addConfig?: () => FormlyFieldConfig[];
+  editConfig?: () => FormlyFieldConfig[];
   original_model: any;
 
   modelKey: string | null;
@@ -183,6 +175,14 @@ export class GenericKendoCrudComponent extends BaseCrudImplementation<any> imple
   }
   getListLayoutStanderd() {
     if (!this.modelName) return;
+    // 1. Check if TypeScript functions were passed via @Input()
+    if (this.modelFnConfig) {
+      // Execute the function to get the actual fields
+      const rawFields = this.modelFnConfig();
+      this.fields = this.transformFields(rawFields); //
+      this.isLoading = false;
+      return; // Stop here if we used the Input functions
+    }
     const layoutSource$ = this.fileLayout
       ? this.localFileService.getJsonData(this.fileLayout)
       : this.rdict.get$('config.models.' + this.modelName + '.formLayout');

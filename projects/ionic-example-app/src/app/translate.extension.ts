@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class TranslateExtension implements FormlyExtension {
     constructor(private translate: TranslateService) { }
     prePopulate(field: FormlyFieldConfig) {
-        console.log("Test translate")
+        // console.log("Test translate")
         const props = field.props || {};
         if (!props['translate'] || props['_translated']) {
             return;

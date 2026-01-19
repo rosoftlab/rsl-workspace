@@ -1,6 +1,7 @@
 <kendo-grid [data]="dataSource" [sortable]="true" [filterable]="showSearch" [resizable]="true" (add)="addHandler()"
   (edit)="editHandler($event)" (remove)="removeHandler($event)" (dataStateChange)="dataStateChange($event)"
-  [pageable]="{pageSizes:pageSizes}" [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort">
+  [pageable]="{pageSizes:pageSizes}" [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort"
+  [dataLayoutMode]="gridDataLayout">
   <kendo-toolbar>
     <kendo-table-title text="{{title}}"></kendo-table-title>
     <kendo-toolbar-messages>Test</kendo-toolbar-messages>

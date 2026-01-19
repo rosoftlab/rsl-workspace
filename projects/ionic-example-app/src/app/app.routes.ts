@@ -7,6 +7,7 @@ import { AuthCallbackComponent } from './components/auth-callback/auth-callback.
 import { TestComponent } from './components/test/test.component';
 import { UnderConstructionComponent } from './components/under-construction/under-construction.component';
 import { Employee } from './models/employee';
+import { EmployeefieldsAdd, EmployeefieldsEdit } from './models/employee-config';
 import { EmployeeService } from './models/employee.service';
 import { authGuard } from './shared/authguard';
 const EmployeeSERVICE = new InjectionToken<string>('EmployeeService');
@@ -428,7 +429,9 @@ export const routes: Routes = [
                       impl: 'KENDO-CRUD',
                       modelService: EmployeeService,
                       modelName: 'user',
-                      fileLayout: 'assets/layouts/data.json'
+                      fileLayout: 'assets/layouts/data.json',
+                      modelFnConfig: EmployeefieldsAdd,
+                      
                     }
                   },
                   {
@@ -438,7 +441,8 @@ export const routes: Routes = [
                       impl: 'KENDO-CRUD',
                       modelService: EmployeeService,
                       modelName: 'user',
-                      fileLayout: 'assets/layouts/data.json'
+                      fileLayout: 'assets/layouts/data.json',
+                      modelFnConfig: EmployeefieldsEdit
                     }
                   }
                 ]

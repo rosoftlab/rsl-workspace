@@ -5,8 +5,9 @@ import { DatePipe, DecimalPipe, PercentPipe } from '@angular/common';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FORMLY_CONFIG, FormlyModule } from '@ngx-formly/core';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MissingTranslationHandler, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
+import { FormlyKendoModule } from '@ngx-formly/kendo';
 import { BaseDatastore, Configurations, DatastoreCore, provideAuth, RSL_FORM_IMPLEMENTATIONS_TOKEN } from '@rosoftlab/core';
 import { GenericKendoCrudComponent, GenericKendoTableComponent } from '@rosoftlab/kendo';
 import { SOCKET_URL } from '@rosoftlab/rdict';
@@ -19,9 +20,11 @@ import { ColumnMappingComponent } from './components/formly/types/types/column-m
 import { FormlySpreadsheetComponent } from './components/formly/types/types/formly-spreadsheet/formly-spreadsheet.component';
 import { PasswordFieldInput } from './components/formly/types/types/password/password.component';
 import { PluginSelectorTypeComponent } from './components/formly/types/types/plugin-selector/plugin-selector.type';
+import { MyMissingTranslationHandler } from './handler/my-missing-translation-handler';
 import { authInterceptor } from './shared/auth.interceptor';
 import { TranslateloaderService } from './shared/services/translate-loader.service';
 import { registerTranslateExtension } from './translate.extension';
+import { fieldMatchValidator } from './validators/field-match-validator';
 
 const oid_settings: UserManagerSettings = {
   userStore: new WebStorageStateStore({ store: window.sessionStorage }),
@@ -71,10 +74,15 @@ export const appConfig: ApplicationConfig = {
           useClass: TranslateloaderService,
           deps: [HttpClient]
         },
-        // missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler },
+        missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler },
         useDefaultLang: false
       }),
       FormlyModule.forRoot({
+        validators: [
+          // This maps the string "fieldMatch" used in your employee-config.ts
+          // to the actual function we just wrote
+          { name: 'fieldMatch', validation: fieldMatchValidator }
+        ],
         types: [
           // { name: 'fieldMaping', component: FieldMapingComponent },
           {
@@ -104,7 +112,8 @@ export const appConfig: ApplicationConfig = {
           },
           { name: 'kendo-treeview', component: RoleRightsComponent, wrappers: ['form-field'] }
         ]
-      })
+      }),
+      FormlyKendoModule
     ),
     provideHttpClient(withInterceptors([authInterceptor])),
     {

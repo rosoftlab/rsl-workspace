@@ -1,0 +1,15 @@
+
+kendo-grid {
+  width: 100%;
+}
+
+:host {
+  display: block;
+}
+
+/* Red background for alert rows */
+:host ::ng-deep .row-alert td {
+  background-color: #ffe5e5;
+  color: #8a0000;
+  font-weight: 600;
+}

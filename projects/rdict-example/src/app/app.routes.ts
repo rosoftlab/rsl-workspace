@@ -5,6 +5,7 @@ import { ReactiveDictionary } from '@rosoftlab/rdict';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
 import { TestComponent } from './components/test/test.component';
 import { UnderConstructionComponent } from './components/under-construction/under-construction.component';
+import { EmployeefieldsAdd, EmployeefieldsEdit } from './configs/employee-config';
 import { authGuard } from './shared/authguard';
 
 export const routes: Routes = [
@@ -424,7 +425,8 @@ export const routes: Routes = [
                       impl: 'KENDO-CRUD',
                       modelService: EmployeeService,
                       modelName: 'user',
-                      fileLayout: 'assets/layouts/data.json'
+                      fileLayout: 'assets/layouts/data.json',
+                      modelFnConfig: EmployeefieldsAdd
                     }
                   },
                   {
@@ -434,7 +436,8 @@ export const routes: Routes = [
                       impl: 'KENDO-CRUD',
                       modelService: EmployeeService,
                       modelName: 'user',
-                      fileLayout: 'assets/layouts/data.json'
+                      fileLayout: 'assets/layouts/data.json',
+                      modelFnConfig: EmployeefieldsEdit
                     }
                   }
                 ]
