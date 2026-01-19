@@ -159,7 +159,7 @@ export class KendoFullLayoutComponent implements OnInit {
       this.expandedIndices = [...newExpandedIndices];
     }
   }
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize() {
     this.checkWidth();
   }

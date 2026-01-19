@@ -27,7 +27,7 @@ export abstract class BaseCrudImplementation<T = any> {
   @Input() customInclude: string = null;
   @Input() changeUrlRoute: boolean = true;
   @Input() hostClass: string = '';
-
+  @Input() modelFnConfig?: () => any[];
   public basePath: string = '';
   public title: string = '';
 

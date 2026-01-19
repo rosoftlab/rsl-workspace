@@ -1,0 +1,30 @@
+<kendo-grid [data]="gridData" [sortable]="false" [pageable]="false" [rowClass]="rowClass" [gridResizable]="true"
+  [loading]="loading">
+  <!-- TOP LEVEL: day + data_source_id -->
+  <kendo-grid-column field="day" title="Data">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      {{ dataItem.day | date:'yyyy-MM-dd' }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column field="data_source_id" title="Furnizor date"></kendo-grid-column>
+  <kendo-grid-column field="slot_count_sum" title="Cate"></kendo-grid-column>
+  <kendo-grid-column field="time_added" title="Data/ ora import">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      {{ dataItem.time_added | date:'yyyy-MM-dd HH:mm' }}
+    </ng-template>
+  </kendo-grid-column>
+
+  <!-- DETAIL: data_type_id rows -->
+  <ng-template kendoGridDetailTemplate let-row>
+    <kendo-grid [data]="row.types" [sortable]="true">
+      <kendo-grid-column field="data_type_id" title="Tip data"></kendo-grid-column>
+      <kendo-grid-column field="slot_count" title="Cate"></kendo-grid-column>
+      <kendo-grid-column field="time_added" title="Data/ ora import">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.time_added | date:'yyyy-MM-dd HH:mm' }}
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid>
+  </ng-template>
+
+</kendo-grid>
