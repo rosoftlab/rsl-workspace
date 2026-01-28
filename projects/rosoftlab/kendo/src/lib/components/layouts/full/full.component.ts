@@ -9,7 +9,6 @@ import { KENDO_TOOLBAR, ToolBarModule } from '@progress/kendo-angular-toolbar';
 import * as allIcons from '@progress/kendo-svg-icons';
 import { logoutIcon, menuIcon, SVGIcon, userIcon } from '@progress/kendo-svg-icons';
 import { AuthService, Menu, UserService } from '@rosoftlab/core';
-import { ReactiveDictionary } from '@rosoftlab/rdict';
 import { filter, Observable } from 'rxjs';
 import { KendoToolbarSpanComponent } from './kendo-toolbar-span';
 
@@ -41,7 +40,7 @@ export class KendoFullLayoutComponent implements OnInit {
   public items: Array<{ [Key: string]: unknown }> = [];
   public icons = allIcons;
   //private rdict: ReactiveDictionary | undefined;
-  apptitle: string = 'Test';
+  apptitle: string = '';
   public isExpanded = true;
   public user_menu = [
     {
@@ -56,7 +55,6 @@ export class KendoFullLayoutComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     public translate: TranslateService,
-    private rdict: ReactiveDictionary,
     public auth_service: AuthService
   ) {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
@@ -66,7 +64,7 @@ export class KendoFullLayoutComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.apptitle = await this.rdict.asyncGet('appname');
+    // this.apptitle = await this.rdict.asyncGet('appname');
   }
 
   public isItemExpanded: DrawerItemExpandedFn = (item): boolean => {

@@ -1,0 +1,13 @@
+<div class="guest-registration">
+  <h3>Guest Registration</h3>
+  <p>Please enter your full name to continue as a guest.</p>
+  <form (ngSubmit)="registerGuest()">
+    <div>
+      <label for="fullName">Full Name:</label>
+      <input type="text" id="fullName" [(ngModel)]="fullName" name="fullName" required />
+    </div>
+    <button type="submit" [disabled]="isLoading">Register</button>
+  </form>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  <div *ngIf="isLoading" class="loading">Registering...</div>
+</div>

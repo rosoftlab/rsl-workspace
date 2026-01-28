@@ -1,10 +1,11 @@
 import { HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { BaseQueryData } from '../models/base-query-data';
 import { BaseModel } from '../models/base.model';
-import { BaseDatastore, ModelType } from './base-datastore.service';
+import { DATASTORE_PORT } from '../tokens/datastore-token';
+import type { DatastorePort, ModelType } from './datastore-port';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ import { BaseDatastore, ModelType } from './base-datastore.service';
 })
 export class BaseService<T extends BaseModel> {
   public modelType: ModelType<T>;
-  constructor(public datastore: BaseDatastore) {
+  constructor(@Inject(DATASTORE_PORT) public datastore: DatastorePort) {
   }
   setModelType(modelType: ModelType<T>) {
     this.modelType = modelType;
@@ -74,26 +75,24 @@ export class BaseService<T extends BaseModel> {
       } else {
         fromModel = docTypeOrFormGroup;
       }
-      const data = this.datastore.createRecord(this.modelType, fromModel);
-      return data.save();
+      return this.datastore.saveRecord(fromModel.attributeMetadata, fromModel);
     } else {
       return this.patch(docTypeOrFormGroup, origModel, id);
     }
   }
 
-  patch(docTypeOrFormGroup: T | UntypedFormGroup, origModel: T, id?: any): Observable<T> {
+  patch(docTypeOrFormGroup: T | UntypedFormGroup, origModel?: T, id?: any): Observable<T> {
     let fromModel: T;
     if (docTypeOrFormGroup instanceof UntypedFormGroup) {
       fromModel = this.fromFormGroup(docTypeOrFormGroup, id);
     } else {
       fromModel = docTypeOrFormGroup;
     }
-    const data = this.datastore.createRecord(this.modelType, fromModel);
-    return data.patch(origModel);
+    return this.datastore.patchRecord(fromModel.attributeMetadata, fromModel, origModel);
   }
 
   newModel(data?: any): T {
-    return new this.modelType(this.datastore, data);
+    return new this.modelType(data);
   }
 
   toFormGroup(fb: UntypedFormBuilder, fromModel?: T): UntypedFormGroup {
@@ -111,6 +110,9 @@ export class BaseService<T extends BaseModel> {
     saveModel.getModelFromFormGroup(formGroup)
     saveModel.id = id ? id : null;
     return saveModel;
+  }
+  serializeModel(model: T): any {
+    return this.datastore.modelToEntity(model, model.attributeMetadata, true);
   }
   getSelectValues(property: string): Observable<any[]> {
     return null;

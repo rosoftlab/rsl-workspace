@@ -2,13 +2,23 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+interface EnvConfig {
+  baseUrl?: string;
+  authUrl?: string;
+  rdictApi?: string;
+}
+
+declare global {
+  interface Window {
+    env: EnvConfig;
+  }
+}
+
 export const environment = {
-  baseUrl: 'http://localhost:33030',
-  authUrl: 'http://localhost:33050',
-  // baseUrl: 'https://repom-dev-api.rosoftlab.net',
-  // authUrl: 'https://repom-dev-identity.rosoftlab.net',
+  baseUrl: 'https://api-dev.fiximo.ro/',
+  authUrl: 'https://auth-dev.fiximo.ro/',
   rdictApi: 'http://localhost:5200',
-  production: false
+  production: false,
 };
 
 /*

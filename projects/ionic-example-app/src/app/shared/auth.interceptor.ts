@@ -3,29 +3,28 @@ import { inject } from '@angular/core';
 import { AuthService } from '@rosoftlab/core';
 import { StorageService } from './services/storage.service';
 
-
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-    const authService = inject(AuthService);
-    const storageService = inject(StorageService);
+  const authService = inject(AuthService);
+  const storageService = inject(StorageService);
 
-    let lang = storageService.retrieve('language', true);
-    if (!lang) {
-        lang = 'en';
-    }
+  let lang = storageService.retrieve('language', true);
+  if (!lang) {
+    lang = 'en';
+  }
 
-    const authReq = req.clone({
-        withCredentials: true,
-        setHeaders: {
-            Authorization: authService.authorizationHeaderValue,
-            'x-language': lang,
-        },
-    });
+  const authReq = req.clone({
+    withCredentials: true,
+    setHeaders: {
+      Authorization: authService.authorizationHeaderValue,
+      'x-language': lang,
+    },
+  });
 
-    if (req.url.includes('s3-de-central')) {
-        return next(req); // Skip modification for specific URLs
-    }
+  if (req.url.includes('s3-de-central')) {
+    return next(req); // Skip modification for specific URLs
+  }
 
-    return next(authReq);
+  return next(authReq);
 };
 
 // @Injectable()

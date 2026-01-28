@@ -446,13 +446,13 @@
               "namedChunks": true,
               "fileReplacements": [
                 {
-                  "replace": "projects/rdict-example/src/environments/environment.ts",
-                  "with": "projects/rdict-example/src/environments/environment.docker.ts"
+                  "replace": "projects/ionic-example-app/src/environments/environment.ts",
+                  "with": "projects/ionic-example-app/src/environments/environment.docker.ts"
                 }
               ]
             }
           },
-          "defaultConfiguration": "docker"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -464,7 +464,7 @@
               "buildTarget": "ionic-example-app:build:development"
             },
             "docker": {
-              "buildTarget": "rdict-example:build:docker"
+              "buildTarget": "ionic-example-app:build:docker"
             }
           },
           "defaultConfiguration": "development"
@@ -488,17 +488,7 @@
               }
             ],
             "styles": [
-              "projects/ionic-example-app/src/theme/variables.css",              
-              "node_modules/@ionic/angular/css/core.css",
-              "node_modules/@ionic/angular/css/normalize.css",
-              "node_modules/@ionic/angular/css/structure.css",
-              "node_modules/@ionic/angular/css/typography.css",
-              "node_modules/@ionic/angular/css/display.css",
-              "node_modules/@ionic/angular/css/padding.css",
-              "node_modules/@ionic/angular/css/float-elements.css",
-              "node_modules/@ionic/angular/css/text-alignment.css",
-              "node_modules/@ionic/angular/css/text-transformation.css",
-              "node_modules/@ionic/angular/css/flex-utils.css",
+              "projects/ionic-example-app/src/theme/variables.css",                           
               "projects/ionic-example-app/src/styles.scss"
             ],
             "scripts": []

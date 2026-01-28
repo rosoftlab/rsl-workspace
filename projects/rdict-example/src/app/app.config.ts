@@ -8,7 +8,7 @@ import { FORMLY_CONFIG, FormlyModule } from '@ngx-formly/core';
 import { MissingTranslationHandler, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { FormlyKendoModule } from '@ngx-formly/kendo';
-import { BaseDatastore, Configurations, DatastoreCore, provideAuth, RSL_FORM_IMPLEMENTATIONS_TOKEN } from '@rosoftlab/core';
+import { BaseDatastore, Configurations, DATASTORE_PORT, DatastoreCore, provideAuth, RSL_FORM_IMPLEMENTATIONS_TOKEN } from '@rosoftlab/core';
 import { GenericKendoCrudComponent, GenericKendoTableComponent } from '@rosoftlab/kendo';
 import { SOCKET_URL } from '@rosoftlab/rdict';
 import { UserManagerSettings, WebStorageStateStore } from 'oidc-client-ts';
@@ -64,6 +64,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     BaseDatastore,
     DatastoreCore,
+    { provide: DATASTORE_PORT, useExisting: DatastoreCore },
     DatePipe,
     DecimalPipe,
     PercentPipe,

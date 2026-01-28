@@ -1,17 +1,19 @@
-import { HttpHeaders } from '@angular/common/http';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { AttributeMetadata } from '../constants/symbols';
+import { Attribute } from '../core';
 import { ModelConfig } from '../interfaces/model-config.interface';
-import { BaseDatastore, ModelType } from '../services/base-datastore.service';
+import type { ModelType } from '../services/datastore-port';
 import { MetadataStorage } from './metadata-storage';
-export class BaseModel {
+export class BaseModel<TId = string> {
   public highlighted: boolean;
-  public id: any;
+
+  @Attribute({ serializedName: 'id' })
+  public id: TId;
+  
   [key: string]: any;
 
   // tslint:disable-next-line:variable-name
-  constructor(protected _datastore: BaseDatastore, data?: any) {
+  constructor(data?: any) {
     if (data) {
       if (data.id) {
         this.id = data.id;
@@ -20,20 +22,6 @@ export class BaseModel {
     }
   }
 
-  save(params?: any, headers?: HttpHeaders, customUrl?: string, customBody?: any): Observable<this> {
-    const attributesMetadata: any = this[AttributeMetadata];
-    return this._datastore.saveRecord(attributesMetadata, this, params, headers, customUrl, customBody);
-  }
-
-  patch(origModel: this, params?: any, headers?: HttpHeaders, customUrl?: string): Observable<this> {
-    const attributesMetadata: any = this[AttributeMetadata];
-    return this._datastore.patchRecord(attributesMetadata, this, origModel, params, headers, customUrl);
-  }
-
-  replace(params?: any, headers?: HttpHeaders, customUrl?: string, customBody?: any): Observable<this> {
-    const attributesMetadata: any = this[AttributeMetadata];
-    return this._datastore.replaceRecord(attributesMetadata, this, params, headers, customUrl, customBody);
-  }
   get attributeMetadata(): any {
     const attributesMetadata: any = this[AttributeMetadata];
     return attributesMetadata;
@@ -83,7 +71,7 @@ export class BaseModel {
 
   protected deserializeModel<T extends BaseModel>(modelType: ModelType<T>, data: any) {
     data = this.transformSerializedNamesToPropertyNames(modelType, data);
-    return new modelType(this._datastore, data);
+    return new modelType(data);
   }
 
   protected transformSerializedNamesToPropertyNames<T extends BaseModel>(modelType: ModelType<T>, attributes: any) {
@@ -99,18 +87,18 @@ export class BaseModel {
     return properties;
   }
 
-  public getModelPropertyNames(model: BaseModel) {
-    return MetadataStorage.getMetadata('AttributeMapping', model);
+  public getModelPropertyNames(model: BaseModel<any>) {
+    return MetadataStorage.getMergedMetadata('AttributeMapping', model);
   }
-  public getModelRequiredPropertyNames(model: BaseModel) {
-    return MetadataStorage.getMetadata('AttributeRequired', model);
+  public getModelRequiredPropertyNames(model: BaseModel<any>) {
+    return MetadataStorage.getMergedMetadata('AttributeRequired', model);
   }
-  public getModelDefaultPropertyValues(model: BaseModel) {
-    return MetadataStorage.getMetadata('AttributedefaultValue', model);
+  public getModelDefaultPropertyValues(model: BaseModel<any>) {
+    return MetadataStorage.getMergedMetadata('AttributedefaultValue', model);
   }
 
-  public getModelSubGroupPropertyNames(model: BaseModel) {
-    return MetadataStorage.getMetadata('AttributeformSubGroup', model);
+  public getModelSubGroupPropertyNames(model: BaseModel<any>) {
+    return MetadataStorage.getMergedMetadata('AttributeformSubGroup', model);
   }
 
   public getFromGroup(fb: UntypedFormBuilder): UntypedFormGroup {
@@ -141,7 +129,7 @@ export class BaseModel {
     return controlsConfig[subGroup];
   }
 
-  public getModelFromFormGroup(formGroup: UntypedFormGroup, id?: any) {
+  public getModelFromFormGroup(formGroup: UntypedFormGroup, id?: TId) {
     try {
       const props = Object.keys(this.getModelPropertyNames(this));
       const formSubGroupsValues = this.getModelSubGroupPropertyNames(this);
@@ -168,10 +156,6 @@ export class BaseModel {
     }
   }
 
-  public getSerializedModel() {
-    const attributesMetadata: any = this[AttributeMetadata];
-    return this._datastore.modelToEntity(this, attributesMetadata, true);
-  }
   getCellClass(property: string) {
     return '';
   }

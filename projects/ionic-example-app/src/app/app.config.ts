@@ -5,46 +5,53 @@ import { DatePipe, DecimalPipe, PercentPipe } from '@angular/common';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FORMLY_CONFIG, FormlyModule } from '@ngx-formly/core';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-// import { BaseDatastore, Configurations, DatastoreCore } from '@rosoftlab/core';
-// import { SOCKET_URL } from 'dist/@rosoftlab/rdict';
+import { MissingTranslationHandler, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { provideIonicAngular } from '@ionic/angular/standalone';
-import { BaseDatastore, Configurations, DatastoreCore, provideAuth, RSL_FORM_IMPLEMENTATIONS_TOKEN } from '@rosoftlab/core';
+import { FormlyKendoModule } from '@ngx-formly/kendo';
+import { BaseDatastore, Configurations, DATASTORE_PORT, DatastoreCore, provideAuth, RSL_FORM_IMPLEMENTATIONS_TOKEN } from '@rosoftlab/core';
 import { GenericKendoCrudComponent, GenericKendoTableComponent } from '@rosoftlab/kendo';
-import { SOCKET_URL } from '@rosoftlab/rdict';
 import { UserManagerSettings, WebStorageStateStore } from 'oidc-client-ts';
+
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { FormlyCronTypeComponent } from './components/formly/types/cron-control/cron-type.component';
+import { FormlyKendoDatePickerComponent } from './components/formly/types/date-picker';
+
+import { PasswordFieldInput } from './components/formly/types/password/password.component';
+
+import { SOCKET_URL } from '@rosoftlab/rdict';
 import { RoleRightsComponent } from './components/formly/types/role-rights/role-rights.component';
-import { ColumnMappingComponent } from './components/formly/types/types/column-mapping/column-mapping.component';
-import { FormlySpreadsheetComponent } from './components/formly/types/types/formly-spreadsheet/formly-spreadsheet.component';
-import { PasswordFieldInput } from './components/formly/types/types/password/password.component';
-import { PluginSelectorTypeComponent } from './components/formly/types/types/plugin-selector/plugin-selector.type';
+import { MyMissingTranslationHandler } from './handler/my-missing-translation-handler';
 import { authInterceptor } from './shared/auth.interceptor';
 import { TranslateloaderService } from './shared/services/translate-loader.service';
 import { registerTranslateExtension } from './translate.extension';
+import { fieldMatchValidator } from './validators/field-match-validator';
 const oid_settings: UserManagerSettings = {
   userStore: new WebStorageStateStore({ store: window.sessionStorage }),
   authority: environment.authUrl,
-  client_id: 'WebApp',
+  client_id: 'Opti_web',
   redirect_uri: location.origin + '/auth-callback',
   post_logout_redirect_uri: location.origin,
   response_type: 'code',
-  scope: 'openid profile common file repom',
+  scope:
+    'openid  profile  optiLogistic  optiPark optifile common optiGPS optiParkTransaction reports inventory partner catalog statemachine',
   filterProtocolClaims: true,
   loadUserInfo: true,
   automaticSilentRenew: false
   //,    silent_redirect_uri: origin + '/silent-refresh.html'
 };
+const guest_oid_settings: UserManagerSettings = {
+  ...oid_settings,
+  client_id: 'Opti_web_guest',
+  scope:
+    'openid profile offline_access optiLogistic  optiPark optifile common optiGPS optiParkTransaction reports inventory partner catalog statemachine'
+};
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
+    provideIonicAngular(),
     provideRouter(routes),
-    provideIonicAngular({
-      mode: 'md' // Optional: force Material Design or 'ios' for iOS style
-    }),
     {
       provide: Configurations,
       useValue: {
@@ -53,13 +60,8 @@ export const appConfig: ApplicationConfig = {
         apiVersion: 'api/v1'
       }
     },
-    ...provideAuth(oid_settings),
-    // {
-    //   provide: ReactiveDictionary,
-    //   useFactory: () => new ReactiveDictionary(inject(SocketService))
-    // },
-    // { provide: SOCKET_URL, useValue: 'http://localhost:5200' },
-    { provide: SOCKET_URL, useValue: environment.rdictApi },
+    ...provideAuth(oid_settings, guest_oid_settings),
+    { provide: SOCKET_URL, useValue: '' },
     {
       provide: RSL_FORM_IMPLEMENTATIONS_TOKEN,
       useValue: {
@@ -71,6 +73,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     BaseDatastore,
     DatastoreCore,
+    { provide: DATASTORE_PORT, useExisting: DatastoreCore },
     DatePipe,
     DecimalPipe,
     PercentPipe,
@@ -81,10 +84,15 @@ export const appConfig: ApplicationConfig = {
           useClass: TranslateloaderService,
           deps: [HttpClient]
         },
-        // missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler },
+        missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler },
         useDefaultLang: false
       }),
       FormlyModule.forRoot({
+        validators: [
+          // This maps the string "fieldMatch" used in your employee-config.ts
+          // to the actual function we just wrote
+          { name: 'fieldMatch', validation: fieldMatchValidator }
+        ],
         types: [
           // { name: 'fieldMaping', component: FieldMapingComponent },
           {
@@ -93,28 +101,15 @@ export const appConfig: ApplicationConfig = {
             wrappers: ['form-field']
           },
           {
-            name: 'plugin-selector',
-            component: PluginSelectorTypeComponent,
-            wrappers: ['form-field']
-          },
-          {
             name: 'password',
             component: PasswordFieldInput,
             wrappers: ['form-field']
           },
-          {
-            name: 'spreadsheet',
-            component: FormlySpreadsheetComponent,
-            wrappers: ['form-field']
-          },
-          {
-            name: 'column-mapping',
-            component: ColumnMappingComponent,
-            wrappers: ['form-field']
-          },
-          { name: 'kendo-treeview', component: RoleRightsComponent, wrappers: ['form-field'] }
+          { name: 'kendo-treeview', component: RoleRightsComponent, wrappers: ['form-field'] },
+          { name: 'datepicker', component: FormlyKendoDatePickerComponent, wrappers: ['form-field'] }
         ]
-      })
+      }),
+      FormlyKendoModule
     ),
     provideHttpClient(withInterceptors([authInterceptor])),
     {

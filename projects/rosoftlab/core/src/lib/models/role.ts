@@ -5,8 +5,6 @@ import { BaseModel } from './base.model';
   type: 'role'
 })
 export class Role extends BaseModel {
-  @Attribute({ serializedName: 'id' })
-  id: string;
 
   @Attribute({ serializedName: 'name' })
   name: string;

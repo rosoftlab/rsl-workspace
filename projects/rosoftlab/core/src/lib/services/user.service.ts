@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { BaseQueryData, BaseService, DatastoreCore, Menu, Right, User } from '../core';
+import { BaseQueryData, BaseService, Menu, Right, User } from '../core';
+import { DATASTORE_PORT } from '../tokens/datastore-token';
+import type { DatastorePort } from './datastore-port';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends BaseService<User> {
   userRights!: Right[];
-  constructor(datastore: DatastoreCore) {
+  constructor(@Inject(DATASTORE_PORT) datastore: DatastorePort) {
     super(datastore);
     this.setModelType(User);
   }

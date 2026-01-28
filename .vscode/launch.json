@@ -11,7 +11,16 @@
       "webRoot": "${workspaceFolder}/projects/rdict-example/src",
       "url": "http://localhost:33080",
       "sourceMaps": true,
-      "trace": true     
+      "trace": true
+    },
+    {
+      "name": "Launch optipark",
+      "request": "launch",
+      "type": "chrome",
+      "webRoot": "${workspaceFolder}/projects/rdict-example/src",
+      "url": "http://localhost:19281",
+      "sourceMaps": true,
+      "trace": true
     },
     {
       "type": "chrome",

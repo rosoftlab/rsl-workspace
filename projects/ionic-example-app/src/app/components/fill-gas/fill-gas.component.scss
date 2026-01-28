@@ -1,0 +1,171 @@
+:host {
+  --ion-background-color: transparent;
+}
+
+ion-content {
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --color: white;
+}
+
+.glass-bg {
+  min-height: 100%;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -1px;
+    background: linear-gradient(to right, #fff, #d1d1d1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  p {
+    opacity: 0.8;
+    font-size: 1rem;
+    margin-top: 5px;
+  }
+}
+
+.confirmation-badge {
+  background: rgba(45, 211, 111, 0.15);
+  border: 1px solid rgba(45, 211, 111, 0.3);
+  border-radius: 16px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  color: white;
+  animation: slideIn 0.5s ease-out;
+
+  ion-icon {
+    font-size: 1.5rem;
+  }
+
+  span {
+    font-size: 0.95rem;
+
+    strong {
+      color: #fff;
+      font-weight: 700;
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.premium-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  margin: 0;
+  color: #333;
+
+  ion-card-content {
+    padding: 24px;
+  }
+}
+
+.camera-trigger {
+  margin-top: 30px;
+  text-align: center;
+
+  ion-button {
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    height: 60px;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .hint {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 10px;
+  }
+
+  .timestamp-info {
+    font-size: 0.9rem;
+    color: #2dd36f;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 500;
+
+    ion-icon {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.footer-btn {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(5px);
+
+  ion-button {
+    height: 60px;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+}
+
+// Formly deep overrides for premium look
+::ng-deep {
+  formly-field {
+    margin-bottom: 15px;
+    display: block;
+
+    ion-item {
+      --background: #f8f9fa;
+      --border-radius: 12px;
+      --padding-start: 16px;
+      --highlight-height: 0;
+      --color: #000000;
+      --placeholder-color: #666666;
+      --placeholder-opacity: 1;
+      margin-bottom: 10px;
+      border: 1px solid #e0e0e0;
+      transition: all 0.3s ease;
+
+      &.ion-focused {
+        border-color: #764ba2;
+        box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+      }
+    }
+
+    ion-label {
+      font-weight: 600 !important;
+      color: #000000 !important;
+      margin-bottom: 8px !important;
+    }
+
+    input {
+      font-size: 1.1rem !important;
+      color: #000000 !important;
+    }
+  }
+}

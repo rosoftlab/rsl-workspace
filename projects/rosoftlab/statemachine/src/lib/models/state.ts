@@ -3,9 +3,6 @@ import { Attribute, BaseModel, BaseModelConfig } from "@rosoftlab/core";
     type: 'state',
 })
 export class State extends BaseModel {
-    @Attribute({ serializedName: 'id' })
-
-    override id: number | undefined;
 
     @Attribute({ serializedName: 'stateMachineId' })
     stateMachineId!: number;

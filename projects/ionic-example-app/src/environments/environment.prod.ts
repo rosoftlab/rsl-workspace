@@ -1,6 +1,7 @@
 export const environment = {
-  baseUrl: window['env']['baseUrl'] || 'https://bee-stage-api.amazomel.com',
-  authUrl: window['env']['authUrl'] ||'https://bee-stage-auth.amazomel.com',
-  rdictApi: 'http://localhost:5200',
+  baseUrl: 'https://opti-api-dev.rosoftlab.net',
+  authUrl: 'https://opti-identity-dev.rosoftlab.net',
+    rdictApi: 'http://localhost:5200',
   production: true
 };
+

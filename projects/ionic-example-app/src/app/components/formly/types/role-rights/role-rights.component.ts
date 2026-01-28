@@ -14,25 +14,13 @@ import { arrowLeftIcon, saveIcon, SVGIcon } from '@progress/kendo-svg-icons';
 import { Right, RightService, RoleService } from '@rosoftlab/core';
 import { map, Observable, of, startWith, Subject, takeUntil, tap } from 'rxjs';
 
-export type RightTreeNode = Right & { items?: RightTreeNode[] };
+export type RightTreeNode = Right & { items?: RightTreeNode[]; translated_name?: string };
 
 @Component({
   selector: 'app-role-rights',
   templateUrl: './role-rights.component.html',
   styleUrls: ['./role-rights.component.scss'],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    FormlyKendoModule,
-    KENDO_TREEVIEW,
-    KENDO_TOOLBAR,
-    KENDO_LABEL,
-    KENDO_BUTTONS,
-    KENDO_DIALOG,
-    KENDO_INPUTS,
-    KENDO_LABELS
-  ]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, FormlyKendoModule, KENDO_TREEVIEW, KENDO_TOOLBAR, KENDO_LABEL, KENDO_BUTTONS, KENDO_DIALOG, KENDO_INPUTS, KENDO_LABELS],
 })
 export class RoleRightsComponent extends FieldType<FieldTypeConfig> implements OnInit, OnDestroy {
   public nodes: RightTreeNode[] = [];
@@ -46,12 +34,7 @@ export class RoleRightsComponent extends FieldType<FieldTypeConfig> implements O
   public backIcon: SVGIcon = arrowLeftIcon;
   checkParents = true;
   checkChildren = true;
-  constructor(
-    private roleService: RoleService,
-    private rightService: RightService,
-    protected translate: TranslateService,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor(private roleService: RoleService, private rightService: RightService, protected translate: TranslateService, private cdr: ChangeDetectorRef) {
     super();
   }
   public get checkableSettings(): CheckableSettings {
@@ -59,7 +42,7 @@ export class RoleRightsComponent extends FieldType<FieldTypeConfig> implements O
       checkChildren: this.checkChildren,
       checkParents: this.checkParents,
       enabled: true,
-      mode: 'multiple'
+      mode: 'multiple',
     };
   }
   ngOnInit() {
@@ -71,7 +54,6 @@ export class RoleRightsComponent extends FieldType<FieldTypeConfig> implements O
         tap((builtNodes) => {
           this.nodes = builtNodes;
           this.updateCheckedKeys(this.checkedIdSet);
-        
         }),
         takeUntil(this.destroy$)
       )
@@ -127,7 +109,7 @@ export class RoleRightsComponent extends FieldType<FieldTypeConfig> implements O
 
     const updatedDetails = uniqueNodes.map((node) => ({
       roleId: roleId,
-      rightId: node.id
+      rightId: node.id,
       // You can also add node.name or other fields here if your backend needs them
     }));
     console.log(updatedDetails);

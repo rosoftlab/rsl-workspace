@@ -1,8 +1,6 @@
 <div class="cron-container">
-  <div class="description" *ngIf="description">
-    <em>Run at {{ description }}</em>
-  </div>
-  <div class="next" *ngIf="nextRun">next at {{ nextRun }}</div>
+  <div class="description" *ngIf="description">ruleaza {{ description }}</div>
+  <div class="next" title="{{nextRunTitle}}" *ngIf="nextRun">urmatorul la {{ nextRun }}</div>
   <div class="error" *ngIf="error">{{ error }}</div>
 
   <div class="cron-inputs">

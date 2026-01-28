@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-import { DatastoreCore } from '../core';
+import { Inject, Injectable } from '@angular/core';
+import { DATASTORE_PORT } from '../tokens/datastore-token';
+import type { DatastorePort } from './datastore-port';
 import { Employee } from '../models';
 import { BaseService } from './base.service';
 
@@ -8,7 +9,7 @@ import { BaseService } from './base.service';
 })
 export class EmployeeService extends BaseService<Employee> {
 
-  constructor(datastore: DatastoreCore) {
+  constructor(@Inject(DATASTORE_PORT) datastore: DatastorePort) {
     super(datastore);
     this.setModelType(Employee);
   }

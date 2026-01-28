@@ -1,0 +1,55 @@
+<!-- <ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>
+      Fiximo Fuel
+    </ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true">
+  <div class="glass-bg">
+    <div class="header-section">
+      <h1>Inregistrare Consum</h1>
+      <p>Alimentare pentru utilaj/vehicul</p>
+    </div>
+
+    <div class="confirmation-badge" *ngIf="model?.licensePlate">
+      <ion-icon name="checkmark-circle" color="success"></ion-icon>
+      <span>Identificat: <strong>{{ model?.licensePlate }}</strong> ({{ model?.fields?.fuelType }})</span>
+    </div>
+
+    <!-- {{model | json}} -->
+
+    <ion-card class="premium-card">
+      <ion-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+
+          <!-- <div class="camera-trigger">
+            <ion-button expand="block" shape="round" color="secondary" (click)="takePicture()"
+              [disabled]="isProcessing">
+              <ion-icon slot="start" name="camera-outline"></ion-icon>
+              <ion-spinner *ngIf="isProcessing"></ion-spinner>
+              <span *ngIf="!isProcessing">Fă poză la pompă</span>
+            </ion-button>
+            <p class="hint" *ngIf="!model.photoTimestamp">OCR va citi automat numărul de Litri</p>
+            <p class="timestamp-info" *ngIf="model.photoTimestamp">
+              <ion-icon name="time-outline"></ion-icon>
+              Poză efectuată la: <strong>{{ model.photoTimestamp | date:'HH:mm:ss' }}</strong>
+            </p>
+          </div> -->
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <div class="footer-btn">
+    <ion-button expand="block" shape="round" color="primary" (click)="submit()"
+      [disabled]="!form.valid || isProcessing">
+      <ion-icon slot="start" name="send-outline"></ion-icon>
+      Salvează Informațiile
+    </ion-button>
+  </div>
+</ion-footer>

@@ -6,9 +6,6 @@ import { BaseModel } from "./base.model";
 })
 export class Employee extends BaseModel {
 
-    @Attribute({ serializedName: 'id' })
-    id: string;
-
     @Attribute({ serializedName: 'userName', required: true })
     userName: string;
 

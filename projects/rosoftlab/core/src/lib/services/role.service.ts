@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DatastoreCore, Right } from '../core';
+import { DATASTORE_PORT } from '../tokens/datastore-token';
+import type { DatastorePort } from './datastore-port';
+import { Right } from '../core';
 import { Role } from '../models/role';
 import { BaseService } from './base.service';
 
@@ -8,7 +10,7 @@ import { BaseService } from './base.service';
   providedIn: 'root'
 })
 export class RoleService extends BaseService<Role> {
-  constructor(datastore: DatastoreCore) {
+  constructor(@Inject(DATASTORE_PORT) datastore: DatastorePort) {
     super(datastore);
     this.setModelType(Role);
   }

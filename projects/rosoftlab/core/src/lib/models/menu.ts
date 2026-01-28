@@ -7,9 +7,6 @@ import { BaseModel } from "./base.model";
 })
 export class Menu extends BaseModel {
 
-    @Attribute({ serializedName: 'id' })
-    override id!: string;
-
     @Attribute({ serializedName: 'header' })
     header?: string;
 

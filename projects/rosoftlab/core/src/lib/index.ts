@@ -10,6 +10,7 @@ export * from './interfaces/datastore-config.interface';
 export * from './interfaces/model-config.interface';
 export * from './interfaces/overrides.interface';
 export * from './interfaces/property-converter.interface';
+export * from './services/datastore-port';
 export * from './models/base-meta.model';
 export * from './models/base-query-data';
 export * from './models/base.model';
@@ -24,4 +25,5 @@ export * from './rsl-base-module';
 export * from './services/base.service';
 export * from './services/local-file.service';
 export * from './validators/pattern-validator';
+export * from './tokens/datastore-token';
 

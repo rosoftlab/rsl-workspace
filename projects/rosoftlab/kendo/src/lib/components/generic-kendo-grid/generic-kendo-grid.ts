@@ -140,7 +140,7 @@ export class GenericKendoTableComponent extends BaseTableImplementation<any, Add
   private performDeleteStandard(id: any): void {
     this.dataService.delete(id).subscribe({
       next: (result) => {
-        const index = this.dataSource.findIndex((item: any) => item.oid === id);
+        const index = this.dataSource.findIndex((item: any) => item.id === id);
         if (index > -1) {
           this.dataSource.splice(index, 1);
         }

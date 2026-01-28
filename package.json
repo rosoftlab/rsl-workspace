@@ -1,6 +1,6 @@
 {
   "name": "@rosoftlab/core",
-  "version": "1.0.5-alpha-5",
+  "version": "1.0.5-alpha-8",
   "scripts": {
     "ng": "ng",
     "build": "ts-node --dir build build.ts",
@@ -17,7 +17,8 @@
     "build-demo-rdict": "ng build rdict-example",
     "build-ionic-example": "ng build ionic-example-app",
     "demo-rdict": "ng serve rdict-example  --port 33080 --configuration development --hmr=false",
-    "ionic-example": "ng serve ionic-example-app  --port 33080 --configuration development --hmr=false"
+    "ionic-example": "ng serve ionic-example-app  --port 19281 --configuration docker --hmr=false",
+    "ionic-example-dev": "ng serve ionic-example-app  --port 19281 --hmr=false"
   },
   "private": false,
   "dependencies": {

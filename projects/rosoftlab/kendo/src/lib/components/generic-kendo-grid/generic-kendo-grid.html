@@ -15,15 +15,16 @@
   <kendo-grid-column *ngFor="let column of allColumns" [field]="column.propertyName"
     [title]="column.translateKey | translate" [format]="column.format" [filter]="inferFilterType(column)">
     <!-- Use ng-template to customize the column content -->
-    <ng-template *ngIf="column.isEditLink; else defaultTemplate" kendoGridCellTemplate let-dataItem>
+    <ng-template kendoGridCellTemplate let-dataItem>
       <!-- Create a link that calls editHandler(dataItem) -->
-      <a href="javascript:void(0)" (click)="edit(dataItem,column)" class="edit-link">
+      <a *ngIf="column.isEditLink; else defaultTemplate" href="javascript:void(0)" (click)="edit(dataItem,column)"
+        class="edit-link">
         {{ getCellValue(dataItem,column) }}
       </a>
-    </ng-template>
-    <!-- Default template for non-link columns -->
-    <ng-template #defaultTemplate kendoGridCellTemplate let-dataItem>
-      {{ getCellValue(dataItem,column) }}
+      <!-- Default template for non-link columns -->
+      <ng-template #defaultTemplate>
+        {{ getCellValue(dataItem,column) }}
+      </ng-template>
     </ng-template>
   </kendo-grid-column>
 

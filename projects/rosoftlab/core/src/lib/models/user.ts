@@ -5,9 +5,6 @@ import { BaseModel } from "./base.model";
 })
 export class User extends BaseModel {
 
-    @Attribute({ serializedName: 'id' })
-    override id!: string;
-
     @Attribute({ serializedName: 'firstName' })
     firstName!: string;
 
