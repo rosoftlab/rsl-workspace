@@ -48,7 +48,6 @@ export interface DatastorePort {
   createRecord<T extends BaseModel>(modelType: ModelType<T>, data?: any): T;
 
   saveRecord<T extends BaseModel>(
-    attributesMetadata: any,
     model: T,
     params?: any,
     headers?: HttpHeaders,
@@ -57,7 +56,6 @@ export interface DatastorePort {
   ): Observable<T>;
 
   patchRecord<T extends BaseModel>(
-    attributesMetadata: any,
     model: T,
     origModel?: T,
     params?: any,
@@ -66,7 +64,6 @@ export interface DatastorePort {
   ): Observable<T>;
 
   replaceRecord<T extends BaseModel>(
-    attributesMetadata: any,
     model: T,
     params?: any,
     headers?: HttpHeaders,
@@ -82,5 +79,5 @@ export interface DatastorePort {
   ): Observable<{}>;
 
   buildUrl<T extends BaseModel>(modelType: ModelType<T>, customUrl?: string): string;
-  modelToEntity<T extends BaseModel>(model: T, attributesMetadata: any, allAttributes?: boolean): any;
+  modelToEntity<T extends BaseModel>(model: T): any;
 }

@@ -1,0 +1,38 @@
+<ion-content [fullscreen]="true" class="guest-registration">
+  <div class="guest-registration__bg"></div>
+  <div class="guest-registration__shell">
+    <ion-card class="guest-registration__card">
+      <ion-card-header>
+        <div class="guest-registration__logo">
+          <img src="assets/icons/fixfuel-icon.svg" alt="FixFuel" />
+        </div>
+        <ion-card-title>Introdu numele complet pentru a continua</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+
+        <form (ngSubmit)="registerGuest()">
+          <ion-item lines="none">
+            <!-- <ion-label position="stacked">Nume complet</ion-label> -->
+            <ion-input
+              type="text"
+              id="fullName"
+              [(ngModel)]="fullName"
+              name="fullName"
+              required
+              [disabled]="isLoading"
+            ></ion-input>
+          </ion-item>
+
+          <ion-button type="submit" expand="block" shape="round" [disabled]="isLoading">
+            <ion-spinner *ngIf="isLoading" name="crescent" slot="start"></ion-spinner>
+            Continuă
+          </ion-button>
+        </form>
+
+        <ion-text color="danger" *ngIf="errorMessage">
+          <p class="guest-registration__error">{{ errorMessage }}</p>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

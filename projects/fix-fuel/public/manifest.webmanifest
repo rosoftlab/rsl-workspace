@@ -1,0 +1,31 @@
+{
+  "name": "FixFuel",
+  "short_name": "FixFuel",
+  "id": "/",
+  "theme_color": "#2e782e",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "assets/icons/fixfuel-icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/screenshots/fixfuel-wide.svg",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    },
+    {
+      "src": "assets/screenshots/fixfuel-mobile.svg",
+      "sizes": "720x1280",
+      "type": "image/svg+xml"
+    }
+  ]
+}

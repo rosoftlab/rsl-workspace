@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { NavigationStart, RouterModule, UrlSegment } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { KENDO_BUTTONS } from '@progress/kendo-angular-buttons';
@@ -18,8 +18,8 @@ import { KENDO_TOOLBAR } from '@progress/kendo-angular-toolbar';
 import { pencilIcon, plusIcon, SVGIcon, trashIcon } from '@progress/kendo-svg-icons';
 import { BaseService, BaseTableImplementation, DIALOG_SERVICE_TOKEN, LocalFileService } from '@rosoftlab/core';
 import { FileService, ReactiveDictionary } from '@rosoftlab/rdict';
-import 'reflect-metadata';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { KendoTableTitle } from '../shared/kendo-table-title';
 import { MaterialDialogService } from '../shared/material-dialog.service';
 import { kendoToFilterRequest } from '../shared/rdict-kendo';
@@ -42,7 +42,7 @@ import { kendoToFilterRequest } from '../shared/rdict-kendo';
   ],
   providers: [{ provide: DIALOG_SERVICE_TOKEN, useClass: MaterialDialogService }]
 })
-export class GenericKendoTableComponent extends BaseTableImplementation<any, AddEvent, RemoveEvent> implements OnInit {
+export class GenericKendoTableComponent extends BaseTableImplementation<any, AddEvent, RemoveEvent> implements OnInit, OnDestroy {
   protected localFileService = inject(LocalFileService);
   data: any[] = [];
   pageIndex: number = 1;
@@ -66,6 +66,7 @@ export class GenericKendoTableComponent extends BaseTableImplementation<any, Add
   private isRdict: Boolean = false;
   private rdict: ReactiveDictionary;
   public gridDataLayout: DataLayoutModeSettings;
+  private readonly destroy$ = new Subject<void>();
   constructor(
     private intl: IntlService,
     private fileService: FileService
@@ -88,6 +89,10 @@ export class GenericKendoTableComponent extends BaseTableImplementation<any, Add
   private initStandard() {
     this.getListLayout();
     this.loadData();
+  }
+  override ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   @HostListener('window:resize', ['$event'])
   onResize(event: UIEvent): void {
@@ -180,10 +185,9 @@ export class GenericKendoTableComponent extends BaseTableImplementation<any, Add
   }
   getListLayoutStanderd() {
     if (!this.model) return;
-    const layoutSource$ = this.fileLayout
-      ? this.localFileService.getJsonData(this.fileLayout)
-      : this.rdict.get$('config.models.' + this.model + '.tableLayout');
+    const layoutSource$ = this.fileLayout ? this.localFileService.getJsonData(this.fileLayout) : null;
 
+    if (!layoutSource$) return;
     layoutSource$.subscribe({
       next: (value) => {
         const layout = this.fileLayout ? value.find((item: any) => item.model === this.model) : value;
@@ -245,6 +249,8 @@ export class GenericKendoTableComponent extends BaseTableImplementation<any, Add
 
   public pageChange(state: PageChangeEvent): void {
     this.stateChange.next(state);
+    this.state = { ...this.state, skip: state.skip, take: state.take };
+    this.loadData();
   }
 
   public formatValue(value: any, format?: string): any {
@@ -329,18 +335,30 @@ export class GenericKendoTableComponent extends BaseTableImplementation<any, Add
       this.loadDataViewRdict();
       return;
     }
-    this.rdict.get$(this.dictPath!).subscribe({
-      next: (rdictData) => {
-        this.tableRdict = rdictData;
-        this.tableRdict.onChange$().subscribe((changes) => this.onChangeEventRdict(changes));
-        this.tableRdict.onDelete$().subscribe((changes) => this.ondDeleteEventRdict(changes));
-        this.rdict.getArray$(this.dictPath!, this.tableRdict).subscribe({
-          next: (value) => (this.dataSource = value),
-          error: (err) => console.error('Error:', err.message)
-        });
-      },
-      error: (err) => console.error('Error:', err.message)
-    });
+    this.rdict
+      .get$(this.dictPath!)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (rdictData) => {
+          this.tableRdict = rdictData;
+          this.tableRdict
+            .onChange$()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((changes) => this.onChangeEventRdict(changes));
+          this.tableRdict
+            .onDelete$()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((changes) => this.ondDeleteEventRdict(changes));
+          this.rdict
+            .getArray$(this.dictPath!, this.tableRdict)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+              next: (value) => (this.dataSource = value),
+              error: (err) => console.error('Error:', err.message)
+            });
+        },
+        error: (err) => console.error('Error:', err.message)
+      });
   }
   private loadDataViewRdict() {
     const request = kendoToFilterRequest(this.state);
@@ -384,7 +402,10 @@ export class GenericKendoTableComponent extends BaseTableImplementation<any, Add
   private performDeleteRdict(id: any): void {
     this.tableRdict.delete$(id).subscribe({
       next: (result) => {
-        this.dataSource.splice(id, 1);
+        const index = this.dataSource.findIndex((item: any) => item.oid === id || item.id === id);
+        if (index > -1) {
+          this.dataSource.splice(index, 1);
+        }
       }
     });
   }

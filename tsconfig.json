@@ -20,8 +20,14 @@
       "@rosoftlab/kendo": [
         "projects/rosoftlab/kendo/src/public-api.ts"
       ],
+      "@rosoftlab/formly": [
+        "projects/rosoftlab/formly/src/public-api.ts"
+      ],
       "@rosoftlab/material": [
         "projects/rosoftlab/material/src/public-api.ts"
+      ],
+      "@rosoftlab/ionic": [
+        "projects/rosoftlab/ionic/src/public-api.ts"
       ],
       "@rosoftlab/statemachine": [
         "projects/rosoftlab/statemachine/src/public-api.ts"

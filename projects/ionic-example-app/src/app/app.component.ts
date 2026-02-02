@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { addIcons } from 'ionicons';
+import { add, create, save, trash } from 'ionicons/icons';
+import { register } from 'swiper/element/bundle';
+
+register();
 
 @Component({
   selector: 'app-root',
@@ -16,7 +21,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   title = 'rdict-example';
   constructor(public translate: TranslateService) {
-    translate.setDefaultLang('ro');
+    addIcons({ add, create, save, trash });
+    translate.setFallbackLang('ro');
     translate.use('ro');
   }
 }

@@ -8,7 +8,7 @@
     "@rosoftlab/core": "0.0.0-ROSOFTLAB-VERSION"
   },
   "dependencies": {
-    "tslib": "^2.6.2"
+    "tslib": "^2.8.0"
   },
   "sideEffects": false
 }

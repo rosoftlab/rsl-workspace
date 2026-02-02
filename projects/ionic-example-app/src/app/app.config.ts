@@ -20,6 +20,7 @@ import { FormlyKendoDatePickerComponent } from './components/formly/types/date-p
 
 import { PasswordFieldInput } from './components/formly/types/password/password.component';
 
+import { GenericIonicGridComponent } from '@rosoftlab/ionic';
 import { SOCKET_URL } from '@rosoftlab/rdict';
 import { RoleRightsComponent } from './components/formly/types/role-rights/role-rights.component';
 import { MyMissingTranslationHandler } from './handler/my-missing-translation-handler';
@@ -67,7 +68,8 @@ export const appConfig: ApplicationConfig = {
       useValue: {
         // Values are the string keys used in Route Data mapped to the Component Classes
         'KENDO-GRID': GenericKendoTableComponent,
-        'KENDO-CRUD': GenericKendoCrudComponent
+        'KENDO-CRUD': GenericKendoCrudComponent,
+        'IONIC-GRID': GenericIonicGridComponent
       }
     },
     provideAnimations(),

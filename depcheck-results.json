@@ -1,0 +1,819 @@
+{
+  "core": {
+    "dependencies": [
+      "tslib"
+    ],
+    "devDependencies": [],
+    "missing": {
+      "karma-jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\karma.conf.js"
+      ],
+      "karma-chrome-launcher": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\karma.conf.js"
+      ],
+      "karma-jasmine-html-reporter": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\karma.conf.js"
+      ],
+      "karma-coverage": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\karma.conf.js"
+      ],
+      "@angular-devkit/build-angular": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\karma.conf.js"
+      ],
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\tsconfig.spec.json"
+      ],
+      "zone.js": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\test.ts"
+      ],
+      "@angular/platform-browser-dynamic": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\test.ts"
+      ],
+      "@angular/forms": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\rsl-base-module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\validators\\pattern-validator.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\base.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\models\\base.model.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-crud-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-form-edit.component.ts"
+      ],
+      "query-string": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\base-datastore.service.ts"
+      ],
+      "rxjs": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\base-datastore.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\base.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\datastore-port.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\dialog.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\local-file.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\role.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\route-history.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\translate-loader.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\user.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\interfaces\\dialog.interface.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\interceptors\\cache.interceptor.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-crud-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-form-edit.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\auth\\auth.service.ts"
+      ],
+      "@angular/router": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\route-history.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\resolvers\\dynamically-class-resolver.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\resolvers\\dynamically-service-resolver.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-crud-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-form-edit.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-table-implementation.ts"
+      ]
+    },
+    "using": {
+      "karma-jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\karma.conf.js"
+      ],
+      "karma-chrome-launcher": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\karma.conf.js"
+      ],
+      "karma-jasmine-html-reporter": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\karma.conf.js"
+      ],
+      "karma-coverage": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\karma.conf.js"
+      ],
+      "@angular-devkit/build-angular": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\karma.conf.js"
+      ],
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\tsconfig.spec.json"
+      ],
+      "zone.js": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\test.ts"
+      ],
+      "@angular/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\test.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\rsl-base-module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\tokens\\datastore-token.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\tokens\\dynamic-form-tokens.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\base-datastore.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\base.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\cache.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\datastore.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\employee.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\file.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\local-file.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\right.service.spec.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\right.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\role.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\route-history.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\translate-loader.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\user.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\pipes\\input-error.pipe.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\pipes\\Nl2brPipe.pipe.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\interfaces\\dialog.interface.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\interceptors\\cache.interceptor.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-crud-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-form-edit.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-table-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\under-construction\\under-construction.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\page-not-found\\page-not-found.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\field-error-display\\field-error-display.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\auth\\auth.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\auth\\provide-auth.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\auth\\tokens.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\auth\\user-manager.factory.ts"
+      ],
+      "@angular/platform-browser-dynamic": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\test.ts"
+      ],
+      "@angular/common": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\providers.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\rsl-base-module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\base-datastore.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\base.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\datastore-port.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\datastore.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\file.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\local-file.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\translate-loader.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\interceptors\\cache.interceptor.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-crud-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-form-edit.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\auth\\auth.service.ts"
+      ],
+      "@angular/forms": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\rsl-base-module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\validators\\pattern-validator.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\base.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\models\\base.model.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-crud-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-form-edit.component.ts"
+      ],
+      "@ngx-translate/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\rsl-base-module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\translate-loader.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\pipes\\input-error.pipe.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-crud-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-form-edit.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-table-implementation.ts"
+      ],
+      "fast-json-patch": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\base-datastore.service.ts"
+      ],
+      "query-string": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\base-datastore.service.ts"
+      ],
+      "rxjs": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\base-datastore.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\base.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\datastore-port.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\dialog.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\local-file.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\role.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\route-history.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\translate-loader.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\user.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\interfaces\\dialog.interface.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\interceptors\\cache.interceptor.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-crud-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-form-edit.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\auth\\auth.service.ts"
+      ],
+      "@angular/router": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\services\\route-history.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\resolvers\\dynamically-class-resolver.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\resolvers\\dynamically-service-resolver.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-crud-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-form-edit.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\base-components\\base-table-implementation.ts"
+      ],
+      "date-fns": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\converters\\date\\date.converter.ts"
+      ],
+      "oidc-client-ts": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\auth\\auth.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\auth\\provide-auth.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\auth\\tokens.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\src\\lib\\auth\\user-manager.factory.ts"
+      ]
+    },
+    "invalidFiles": {
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\tsconfig.lib.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\tsconfig.lib.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\tsconfig.lib.prod.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\tsconfig.lib.prod.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\tsconfig.spec.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\core\\tsconfig.spec.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)"
+    },
+    "invalidDirs": {}
+  },
+  "formly": {
+    "dependencies": [
+      "tslib"
+    ],
+    "devDependencies": [],
+    "missing": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\formly\\tsconfig.spec.json"
+      ]
+    },
+    "using": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\formly\\tsconfig.spec.json"
+      ],
+      "@ngx-formly/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\formly\\src\\lib\\base-model-formly.ts"
+      ],
+      "@rosoftlab/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\formly\\src\\lib\\base-model-formly.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\formly\\src\\lib\\formly-base-service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\formly\\src\\lib\\formly-layout.ts"
+      ]
+    },
+    "invalidFiles": {
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\formly\\tsconfig.lib.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\formly\\tsconfig.lib.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\formly\\tsconfig.lib.prod.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\formly\\tsconfig.lib.prod.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\formly\\tsconfig.spec.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\formly\\tsconfig.spec.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)"
+    },
+    "invalidDirs": {}
+  },
+  "ionic": {
+    "dependencies": [
+      "tslib"
+    ],
+    "devDependencies": [],
+    "missing": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\tsconfig.spec.json"
+      ],
+      "@angular/forms": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\rsl-ionic-module.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\wrappers.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\validators\\must-match.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat-datatable\\repeat-datatable.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat\\repeat-section.type.ts"
+      ],
+      "@ngx-formly/ionic": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\rsl-ionic-module.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\wrappers.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-sm-buttons\\ionic-sm-buttons.component.ts"
+      ],
+      "@ngx-translate/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\rsl-ionic-module.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\translate.extension.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\wrappers.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat-datatable\\repeat-datatable.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat\\repeat-section.type.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\user-menu\\user-menu.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-sm-buttons\\ionic-sm-buttons.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-layout\\rsl-ionic-layout.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\generic-ionic-grid\\generic-ionic-grid.component.ts"
+      ],
+      "ngx-filesaver": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat-datatable\\repeat-datatable.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat\\repeat-section.type.ts"
+      ],
+      "xlsx": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat-datatable\\repeat-datatable.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat\\repeat-section.type.ts"
+      ],
+      "@angular/router": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\user-menu\\user-menu.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-layout\\rsl-ionic-layout.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\generic-ionic-grid\\generic-ionic-grid.component.ts"
+      ],
+      "rxjs": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\user-menu\\user-menu.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-sm-buttons\\ionic-sm-buttons.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\generic-ionic-grid\\generic-ionic-grid.component.ts"
+      ],
+      "json-logic-js": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\generic-ionic-grid\\generic-ionic-grid.component.ts"
+      ]
+    },
+    "using": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\tsconfig.spec.json"
+      ],
+      "@angular/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\ionic-dialog.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\rsl-ionic-module.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\accordion-wrapper.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\panel-wrapper.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\wrappers.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat-datatable\\repeat-datatable.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat\\repeat-section.type.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\user-menu\\user-menu.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-sm-buttons\\ionic-sm-buttons.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-layout\\rsl-ionic-layout.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\generic-ionic-grid\\generic-ionic-grid.component.ts"
+      ],
+      "@ionic/angular": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\ionic-dialog.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\rsl-ionic-module.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\wrappers.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\user-menu\\user-menu.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-layout\\rsl-ionic-layout.component.ts"
+      ],
+      "@angular/common": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\rsl-ionic-module.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\wrappers.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\user-menu\\user-menu.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-layout\\rsl-ionic-layout.component.ts"
+      ],
+      "@angular/forms": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\rsl-ionic-module.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\wrappers.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\validators\\must-match.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat-datatable\\repeat-datatable.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat\\repeat-section.type.ts"
+      ],
+      "@ngx-formly/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\rsl-ionic-module.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\translate.extension.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\accordion-wrapper.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\panel-wrapper.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\wrappers.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat-datatable\\repeat-datatable.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat\\repeat-section.type.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-sm-buttons\\ionic-sm-buttons.component.ts"
+      ],
+      "@ngx-formly/ionic": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\rsl-ionic-module.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\wrappers.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-sm-buttons\\ionic-sm-buttons.component.ts"
+      ],
+      "@ngx-translate/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\rsl-ionic-module.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\translate.extension.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\wrappers.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat-datatable\\repeat-datatable.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat\\repeat-section.type.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\user-menu\\user-menu.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-sm-buttons\\ionic-sm-buttons.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-layout\\rsl-ionic-layout.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\generic-ionic-grid\\generic-ionic-grid.component.ts"
+      ],
+      "@swimlane/ngx-datatable": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\rsl-ionic-module.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\wrappers.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat-datatable\\repeat-datatable.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\decorators\\ionic-datatable-layout.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\generic-ionic-grid\\generic-ionic-grid.component.ts"
+      ],
+      "@rosoftlab/statemachine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\wrappers\\wrappers.module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-sm-buttons\\ionic-sm-buttons.component.ts"
+      ],
+      "ngx-filesaver": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat-datatable\\repeat-datatable.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat\\repeat-section.type.ts"
+      ],
+      "xlsx": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat-datatable\\repeat-datatable.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat\\repeat-section.type.ts"
+      ],
+      "@rosoftlab/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\types\\repeat\\repeat-section.type.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\interfaces\\ionic-list-layout-config.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\decorators\\ionic-datatable-layout.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\decorators\\ionic-list.decorator.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\user-menu\\user-menu.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-layout\\rsl-ionic-layout.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\generic-ionic-grid\\generic-ionic-grid.component.ts"
+      ],
+      "@angular/router": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\user-menu\\user-menu.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-layout\\rsl-ionic-layout.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\generic-ionic-grid\\generic-ionic-grid.component.ts"
+      ],
+      "rxjs": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\user-menu\\user-menu.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-sm-buttons\\ionic-sm-buttons.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\generic-ionic-grid\\generic-ionic-grid.component.ts"
+      ],
+      "@rosoftlab/rdict": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-layout\\rsl-ionic-layout.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\generic-ionic-grid\\generic-ionic-grid.component.ts"
+      ],
+      "json-logic-js": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\generic-ionic-grid\\generic-ionic-grid.component.ts"
+      ]
+    },
+    "invalidFiles": {
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\tsconfig.lib.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\tsconfig.lib.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\tsconfig.lib.prod.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\tsconfig.lib.prod.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\tsconfig.spec.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\tsconfig.spec.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-grid\\rsl-ionic-grid.component.ts": "SyntaxError: Unexpected token (85:6)\n    at constructor (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:367:19)\n    at TypeScriptParserMixin.raise (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:6624:19)\n    at TypeScriptParserMixin.unexpected (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:6644:16)\n    at TypeScriptParserMixin.parseExprAtom (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:11508:22)\n    at TypeScriptParserMixin.parseExprAtom (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4793:20)\n    at TypeScriptParserMixin.parseExprSubscripts (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:11145:23)\n    at TypeScriptParserMixin.parseUpdate (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:11130:21)\n    at TypeScriptParserMixin.parseMaybeUnary (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:11110:23)\n    at TypeScriptParserMixin.parseMaybeUnary (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:9890:18)\n    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:10963:61)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-data-table\\rsl-ionic-data-table.component.ts": "SyntaxError: Unexpected token (96:6)\n    at constructor (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:367:19)\n    at TypeScriptParserMixin.raise (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:6624:19)\n    at TypeScriptParserMixin.unexpected (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:6644:16)\n    at TypeScriptParserMixin.parseExprAtom (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:11508:22)\n    at TypeScriptParserMixin.parseExprAtom (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4793:20)\n    at TypeScriptParserMixin.parseExprSubscripts (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:11145:23)\n    at TypeScriptParserMixin.parseUpdate (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:11130:21)\n    at TypeScriptParserMixin.parseMaybeUnary (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:11110:23)\n    at TypeScriptParserMixin.parseMaybeUnary (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:9890:18)\n    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:10963:61)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\rsl-ionic-crud.component\\rsl-ionic-crud.component.ts": "SyntaxError: Unexpected token, expected \"}\" (60:4)\n    at constructor (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:367:19)\n    at TypeScriptParserMixin.raise (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:6624:19)\n    at TypeScriptParserMixin.unexpected (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:6644:16)\n    at TypeScriptParserMixin.expect (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:6924:12)\n    at TypeScriptParserMixin.jsxParseExpressionContainer (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4666:10)\n    at TypeScriptParserMixin.jsxParseElementAt (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4740:36)\n    at TypeScriptParserMixin.jsxParseElementAt (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4727:32)\n    at TypeScriptParserMixin.jsxParseElementAt (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4727:32)\n    at TypeScriptParserMixin.jsxParseElement (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4778:17)\n    at TypeScriptParserMixin.parseExprAtom (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4788:19)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\ionic\\src\\lib\\components\\generic-ionic-crud\\generic-ionic-crud.component.ts": "SyntaxError: Unexpected token, expected \"}\" (60:4)\n    at constructor (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:367:19)\n    at TypeScriptParserMixin.raise (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:6624:19)\n    at TypeScriptParserMixin.unexpected (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:6644:16)\n    at TypeScriptParserMixin.expect (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:6924:12)\n    at TypeScriptParserMixin.jsxParseExpressionContainer (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4666:10)\n    at TypeScriptParserMixin.jsxParseElementAt (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4740:36)\n    at TypeScriptParserMixin.jsxParseElementAt (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4727:32)\n    at TypeScriptParserMixin.jsxParseElementAt (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4727:32)\n    at TypeScriptParserMixin.jsxParseElement (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4778:17)\n    at TypeScriptParserMixin.parseExprAtom (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\@babel\\parser\\lib\\index.js:4788:19)"
+    },
+    "invalidDirs": {}
+  },
+  "kendo": {
+    "dependencies": [
+      "tslib"
+    ],
+    "devDependencies": [],
+    "missing": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\tsconfig.spec.json"
+      ],
+      "@ngx-formly/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\translate.extension.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@ngx-translate/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\translate.extension.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\material-dialog.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@progress/kendo-angular-notification": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\material-dialog.service.ts"
+      ],
+      "rxjs": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\material-dialog.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@angular/router": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts"
+      ],
+      "@angular/forms": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@ngx-formly/kendo": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ]
+    },
+    "using": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\tsconfig.spec.json"
+      ],
+      "@ngx-formly/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\translate.extension.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@ngx-translate/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\translate.extension.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\material-dialog.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@angular/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\kendo-table-title.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\material-dialog.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\kendo-toolbar-span.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@progress/kendo-angular-label": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\kendo-table-title.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@progress/kendo-angular-toolbar": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\kendo-table-title.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\kendo-toolbar-span.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@progress/kendo-angular-dialog": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\material-dialog.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@progress/kendo-angular-notification": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\material-dialog.service.ts"
+      ],
+      "@rosoftlab/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\material-dialog.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\rdict-kendo.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "rxjs": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\material-dialog.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@progress/kendo-data-query": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\shared\\rdict-kendo.ts"
+      ],
+      "@progress/kendo-theme-default": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.scss",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.scss"
+      ],
+      "@angular/common": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\kendo-toolbar-span.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts"
+      ],
+      "@angular/router": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts"
+      ],
+      "@progress/kendo-angular-buttons": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@progress/kendo-angular-icons": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts"
+      ],
+      "@progress/kendo-angular-layout": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts"
+      ],
+      "@progress/kendo-svg-icons": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\layouts\\full\\full.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@progress/kendo-angular-grid": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts"
+      ],
+      "@progress/kendo-angular-intl": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts"
+      ],
+      "@rosoftlab/rdict": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-grid\\generic-kendo-grid.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@angular/forms": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ],
+      "@ngx-formly/kendo": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\src\\lib\\components\\generic-kendo-crud\\generic-kendo-crud.component.ts"
+      ]
+    },
+    "invalidFiles": {
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\tsconfig.lib.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\tsconfig.lib.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\tsconfig.lib.prod.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\tsconfig.lib.prod.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\tsconfig.spec.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\kendo\\tsconfig.spec.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)"
+    },
+    "invalidDirs": {}
+  },
+  "material": {
+    "dependencies": [
+      "tslib"
+    ],
+    "devDependencies": [],
+    "missing": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\tsconfig.spec.json"
+      ],
+      "@angular/cdk": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\rsl-material-module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\searchable-dropdown\\searchable-dropdown.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\generic-table\\generic-table.component.ts"
+      ],
+      "@angular/forms": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\rsl-material-module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\searchable-dropdown\\searchable-dropdown.component.ts"
+      ],
+      "@ngx-translate/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\rsl-material-module.ts"
+      ],
+      "rxjs": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\services\\dialog.service-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\searchable-dropdown\\searchable-dropdown.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\generic-table\\generic-table.component.ts"
+      ],
+      "@angular/router": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\generic-table\\generic-table.component.ts"
+      ],
+      "json-logic-js": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\generic-table\\generic-table.component.ts"
+      ]
+    },
+    "using": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\tsconfig.spec.json"
+      ],
+      "@angular/cdk": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\rsl-material-module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\searchable-dropdown\\searchable-dropdown.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\generic-table\\generic-table.component.ts"
+      ],
+      "@angular/common": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\rsl-material-module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\services\\dialog.service-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\generic-table\\generic-table.component.ts"
+      ],
+      "@angular/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\rsl-material-module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\services\\dialog.service-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\services\\grid-layout.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\searchable-dropdown\\searchable-dropdown.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\generic-table\\generic-table.component.ts"
+      ],
+      "@angular/forms": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\rsl-material-module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\searchable-dropdown\\searchable-dropdown.component.ts"
+      ],
+      "@angular/material": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\rsl-material-module.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\generic-table\\generic-table.component.ts"
+      ],
+      "@ngx-translate/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\rsl-material-module.ts"
+      ],
+      "@rosoftlab/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\services\\dialog.service-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\services\\grid-layout.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\models\\grid-layout.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\models\\material-base-model.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\decorators\\grid-layout.decorator.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\searchable-dropdown\\searchable-dropdown.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\generic-table\\generic-table.component.ts"
+      ],
+      "rxjs": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\services\\dialog.service-implementation.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\searchable-dropdown\\searchable-dropdown.component.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\generic-table\\generic-table.component.ts"
+      ],
+      "sweetalert2": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\services\\dialog.service-implementation.ts"
+      ],
+      "@angular/router": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\generic-table\\generic-table.component.ts"
+      ],
+      "json-logic-js": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\src\\lib\\components\\generic-table\\generic-table.component.ts"
+      ]
+    },
+    "invalidFiles": {
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\tsconfig.lib.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\tsconfig.lib.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\tsconfig.lib.prod.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\tsconfig.lib.prod.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\tsconfig.spec.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\material\\tsconfig.spec.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)"
+    },
+    "invalidDirs": {}
+  },
+  "rdict": {
+    "dependencies": [
+      "tslib",
+      "@progress/kendo-angular-grid",
+      "@progress/kendo-data-query",
+      "@progress/kendo-drawing",
+      "@progress/kendo-licensing",
+      "@progress/kendo-angular-buttons",
+      "@progress/kendo-angular-common",
+      "@progress/kendo-angular-dateinputs",
+      "@progress/kendo-angular-layout",
+      "@progress/kendo-angular-dropdowns",
+      "@progress/kendo-angular-excel-export",
+      "@progress/kendo-angular-icons",
+      "@progress/kendo-angular-inputs",
+      "@progress/kendo-angular-intl",
+      "@progress/kendo-angular-l10n",
+      "@progress/kendo-angular-label",
+      "@progress/kendo-angular-pager",
+      "@progress/kendo-angular-pdf-export",
+      "@progress/kendo-angular-popup",
+      "@progress/kendo-angular-toolbar",
+      "@progress/kendo-angular-utils",
+      "@progress/kendo-angular-treeview",
+      "@progress/kendo-angular-navigation",
+      "@progress/kendo-angular-dialog",
+      "@progress/kendo-svg-icons",
+      "@progress/kendo-angular-progressbar",
+      "@progress/kendo-theme-default",
+      "socket.io-msgpack-parser",
+      "socket.io-parser"
+    ],
+    "devDependencies": [],
+    "missing": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\tsconfig.spec.json"
+      ],
+      "rxjs": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\reactive-dictionary.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\services\\file.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\services\\socket.service.ts"
+      ],
+      "uuid": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\reactive-dictionary.ts"
+      ],
+      "@msgpack/msgpack": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\services\\custom-msgpak-parser.ts"
+      ]
+    },
+    "using": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\tsconfig.spec.json"
+      ],
+      "@angular/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\reactive-dictionary.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\socket-config.token.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\services\\file.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\services\\socket.service.ts"
+      ],
+      "@rosoftlab/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\reactive-dictionary.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\services\\socket.service.ts"
+      ],
+      "rxjs": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\reactive-dictionary.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\services\\file.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\services\\socket.service.ts"
+      ],
+      "uuid": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\reactive-dictionary.ts"
+      ],
+      "@msgpack/msgpack": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\services\\custom-msgpak-parser.ts"
+      ],
+      "@angular/common": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\services\\file.service.ts"
+      ],
+      "socket.io-client": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\src\\lib\\services\\socket.service.ts"
+      ]
+    },
+    "invalidFiles": {
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\tsconfig.lib.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\tsconfig.lib.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\tsconfig.lib.prod.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\tsconfig.lib.prod.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\tsconfig.spec.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\rdict\\tsconfig.spec.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)"
+    },
+    "invalidDirs": {}
+  },
+  "shared-ui": {
+    "dependencies": [
+      "tslib"
+    ],
+    "devDependencies": [],
+    "missing": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\shared-ui\\tsconfig.spec.json"
+      ],
+      "@angular/router": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\shared-ui\\src\\lib\\rsl-dynamic-form.component.ts"
+      ]
+    },
+    "using": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\shared-ui\\tsconfig.spec.json"
+      ],
+      "@angular/common": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\shared-ui\\src\\lib\\rsl-dynamic-form.component.ts"
+      ],
+      "@angular/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\shared-ui\\src\\lib\\rsl-dynamic-form.component.ts"
+      ],
+      "@angular/router": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\shared-ui\\src\\lib\\rsl-dynamic-form.component.ts"
+      ],
+      "@rosoftlab/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\shared-ui\\src\\lib\\rsl-dynamic-form.component.ts"
+      ]
+    },
+    "invalidFiles": {
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\shared-ui\\tsconfig.lib.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\shared-ui\\tsconfig.lib.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\shared-ui\\tsconfig.lib.prod.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\shared-ui\\tsconfig.lib.prod.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\shared-ui\\tsconfig.spec.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\shared-ui\\tsconfig.spec.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)"
+    },
+    "invalidDirs": {}
+  },
+  "statemachine": {
+    "dependencies": [
+      "tslib"
+    ],
+    "devDependencies": [],
+    "missing": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\tsconfig.spec.json"
+      ],
+      "rxjs": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\src\\lib\\services\\sm-action.service.ts"
+      ]
+    },
+    "using": {
+      "@types/jasmine": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\tsconfig.spec.json"
+      ],
+      "@angular/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\src\\lib\\services\\sm-action.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\src\\lib\\services\\state.service.ts"
+      ],
+      "@rosoftlab/core": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\src\\lib\\services\\sm-action.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\src\\lib\\services\\state.service.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\src\\lib\\models\\sm-action.ts",
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\src\\lib\\models\\state.ts"
+      ],
+      "rxjs": [
+        "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\src\\lib\\services\\sm-action.service.ts"
+      ]
+    },
+    "invalidFiles": {
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\tsconfig.lib.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\tsconfig.lib.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\tsconfig.lib.prod.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\tsconfig.lib.prod.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)",
+      "F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\tsconfig.spec.json": "SyntaxError: F:\\Work\\Rosoftlab\\rosoftlab\\rsl-workspace\\projects\\rosoftlab\\statemachine\\tsconfig.spec.json: Unexpected token '/', \"/* To lear\"... is not valid JSON\n    at parse (<anonymous>)\n    at Object..json (node:internal/modules/cjs/loader:1907:39)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1487:12)\n    at require (node:internal/modules/helpers:135:16)\n    at readJSON (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\utils\\index.js:24:10)\n    at parseTTypeScript (C:\\Users\\t.corbu\\AppData\\Local\\npm-cache\\_npx\\d2bd3cb5801d0b99\\node_modules\\depcheck\\dist\\special\\ttypescript.js:16:41)"
+    },
+    "invalidDirs": {}
+  }
+}

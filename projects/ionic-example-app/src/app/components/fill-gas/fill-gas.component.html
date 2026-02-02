@@ -9,47 +9,234 @@
 <ion-content [fullscreen]="true">
   <div class="glass-bg">
     <div class="header-section">
-      <h1>Inregistrare Consum</h1>
-      <p>Alimentare pentru utilaj/vehicul</p>
     </div>
 
-    <div class="confirmation-badge" *ngIf="model?.licensePlate">
+    <div class="confirmation-badge" *ngIf="car?.licensePlate || fuelModel?.destinationWarehouseId || userName">
       <ion-icon name="checkmark-circle" color="success"></ion-icon>
-      <span>Identificat: <strong>{{ model?.licensePlate }}</strong> ({{ model?.fields?.fuelType }})</span>
+      <div class="badge-content">
+        <div class="badge-left" *ngIf="userName"><strong>{{ userName }}</strong></div>
+        <div class="badge-right" *ngIf="car?.licensePlate"><strong>{{ car?.licensePlate }}</strong></div>
+        <div class="badge-right" *ngIf="!car?.licensePlate && fuelModel?.destinationWarehouseId">
+          <strong>{{ destinationWarehouse?.name || fuelModel?.destinationWarehouseId }}</strong>
+        </div>
+      </div>
     </div>
 
-    <!-- {{model | json}} -->
+    <div class="premium-card">
+      <div class="premium-card-content">
+        <swiper-container #fillSwiper class="fill-gas-swiper" slides-per-view="1" auto-height="false"
+          allow-touch-move="false" (slidechange)="onSlideChanged()">
 
-    <ion-card class="premium-card">
-      <ion-card-content>
-        <form [formGroup]="form" (ngSubmit)="submit()">
-          <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+          <swiper-slide *ngIf="!fuelModel?.warehouseId">
+            <div class="slide-body full-height">
+              <div class="list-panel full">
+                <div class="list-header">
+                  <div class="slide-title">Selectare depozit</div>
+                  <ion-searchbar placeholder="Caută depozit" (ionInput)="onWarehouseSearch($event)"></ion-searchbar>
+                </div>
+                <ion-list>
+                  <ion-item *ngIf="isLoadingWarehouses" lines="none">
+                    <ion-spinner name="crescent" slot="start"></ion-spinner>
+                    <ion-label>Se încarcă depozitele...</ion-label>
+                  </ion-item>
+                  <ion-item button *ngFor="let warehouse of filteredWarehouses"
+                    (click)="selectWarehouseForOrigin(warehouse)">
+                    <ion-label>
+                      <div class="warehouse-main">{{ warehouse.name || 'Fără nume' }}</div>
+                    </ion-label>
+                  </ion-item>
+                  <ion-item *ngIf="!isLoadingWarehouses && filteredWarehouses.length === 0">
+                    <ion-label>Nu există depozite.</ion-label>
+                  </ion-item>
+                </ion-list>
+              </div>
+            </div>
+          </swiper-slide>
 
-          <!-- <div class="camera-trigger">
-            <ion-button expand="block" shape="round" color="secondary" (click)="takePicture()"
-              [disabled]="isProcessing">
-              <ion-icon slot="start" name="camera-outline"></ion-icon>
-              <ion-spinner *ngIf="isProcessing"></ion-spinner>
-              <span *ngIf="!isProcessing">Fă poză la pompă</span>
-            </ion-button>
-            <p class="hint" *ngIf="!model.photoTimestamp">OCR va citi automat numărul de Litri</p>
-            <p class="timestamp-info" *ngIf="model.photoTimestamp">
-              <ion-icon name="time-outline"></ion-icon>
-              Poză efectuată la: <strong>{{ model.photoTimestamp | date:'HH:mm:ss' }}</strong>
-            </p>
-          </div> -->
-        </form>
-      </ion-card-content>
-    </ion-card>
+          <swiper-slide>
+            <div class="slide-body">
+              <div class="slide-title">Scanare QR vehicul / pompă</div>
+              <ion-segment [value]="activeTab" (ionChange)="onTabChanged($event.detail.value)">
+                <ion-segment-button value="scan">
+                  <ion-icon name="qr-code-outline" slot="start"></ion-icon>
+                  <ion-label>Scanare</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="list">
+                  <ion-icon name="car-outline" slot="start"></ion-icon>
+                  <ion-label>Listă</ion-label>
+                </ion-segment-button>
+              </ion-segment>
+              <div class="tab-content">
+                <div class="tab-panel" [class.active]="activeTab === 'scan'">
+                  <div class="camera-frame live">
+                    <video #qrVideo autoplay playsinline muted></video>
+                    <div class="scan-overlay">
+                      <div class="scan-line"></div>
+                      <p>Aliniază camera pe codul QR al vehiculului sau pompei</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-panel" [class.active]="activeTab === 'list'">
+                  <div class="list-panel">
+                    <ion-searchbar placeholder="Caută vehicul sau depozit"
+                      (ionInput)="onListSearch($event)"></ion-searchbar>
+                    <ion-list>
+                      <ion-item *ngIf="isLoadingCars || isLoadingWarehouses" lines="none">
+                        <ion-spinner name="crescent" slot="start"></ion-spinner>
+                        <ion-label>Se încarcă lista...</ion-label>
+                      </ion-item>
+                      <ion-item button *ngFor="let item of combinedList"
+                        [class.selected]="selectedListItem?.type === item.type && selectedListItem?.id === (item.type === 'car' ? item.car?.id : item.warehouse?.id)"
+                        (click)="item.type === 'car' ? selectCar(item.car!) : selectWarehouseForDestination(item.warehouse!)">
+                        <ion-label>
+                          <div class="car-main">{{ item.title }}</div>
+                          <div class="car-sub" *ngIf="item.subtitle">{{ item.subtitle }}</div>
+                        </ion-label>
+                      </ion-item>
+                      <ion-item *ngIf="!isLoadingCars && !isLoadingWarehouses && combinedList.length === 0">
+                        <ion-label>Nu există rezultate.</ion-label>
+                      </ion-item>
+                    </ion-list>
+                  </div>
+                </div>
+              </div>
+              <div class="slide-info" *ngIf="vehicleId || fuelModel?.warehouseId || fuelModel?.destinationWarehouseId">
+                <div *ngIf="fuelModel?.warehouseId"><strong>ID depozit:</strong> {{ fuelModel?.warehouseId }}</div>
+                <div *ngIf="fuelModel?.destinationWarehouseId"><strong>ID depozit pompă:</strong> {{
+                  fuelModel?.destinationWarehouseId }}</div>
+                <div *ngIf="vehicleId"><strong>ID vehicul:</strong> {{ vehicleId }}</div>
+                <div *ngIf="vehicleId"><strong>Are odometru:</strong> {{ hasOdometer ? 'Da' : 'Nu' }}</div>
+                <div *ngIf="vehicleId"><strong>Descriere obligatorie:</strong> {{ requireDescription ? 'Da' : 'Nu' }}
+                </div>
+              </div>
+              <div class="slide-actions">
+                <ion-button expand="block" shape="round" color="primary" [disabled]="!isStep1Valid()"
+                  (click)="nextSlide()">
+                  Continuă
+                  <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+                </ion-button>
+              </div>
+              <div class="slide-error" *ngIf="qrError">{{ qrError }}</div>
+            </div>
+          </swiper-slide>
+
+          <swiper-slide *ngIf="showOdometerPhotoSlide">
+            <div class="slide-body photo-slide">
+              <div class="slide-title">Poză odometru</div>
+              <div class="camera-frame live">
+                <video #odometerVideo autoplay playsinline muted></video>
+              </div>
+              <div class="slide-actions">
+                <ion-button expand="block" shape="round" color="secondary" (click)="captureOdometerAndContinue()">
+                  <ion-icon slot="start" name="camera-outline"></ion-icon>
+                  Continuă
+                </ion-button>
+              </div>
+            </div>
+          </swiper-slide>
+
+          <swiper-slide>
+            <div class="slide-body">
+              <div class="slide-title">Citire km / ore</div>
+              <form [formGroup]="form">
+                <formly-form [form]="form" [fields]="kmFields" [model]="fuelModel"></formly-form>
+              </form>
+              <div class="slide-actions">
+                <ion-button expand="block" shape="round" color="primary" (click)="nextSlide()">
+                  Continuă
+                  <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+          </swiper-slide>
+
+          <swiper-slide *ngIf="showPumpPhotoSlide">
+            <div class="slide-body photo-slide">
+              <div class="slide-title">Poză pompă</div>
+              <div class="camera-frame live">
+                <video #pumpVideo autoplay playsinline muted></video>
+              </div>
+              <div class="slide-actions">
+                <ion-button expand="block" shape="round" color="secondary" (click)="capturePumpAndContinue()">
+                  <ion-icon slot="start" name="camera-outline"></ion-icon>
+                  Continuă
+                </ion-button>
+              </div>
+            </div>
+          </swiper-slide>
+
+          <swiper-slide>
+            <div class="slide-body">
+              <div class="slide-title">Cantitate combustibil</div>
+              <form [formGroup]="form">
+                <formly-form [form]="form" [fields]="litersFields" [model]="fuelModel"></formly-form>
+                <div class="slide-actions">
+                  <ion-button expand="block" shape="round" color="primary" (click)="nextSlide()"
+                    [disabled]="!form.valid || isProcessing">
+                    <ion-icon slot="start" name="send-outline"></ion-icon>
+                    Continuă
+                  </ion-button>
+                </div>
+              </form>
+            </div>
+          </swiper-slide>
+
+          <swiper-slide>
+            <div class="slide-body">
+              <div class="slide-title">Sumar</div>
+              <div class="summary-grid">
+                <div class="summary-item" *ngIf="fuelModel.employeeId">
+                  <div class="summary-label">Angajat</div>
+                  <div class="summary-value">{{ userName || fuelModel.employeeId }}</div>
+                </div>
+                <div class="summary-item" *ngIf="fuelModel.warehouseId">
+                  <div class="summary-label">Depozit</div>
+                  <div class="summary-value">{{ originWarehouse?.name || fuelModel.warehouseId }}</div>
+                </div>
+                <div class="summary-item" *ngIf="fuelModel.carId">
+                  <div class="summary-label">Vehicul</div>
+                  <div class="summary-value">{{ car?.licensePlate || fuelModel.carId }}</div>
+                </div>
+                <div class="summary-item" *ngIf="fuelModel.destinationWarehouseId">
+                  <div class="summary-label">Depozit pompă</div>
+                  <div class="summary-value">{{ destinationWarehouse?.name || fuelModel.destinationWarehouseId }}</div>
+                </div>
+                <div class="summary-item" *ngIf="fuelModel.kilometersOrHours != null">
+                  <div class="summary-label">Km / ore</div>
+                  <div class="summary-value">{{ fuelModel.kilometersOrHours }}</div>
+                </div>
+                <div class="summary-item" *ngIf="fuelModel.liters != null">
+                  <div class="summary-label">Litri</div>
+                  <div class="summary-value">{{ fuelModel.liters }}</div>
+                </div>
+                <div class="summary-item" *ngIf="fuelModel.description">
+                  <div class="summary-label">Descriere</div>
+                  <div class="summary-value">{{ fuelModel.description }}</div>
+                </div>
+              </div>
+
+              <div class="summary-photos" *ngIf="odometerPhotoData || pumpPhotoData">
+                <div class="summary-photo" *ngIf="odometerPhotoData">
+                  <div class="summary-label">Poză odometru</div>
+                  <img [src]="odometerPhotoData" alt="Poză odometru" />
+                </div>
+                <div class="summary-photo" *ngIf="pumpPhotoData">
+                  <div class="summary-label">Poză pompă</div>
+                  <img [src]="pumpPhotoData" alt="Poză pompă" />
+                </div>
+              </div>
+
+              <div class="slide-actions">
+                <ion-button expand="block" shape="round" color="primary" (click)="submit()"
+                  [disabled]="!form.valid || isProcessing">
+                  <ion-icon slot="start" name="send-outline"></ion-icon>
+                  Salvează
+                </ion-button>
+              </div>
+            </div>
+          </swiper-slide>
+        </swiper-container>
+      </div>
+    </div>
   </div>
 </ion-content>
-
-<ion-footer class="ion-no-border">
-  <div class="footer-btn">
-    <ion-button expand="block" shape="round" color="primary" (click)="submit()"
-      [disabled]="!form.valid || isProcessing">
-      <ion-icon slot="start" name="send-outline"></ion-icon>
-      Salvează Informațiile
-    </ion-button>
-  </div>
-</ion-footer>

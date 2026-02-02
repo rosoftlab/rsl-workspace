@@ -1,6 +1,6 @@
 {
   "name": "@rosoftlab/core",
-  "version": "1.0.5-alpha-8",
+  "version": "1.0.5-alpha-10",
   "scripts": {
     "ng": "ng",
     "build": "ts-node --dir build build.ts",
@@ -16,9 +16,16 @@
     "build-rdict": "ng build @rosoftlab/rdict --configuration development",
     "build-demo-rdict": "ng build rdict-example",
     "build-ionic-example": "ng build ionic-example-app",
+    "build-fix-fuel": "ng build fix-fuel",
+    "build-fix-fuel-prod": "ng build fix-fuel --configuration production",
     "demo-rdict": "ng serve rdict-example  --port 33080 --configuration development --hmr=false",
-    "ionic-example": "ng serve ionic-example-app  --port 19281 --configuration docker --hmr=false",
-    "ionic-example-dev": "ng serve ionic-example-app  --port 19281 --hmr=false"
+    "ionic-example": "ng serve ionic-example-app  --host 0.0.0.0  --port 19281 --configuration docker --hmr=false",
+    "ionic-example-dev": "ng serve ionic-example-app  --host 0.0.0.0 --port 19281 --hmr=false",
+    "fix-fuel": "ng serve fix-fuel  --host 0.0.0.0  --port 19281 --configuration docker --hmr=false",
+    "fix-fuel-dev": "ng serve fix-fuel  --host 0.0.0.0 --port 19281 --hmr=false",
+    "fix-fuel-dev-ssl": "ng serve fix-fuel  --host 0.0.0.0 --port 19281 --hmr=false --ssl true",
+    "serve-fix-fuel-https": "npx http-server dist/fix-fuel/browser -p 19281 -c-1 --spa --ssl --cert certs/localhost.pem --key certs/localhost-key.pem -a 0.0.0.0",
+    "pwa-fix-fuel-mobile": "npm run build-fix-fuel-prod && npm run serve-fix-fuel-https"
   },
   "private": false,
   "dependencies": {
@@ -33,6 +40,7 @@
     "@angular/platform-browser": "^19.2.8",
     "@angular/platform-browser-dynamic": "^19.2.8",
     "@angular/router": "^19.2.8",
+    "@angular/service-worker": "19.2.8",
     "@capacitor/app": "8.0.0",
     "@capacitor/cli": "8.0.1",
     "@capacitor/core": "8.0.1",
@@ -82,6 +90,7 @@
     "@swimlane/ngx-datatable": "^20.1.0",
     "@tinymce/tinymce-angular": "^8.0.1",
     "@types/qs": "^6.9.18",
+    "@zxing/browser": "^0.1.5",
     "cron-parser": "^5.1.1",
     "cronstrue": "^2.59.0",
     "date-fns": "^4.1.0",
@@ -98,6 +107,7 @@
     "socket.io-msgpack-parser": "^3.0.2",
     "socket.io-parser": "^4.2.4",
     "sweetalert2": "^11.19.1",
+    "swiper": "^11.1.0",
     "tinymce": "^7.8.0",
     "tslib": "^2.8.0",
     "uuid": "^11.1.0",

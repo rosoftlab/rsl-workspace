@@ -25,52 +25,7 @@ export class BaseDatastore implements DatastorePort {
       : this._toQueryString;
   // tslint:enable:max-line-length
 
-  private get getDirtyAttributes() {
-    if (this.datastoreConfig.overrides && this.datastoreConfig.overrides.getDirtyAttributes) {
-      return this.datastoreConfig.overrides.getDirtyAttributes;
-    } else {
-      return BaseDatastore.getDirtyAttributes;
-    }
-  }
-
-  public get getAllAttributes() {
-    if (this.datastoreConfig.overrides && this.datastoreConfig.overrides.getAllAttributes) {
-      return this.datastoreConfig.overrides.getAllAttributes;
-    } else {
-      return BaseDatastore.getAllAttributes;
-    }
-  }
-
   // protected config: DatastoreConfig;
-
-  private static getDirtyAttributes(attributesMetadata: any): { string: any } {
-    const dirtyData: any = {};
-
-    for (const propertyName in attributesMetadata) {
-      if (attributesMetadata.hasOwnProperty(propertyName)) {
-        const metadata: any = attributesMetadata[propertyName];
-
-        if (metadata.hasDirtyAttributes) {
-          const attributeName = metadata.serializedName != null ? metadata.serializedName : propertyName;
-          dirtyData[attributeName] = metadata.serialisationValue ? metadata.serialisationValue : metadata.newValue;
-        }
-      }
-    }
-    return dirtyData;
-  }
-
-  private static getAllAttributes(attributesMetadata: any): { string: any } {
-    const dirtyData: any = {};
-
-    for (const propertyName in attributesMetadata) {
-      if (attributesMetadata.hasOwnProperty(propertyName)) {
-        const metadata: any = attributesMetadata[propertyName];
-        const attributeName = metadata.serializedName != null ? metadata.serializedName : propertyName;
-        dirtyData[attributeName] = metadata.serialisationValue ? metadata.serialisationValue : metadata.newValue;
-      }
-    }
-    return dirtyData;
-  }
 
   constructor(
     protected httpClient: HttpClient,
@@ -140,7 +95,7 @@ export class BaseDatastore implements DatastorePort {
     headers?: HttpHeaders,
     customUrl?: string
   ): Observable<U> {
-    const customHeadhers: HttpHeaders = this.buildHeaders(headers);
+    const customHeadhers: HttpHeaders = this.buildHeaders(headers, 'application/json');
     const url: string = this.buildUrl(modelType, customUrl);
     const htmlParams = this.buildParams(modelType, params);
     return this.httpClient.post<U>(url, body, { headers: customHeadhers, params: htmlParams, reportProgress: true, withCredentials: true });
@@ -153,7 +108,7 @@ export class BaseDatastore implements DatastorePort {
     headers?: HttpHeaders,
     customUrl?: string
   ): Observable<U> {
-    const customHeadhers: HttpHeaders = this.buildHeaders(headers);
+    const customHeadhers: HttpHeaders = this.buildHeaders(headers, 'application/json');
     const url: string = this.buildUrl(modelType, customUrl);
     const htmlParams = this.buildParams(modelType, params);
     return this.httpClient.patch<U>(url, body, { headers: customHeadhers, params: htmlParams, withCredentials: true });
@@ -163,7 +118,6 @@ export class BaseDatastore implements DatastorePort {
   }
 
   saveRecord<T extends BaseModel>(
-    attributesMetadata: any,
     model: T,
     params?: any,
     headers?: HttpHeaders,
@@ -171,14 +125,13 @@ export class BaseDatastore implements DatastorePort {
     customBody?: any
   ): Observable<T> {
     const modelType = model.constructor as ModelType<T>;
-    const modelConfig: ModelConfig = model.modelConfig;
-    const customHeadhers: HttpHeaders = this.buildHeaders(headers);
+    const customHeadhers: HttpHeaders = this.buildHeaders(headers, 'application/json');
     const url: string = this.buildUrl(modelType, customUrl);
     const htmlParams = this.buildParams(modelType, params);
 
     let httpCall: Observable<any>;
 
-    const body = customBody || this.modelToEntity(model, attributesMetadata);
+    const body = customBody || this.modelToEntity(model);
 
     if (model.id) {
       // tslint:disable-next-line:max-line-length
@@ -190,15 +143,13 @@ export class BaseDatastore implements DatastorePort {
     return httpCall.pipe(
       map((res) => {
         this.cacheService.clearCacheContainingKeyword(url);
-        const data = this.resetMetadataAttributes(res, attributesMetadata, modelType);
-        return this.entityToModel(data, modelType);
+        return this.entityToModel(res, modelType);
       }),
       catchError(this.handleError)
     );
   }
 
   patchRecord<T extends BaseModel>(
-    attributesMetadata: any,
     model: T,
     origModel?: T,
     params?: any,
@@ -206,27 +157,24 @@ export class BaseDatastore implements DatastorePort {
     customUrl?: string
   ): Observable<T> {
     const modelType = model.constructor as ModelType<T>;
-    const modelConfig: ModelConfig = model.modelConfig;
-    const customHeadhers: HttpHeaders = this.buildHeaders(headers);
+    const customHeadhers: HttpHeaders = this.buildHeaders(headers, 'application/json-patch+json');
     const url: string = this.buildUrl(modelType, customUrl);
     const htmlParams = this.buildParams(modelType, params);
 
     let httpCall: Observable<any>;
-    // let origData = { id: '' };
-    // if (origModel)
-    //   origData = this.modelToEntity(origModel, origModel.attributeMetadata, true);
-    // const newData = this.modelToEntity(model, attributesMetadata, true);
+    if (!origModel) {
+      return this.replaceRecord(model, params, headers, customUrl);
+    }
     model.id = origModel.id;
 
-    const patch = compare(origModel, model);
+    const patch = compare(this.modelToEntity(origModel), this.modelToEntity(model));
     if (patch.length > 0) {
       httpCall = this.httpClient.patch(url + '/' + model.id, patch, { headers: customHeadhers, params: htmlParams, withCredentials: true });
 
       return httpCall.pipe(
         map((res) => {
           this.cacheService.clearCacheContainingKeyword(url);
-          const data = this.resetMetadataAttributes(res, attributesMetadata, modelType);
-          return this.entityToModel(data, modelType);
+          return this.entityToModel(res, modelType);
         }),
         catchError(this.handleError)
       );
@@ -243,7 +191,6 @@ export class BaseDatastore implements DatastorePort {
 
   // }
   replaceRecord<T extends BaseModel>(
-    attributesMetadata: any,
     model: T,
     params?: any,
     headers?: HttpHeaders,
@@ -251,14 +198,13 @@ export class BaseDatastore implements DatastorePort {
     customBody?: any
   ): Observable<T> {
     const modelType = model.constructor as ModelType<T>;
-    const modelConfig: ModelConfig = model.modelConfig;
-    const customHeadhers: HttpHeaders = this.buildHeaders(headers);
+    const customHeadhers: HttpHeaders = this.buildHeaders(headers, 'application/json');
     const url: string = this.buildUrl(modelType, customUrl);
     const htmlParams = this.buildParams(modelType, params);
 
     let httpCall: Observable<any>;
 
-    const body = customBody || this.modelToEntity(model, attributesMetadata, true);
+    const body = customBody || this.modelToEntity(model);
 
     if (model.id) {
       httpCall = this.httpClient.put(url + '/' + model.id, body, { headers: customHeadhers, params: htmlParams, withCredentials: true });
@@ -269,8 +215,7 @@ export class BaseDatastore implements DatastorePort {
     return httpCall.pipe(
       map((res) => {
         this.cacheService.clearCacheContainingKeyword(url);
-        const data = this.resetMetadataAttributes(res, attributesMetadata, modelType);
-        return this.entityToModel(data, modelType);
+        return this.entityToModel(res, modelType);
       }),
       catchError(this.handleError)
     );
@@ -323,7 +268,6 @@ export class BaseDatastore implements DatastorePort {
   }
 
   protected deserializeModel<T extends BaseModel>(modelType: ModelType<T>, data: any) {
-    data = this.transformSerializedNamesToPropertyNames(modelType, data);
     return new modelType(data);
   }
 
@@ -347,68 +291,18 @@ export class BaseDatastore implements DatastorePort {
     return new metaModel(body);
   }
 
-  protected resetMetadataAttributes<T extends BaseModel>(res: T, attributesMetadata: any, modelType: ModelType<T>) {
-    // TODO check why is attributesMetadata from the arguments never used
-
-    for (const propertyName in attributesMetadata) {
-      if (attributesMetadata.hasOwnProperty(propertyName)) {
-        const metadata: any = attributesMetadata[propertyName];
-
-        if (metadata.hasDirtyAttributes) {
-          metadata.hasDirtyAttributes = false;
-        }
-      }
-    }
-
-    if (res) {
-      res.attributeMetadata = attributesMetadata;
-    }
-    return res;
-  }
-
   public get datastoreConfig(): DatastoreConfig {
     const configFromDecorator: DatastoreConfig = MetadataStorage.getMetadata('BaseDatastoreConfig', this.constructor);
     return Object.assign(configFromDecorator, this.config);
   }
 
-  protected transformSerializedNamesToPropertyNames<T extends BaseModel>(modelType: ModelType<T>, attributes: any) {
-    const apiFieldMap = this.getApiFieldMap(modelType);
-    if (apiFieldMap) {
-      const properties: any = {};
-      Object.keys(apiFieldMap).forEach((serializedName) => {
-        if (attributes[serializedName] !== null && attributes[serializedName] !== undefined) {
-          properties[apiFieldMap[serializedName]] = attributes[serializedName];
-        }
-      });
-      return properties;
-    }
-
-    const serializedNameToPropertyName = this.getModelPropertyNames(modelType.prototype);
-    const properties: any = {};
-
-    Object.keys(serializedNameToPropertyName).forEach((serializedName) => {
-      if (attributes[serializedName] !== null && attributes[serializedName] !== undefined) {
-        properties[serializedNameToPropertyName[serializedName]] = attributes[serializedName];
-      }
-    });
-
-    return properties;
-  }
-
-  protected getModelPropertyNames(model: BaseModel) {
-    return MetadataStorage.getMergedMetadata('AttributeMapping', model);
-  }
-
-  protected getApiFieldMap<T extends BaseModel>(modelType: ModelType<T>): Record<string, string> | null {
-    return (modelType as any).apiFieldMap || null;
-  }
-
-  public buildHeaders(customHeaders?: HttpHeaders): HttpHeaders {
+  public buildHeaders(customHeaders?: HttpHeaders, contentType?: string): HttpHeaders {
     const headers: any = {
-      Accept: 'application/json-patch+json',
-      // 'Content-Type': 'application/vnd.api+json',
-      'Content-Type': 'application/json-patch+json'
+      Accept: 'application/json'
     };
+    if (contentType) {
+      headers['Content-Type'] = contentType;
+    }
     if (customHeaders && customHeaders.keys().length) {
       // tslint:disable-next-line:variable-name
       Object.assign(
@@ -455,15 +349,22 @@ export class BaseDatastore implements DatastorePort {
     return deserializedModel;
   }
 
-  public modelToEntity<T extends BaseModel>(model: T, attributesMetadata: any, allAttributes: boolean = false): any {
-    let attributes;
-    if (allAttributes) {
-      attributes = this.getAllAttributes(attributesMetadata, model);
-    } else {
-      attributes = this.getDirtyAttributes(attributesMetadata, model);
+  public modelToEntity<T extends BaseModel>(model: T): any {
+    if (!model) {
+      return model;
     }
-    // this.getRelationships(model, attributes);
-    return attributes;
+    const entity: any = {};
+    Object.keys(model).forEach((key) => {
+      if (key.startsWith('_') || key === 'highlighted' || key === 'attributeMetadata') {
+        return;
+      }
+      const value = (model as any)[key];
+      if (typeof value === 'function') {
+        return;
+      }
+      entity[key] = value;
+    });
+    return entity;
   }
   private _toQueryString(params: any): string {
     return queryString.stringify(params, { arrayFormat: 'bracket' });

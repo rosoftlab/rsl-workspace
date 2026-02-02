@@ -2,13 +2,14 @@
   "name": "@rosoftlab/shared-ui",
   "version": "0.0.0-ROSOFTLAB-VERSION",
   "peerDependencies": {
-    "@angular/common": "^19.2.0",
-    "@angular/core": "^19.2.0",
+    "@angular/common": "^19.2.8",
+    "@angular/core": "^19.2.8",
+    "@angular/router": "^19.2.8",
     "@rosoftlab/core": "0.0.0-ROSOFTLAB-VERSION",
     "@rosoftlab/rdict": "0.0.0-ROSOFTLAB-VERSION"
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.8.0"
   },
   "sideEffects": false
 }

@@ -1,0 +1,77 @@
+.guest-registration {
+  --background: #f5f7fb;
+  position: relative;
+}
+
+.guest-registration__bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(46, 120, 46, 0.15), transparent 55%),
+    linear-gradient(135deg, #e5efe5, #f7f7fb);
+}
+
+.guest-registration__shell {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.guest-registration__card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 20px;
+  box-shadow: 0 18px 40px rgba(23, 60, 40, 0.18);
+  --background: #ffffff;
+}
+
+.guest-registration__logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+
+  img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+  }
+}
+
+.guest-registration__card ion-card-title {
+  font-weight: 700;
+  color: #1e4e1e;
+}
+
+.guest-registration__card p {
+  margin-top: 0;
+  color: #1e4e1e;
+  font-weight: 600;
+}
+
+.guest-registration__card ion-item {
+  --background: #f8f9fb;
+  --border-radius: 12px;
+  --padding-start: 12px;
+  --highlight-height: 0;
+  border: 1px solid rgba(46, 120, 46, 0.15);
+  margin-bottom: 16px;
+}
+
+.guest-registration__card ion-label {
+  color: #2b3b2b;
+  font-weight: 600;
+}
+
+.guest-registration__card ion-input {
+  --color: #1e4e1e;
+  --placeholder-color: rgba(30, 78, 30, 0.4);
+}
+
+.guest-registration__error {
+  margin-top: 12px;
+  font-weight: 600;
+}

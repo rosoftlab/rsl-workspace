@@ -1,13 +1,9 @@
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { AttributeMetadata } from '../constants/symbols';
-import { Attribute } from '../core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModelConfig } from '../interfaces/model-config.interface';
-import type { ModelType } from '../services/datastore-port';
 import { MetadataStorage } from './metadata-storage';
 export class BaseModel<TId = string> {
   public highlighted: boolean;
 
-  @Attribute({ serializedName: 'id' })
   public id: TId;
   
   [key: string]: any;
@@ -22,86 +18,38 @@ export class BaseModel<TId = string> {
     }
   }
 
-  get attributeMetadata(): any {
-    const attributesMetadata: any = this[AttributeMetadata];
-    return attributesMetadata;
-  }
-  set attributeMetadata(val: any) {
-    this[AttributeMetadata] = val;
-  }
-  get hasDirtyAttributes() {
-    const attributesMetadata: any = this[AttributeMetadata];
-    let hasDirtyAttributes = false;
-    for (const propertyName in attributesMetadata) {
-      if (attributesMetadata.hasOwnProperty(propertyName)) {
-        const metadata: any = attributesMetadata[propertyName];
-
-        if (metadata.hasDirtyAttributes) {
-          hasDirtyAttributes = true;
-          break;
-        }
-      }
-    }
-    return hasDirtyAttributes;
-  }
-
-  rollbackAttributes(): void {
-    const attributesMetadata: any = this[AttributeMetadata];
-    let metadata: any;
-    for (const propertyName in attributesMetadata) {
-      if (attributesMetadata.hasOwnProperty(propertyName)) {
-        if (attributesMetadata[propertyName].hasDirtyAttributes) {
-          this[propertyName] = attributesMetadata[propertyName].oldValue;
-          metadata = {
-            hasDirtyAttributes: false,
-            newValue: attributesMetadata[propertyName].oldValue,
-            oldValue: undefined
-          };
-          attributesMetadata[propertyName] = metadata;
-        }
-      }
-    }
-
-    this[AttributeMetadata] = attributesMetadata;
-  }
-
   get modelConfig(): ModelConfig {
     return MetadataStorage.getMetadata('BaseModelConfig', this.constructor);
   }
 
-  protected deserializeModel<T extends BaseModel>(modelType: ModelType<T>, data: any) {
-    data = this.transformSerializedNamesToPropertyNames(modelType, data);
-    return new modelType(data);
-  }
-
-  protected transformSerializedNamesToPropertyNames<T extends BaseModel>(modelType: ModelType<T>, attributes: any) {
-    const serializedNameToPropertyName = this.getModelPropertyNames(modelType.prototype);
+  public getModelPropertyNames(model: BaseModel<any>) {
+    const staticFields = (model.constructor as any).fields;
+    if (Array.isArray(staticFields) && staticFields.length) {
+      return staticFields.reduce((acc: any, key: string) => {
+        acc[key] = key;
+        return acc;
+      }, {});
+    }
     const properties: any = {};
-
-    Object.keys(serializedNameToPropertyName).forEach((serializedName) => {
-      if (attributes[serializedName] !== null && attributes[serializedName] !== undefined) {
-        properties[serializedNameToPropertyName[serializedName]] = attributes[serializedName];
-      }
-    });
-
+    Object.keys(model)
+      .filter((key) => !key.startsWith('_') && key !== 'highlighted')
+      .forEach((key) => {
+        properties[key] = key;
+      });
     return properties;
   }
-
-  public getModelPropertyNames(model: BaseModel<any>) {
-    return MetadataStorage.getMergedMetadata('AttributeMapping', model);
-  }
   public getModelRequiredPropertyNames(model: BaseModel<any>) {
-    return MetadataStorage.getMergedMetadata('AttributeRequired', model);
+    return (model.constructor as any).requiredFields || {};
   }
   public getModelDefaultPropertyValues(model: BaseModel<any>) {
-    return MetadataStorage.getMergedMetadata('AttributedefaultValue', model);
+    return (model.constructor as any).defaultValues || {};
   }
 
   public getModelSubGroupPropertyNames(model: BaseModel<any>) {
-    return MetadataStorage.getMergedMetadata('AttributeformSubGroup', model);
+    return (model.constructor as any).formSubGroups || {};
   }
 
-  public getFromGroup(fb: UntypedFormBuilder): UntypedFormGroup {
+  public getFromGroup(fb: FormBuilder): FormGroup {
     const props = Object.keys(this.getModelPropertyNames(this));
     const requiredProps = this.getModelRequiredPropertyNames(this);
     const defaultValues = this.getModelDefaultPropertyValues(this);
@@ -124,12 +72,12 @@ export class BaseModel<TId = string> {
     }
     return fb.group(controlsConfig);
   }
-  private getSubFromGroup(fb: UntypedFormBuilder, controlsConfig: any, subGroup: string): UntypedFormGroup {
+  private getSubFromGroup(fb: FormBuilder, controlsConfig: any, subGroup: string): FormGroup {
     if (!controlsConfig[subGroup]) controlsConfig[subGroup] = fb.group({});
     return controlsConfig[subGroup];
   }
 
-  public getModelFromFormGroup(formGroup: UntypedFormGroup, id?: TId) {
+  public getModelFromFormGroup(formGroup: FormGroup, id?: TId) {
     try {
       const props = Object.keys(this.getModelPropertyNames(this));
       const formSubGroupsValues = this.getModelSubGroupPropertyNames(this);
@@ -142,7 +90,7 @@ export class BaseModel<TId = string> {
         props.forEach((property) => {
           const formSubGroup = formSubGroupsValues[property] ?? null;
           if (!formSubGroup) data[property] = formGroup.controls[property].value ?? null;
-          else data[property] = (formGroup.controls[formSubGroup] as UntypedFormGroup).controls[property].value ?? null;
+          else data[property] = (formGroup.controls[formSubGroup] as FormGroup).controls[property].value ?? null;
         });
       }
       if (data) {

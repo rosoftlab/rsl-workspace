@@ -29,6 +29,7 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+@import 'swiper/swiper-bundle.css';
 
 body {
   font-family: "RobotoRegular", Helvetica, Arial, sans-serif;
@@ -40,20 +41,32 @@ body {
 
 :root {
   --ion-font-family: "RobotoRegular", Helvetica, Arial, sans-serif;
-  --ion-color-primary: #1e88e5;
-  --ion-color-primary-rgb: 30, 136, 229;
+  --ion-color-primary: #2e782e;
+  --ion-color-primary-rgb: 46, 120, 46;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #1a78ca;
-  --ion-color-primary-tint: #3696e8;
-  --ion-color-secondary: #43a047;
-  --ion-color-secondary-rgb: 67, 160, 71;
+  --ion-color-primary-shade: #296c29;
+  --ion-color-primary-tint: #428542;
+  --ion-color-secondary: #659c65;
+  --ion-color-secondary-rgb: 101, 156, 101;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #3b8d3f;
-  --ion-color-secondary-tint: #56aa59;
-  --ion-background-color: #f6f7fb;
-  --ion-text-color: #1f1f1f;
+  --ion-color-secondary-shade: #5a8c5a;
+  --ion-color-secondary-tint: #74a574;
+  --ion-color-tertiary: #cbddcb;
+  --ion-color-tertiary-rgb: 203, 221, 203;
+  --ion-color-tertiary-contrast: #1e4e1e;
+  --ion-color-tertiary-contrast-rgb: 30, 78, 30;
+  --ion-color-tertiary-shade: #b6c6b6;
+  --ion-color-tertiary-tint: #d0e0d0;
+  --ion-color-dark: #1e4e1e;
+  --ion-color-dark-rgb: 30, 78, 30;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #1b461b;
+  --ion-color-dark-tint: #345f34;
+  --ion-background-color: #ffffff;
+  --ion-text-color: #1e4e1e;
   --ion-card-background: #ffffff;
   --ion-item-background: #ffffff;
 }

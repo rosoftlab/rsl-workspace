@@ -1,4 +1,4 @@
-import { Directive, HostBinding, Input, OnInit, inject } from '@angular/core';
+import { Directive, HostBinding, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, UrlSegment } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { DIALOG_SERVICE_TOKEN } from '../interfaces/dialog.interface';
@@ -6,7 +6,7 @@ import { Rule } from '../models/rule';
 import { MODEL_SERVICE, MODEL_TOKEN } from '../tokens/dynamic-form-tokens';
 
 @Directive()
-export abstract class BaseTableImplementation<T = any, TEditArgs = any, TRemoveArgs = any> implements OnInit {
+export abstract class BaseTableImplementation<T = any, TEditArgs = any, TRemoveArgs = any> implements OnInit, OnDestroy {
   // Access the Router without a constructor
   protected router = inject(Router);
   protected translate = inject(TranslateService);
@@ -57,6 +57,7 @@ export abstract class BaseTableImplementation<T = any, TEditArgs = any, TRemoveA
 
     this.basePath = currentUrlSegments.map((segment) => segment.path).join('/');
   }
+  ngOnDestroy(): void {}
   @HostBinding('class')
   get hostClasses(): string {
     return this.hostClass;

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +20,15 @@ export class LocalFileService {
 
     this.http
       .get<any>(jsonUrl)
-      .pipe(
-        tap((data) => dataSubject.next(data)) // Cache the fetched data
-      )
       .subscribe({
-        next: (data) => console.log('Data loaded for', jsonUrl),
-        error: (err) => console.error('Error loading JSON:', err)
+        next: (data) => {
+          dataSubject.next(data);
+          dataSubject.complete();
+        },
+        error: (err) => {
+          this.cache.delete(jsonUrl);
+          dataSubject.error(err);
+        }
       });
 
     return dataSubject.asObservable(); // Return observable

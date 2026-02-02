@@ -1,0 +1,16 @@
+.rls-server-scrolling {
+  height: calc(100vh - 110px);
+}
+
+::ng-deep .progress-linear {
+  position: fixed !important;
+  bottom: 0px;
+}
+
+::ng-deep .actions-cell {
+  padding: 5px 0 0 0.9rem !important;
+}
+
+::ng-deep .align-right {
+  text-align: right !important;
+}

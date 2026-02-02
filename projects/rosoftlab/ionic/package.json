@@ -4,16 +4,24 @@
   "peerDependencies": {
     "@angular/common": "^19.2.8",
     "@angular/core": "^19.2.8",
+    "@angular/forms": "^19.2.8",
+    "@angular/router": "^19.2.8",
     "@ngx-formly/core": "^7.0.1",
+    "@ngx-formly/ionic": "^7.0.1",
+    "@ngx-translate/core": "^17.0.0",
     "@ionic/angular": "~8.7.17",
     "@swimlane/ngx-datatable": "^20.1.0",
+    "json-logic-js": "^2.0.5",
+    "ngx-filesaver": "^19.0.0",
+    "rxjs": "~7.8.1",
+    "xlsx": "^0.18.5",
     "@rosoftlab/core": "0.0.0-ROSOFTLAB-VERSION",
     "@rosoftlab/rdict": "0.0.0-ROSOFTLAB-VERSION",
     "@rosoftlab/formly": "0.0.0-ROSOFTLAB-VERSION",
     "@rosoftlab/statemachine": "0.0.0-ROSOFTLAB-VERSION"
   },
   "dependencies": {
-    "tslib": "^2.6.2"
+    "tslib": "^2.8.0"
   },
   "sideEffects": false,
   "repository": {

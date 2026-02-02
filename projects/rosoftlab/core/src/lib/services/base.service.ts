@@ -75,7 +75,7 @@ export class BaseService<T extends BaseModel> {
       } else {
         fromModel = docTypeOrFormGroup;
       }
-      return this.datastore.saveRecord(fromModel.attributeMetadata, fromModel);
+      return this.datastore.saveRecord(fromModel);
     } else {
       return this.patch(docTypeOrFormGroup, origModel, id);
     }
@@ -88,7 +88,7 @@ export class BaseService<T extends BaseModel> {
     } else {
       fromModel = docTypeOrFormGroup;
     }
-    return this.datastore.patchRecord(fromModel.attributeMetadata, fromModel, origModel);
+    return this.datastore.patchRecord(fromModel, origModel);
   }
 
   newModel(data?: any): T {
@@ -112,7 +112,7 @@ export class BaseService<T extends BaseModel> {
     return saveModel;
   }
   serializeModel(model: T): any {
-    return this.datastore.modelToEntity(model, model.attributeMetadata, true);
+    return this.datastore.modelToEntity(model);
   }
   getSelectValues(property: string): Observable<any[]> {
     return null;

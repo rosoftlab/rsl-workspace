@@ -8,6 +8,15 @@ export class CacheService {
 
   constructor() {}
 
+  private pruneExpired(): void {
+    const now = Date.now();
+    Object.keys(this.cache).forEach((key) => {
+      if (this.cache[key].expiration <= now) {
+        delete this.cache[key];
+      }
+    });
+  }
+
   get(key: string): any {
     const cachedItem = this.cache[key];
     if (cachedItem && cachedItem.expiration > Date.now()) {
@@ -18,6 +27,7 @@ export class CacheService {
   }
 
   set(key: string, data: any, expiresInMs: number): void {
+    this.pruneExpired();
     const expiration = Date.now() + expiresInMs;
     this.cache[key] = { data, expiration };
   }

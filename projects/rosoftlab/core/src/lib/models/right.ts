@@ -1,4 +1,4 @@
-import { Attribute, BaseModelConfig } from "../core";
+import { BaseModelConfig } from "../core";
 import { BaseModel } from "./base.model";
 
 @BaseModelConfig({
@@ -7,34 +7,24 @@ import { BaseModel } from "./base.model";
 })
 export class Right extends BaseModel {
 
-    @Attribute({ serializedName: 'name' })
     name!: string;
 
-    @Attribute({ serializedName: 'rightKey' })
     rightKey!: string;
 
-    @Attribute({ serializedName: 'pagePath' })
     pagePath!: string;
 
-    @Attribute({ serializedName: 'order' })
     order!: number;
 
-    @Attribute({ serializedName: 'isMenu' })
     isMenu!: boolean;
 
-    @Attribute({ serializedName: 'resourceName' })
     resourceName!: string;
 
-    @Attribute({ serializedName: 'parentId' })
     parentId!: string;
 
-    @Attribute({ serializedName: 'color' })
     color!: string;
 
-    @Attribute({ serializedName: 'defaultRoles' })
     defaultRoles!: string;
 
-    @Attribute({ serializedName: 'icon' })
     icon?: string;
 
 }
