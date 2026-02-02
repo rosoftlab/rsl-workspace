@@ -2,6 +2,8 @@ stages:
   - release
 
 release:
+  tags:
+    - build
   image: node:22
   stage: release
   variables:
