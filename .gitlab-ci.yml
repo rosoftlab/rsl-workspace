@@ -1,0 +1,27 @@
+stages:
+  - release
+
+release:
+  image: node:22
+  stage: release
+  variables:
+    GIT_DEPTH: "0"
+    NODE_OPTIONS: "--max-old-space-size=4096"
+    NPM_CONFIG_LOGLEVEL: "warn"
+    NPM_CONFIG_FUND: "false"
+    NPM_CONFIG_AUDIT: "false"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+  before_script:
+    - npm ci
+    - git config user.email "${GITLAB_USER_EMAIL:-ci@rosoftlab.net}"
+    - git config user.name "${GITLAB_USER_NAME:-gitlab-ci}"
+    - export NPM_TOKEN="${NPM_TOKEN:-$GL_TOKEN}"
+    - git remote set-url origin "https://oauth2:${GL_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+    - |
+      cat <<EONPMRC > ~/.npmrc
+      @rosoftlab:registry=${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/npm/
+      //${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${NPM_TOKEN}
+      EONPMRC
+  script:
+    - npx semantic-release
